@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Radix Ltd</string>
+
+    <string name="menu_promotions">Promotions</string>
+    <string name="menu_offer">Request offer</string>
+    <string name="menu_order">Make order</string>
+    <string name="menu_prices">Prices</string>
+    <string name="menu_languages">Languages</string>
+    <string name="menu_about">About us</string>
+
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_btn_title">Login</string>
+    <string name="login_forgot_pass_text">Forgot Password?</string>
+    <string name="login_no_account_text">Don\'t have an account? Sign up here ></string>
+</resources>

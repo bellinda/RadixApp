@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#912213</color>
+    <color name="colorPrimaryDark">#57150b</color>
+    <color name="colorAccent">#de8025</color>
+
+    <color name="login_items_color">#FF858282</color>
+    <color name="login_items_color_transperent">#55858282</color>
+    <color name="login_btn_text_color">#c0858282</color>
+
+    <color name="menu_icons_color">#8f110e</color>
+    <color name="white">#FFFFFF</color>
+</resources>
