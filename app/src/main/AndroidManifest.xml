@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".menuItems.OfferActivity" />
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".menuItems.OrderActivity" />
+        <activity android:name=".menuItems.PromotionsActivity" />
+        <activity android:name=".menuItems.PricesActivity" />
+        <activity android:name=".menuItems.LanguagesActivity" />
+        <activity android:name=".menuItems.AboutActivity"></activity>
     </application>
 
 </manifest>

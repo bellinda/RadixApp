@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/offer_item">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -101,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/order_item">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -123,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/promotions_item">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -157,7 +160,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/prices_item">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -180,7 +184,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/languages_item">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -202,7 +207,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/about_item">
 
                 <ImageView
                     android:layout_width="wrap_content"
