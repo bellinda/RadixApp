@@ -2,4 +2,6 @@
 <resources>
     <dimen name="menu_text_size">14sp</dimen>
     <dimen name="login_btn_title_size">26sp</dimen>
+    <dimen name="activity_title_size">22sp</dimen>
+    <dimen name="labels_text_size">20sp</dimen>
 </resources>

@@ -13,4 +13,21 @@
     <string name="login_btn_title">Вписване</string>
     <string name="login_forgot_pass_text">Забравена парола?</string>
     <string name="login_no_account_text">Нямате профил? Регистрирайте се тук ></string>
+
+    <string name="offer_title">Поискай оферта</string>
+    <string name="offer_select_document">Избери документ</string>
+    <string name="offer_selected_documents">Избрани документи:</string>
+    <string name="offer_full_name">Две имена</string>
+    <string name="offer_order_type">Тип на поръчката</string>
+    <string name="offer_express_order">Експресна</string>
+    <string name="offer_normal_order">Обикновена</string>
+    <string name="offer_translation_type">Тип на превода</string>
+    <string name="offer_translation_special">Специализиран</string>
+    <string name="offer_translation_normal">Неспециализиран</string>
+    <string name="offer_description">Бележки</string>
+    <string name="offer_language_from">От език</string>
+    <string name="offer_language_to">На език</string>
+    <string name="offer_email">Емайл за получаване на отговор</string>
+    <string name="offer_current_email">Текущият имейл</string>
+    <string name="offer_other_email">Друг имейл</string>
 </resources>
