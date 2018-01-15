@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +28,8 @@ public class OfferActivity extends BaseActivity {
     private LinearLayout mSelectFile;
     private TagGroup mSelectedFilesGroup;
     private TextView mSelectedFilesLabel;
+    private Button mExpressOrderBtn;
+    private Button mNormalOrderBtn;
 
     private List<String> selectedFilesNames = new ArrayList<>();
 
@@ -41,6 +45,8 @@ public class OfferActivity extends BaseActivity {
         mSelectFile = (LinearLayout) findViewById(R.id.select);
         mSelectedFilesGroup = (TagGroup) findViewById(R.id.tag_group);
         mSelectedFilesLabel = (TextView) findViewById(R.id.selected_files);
+        mExpressOrderBtn = (Button) findViewById(R.id.express_order_btn);
+        mNormalOrderBtn = (Button) findViewById(R.id.normal_order_btn);
 
         mSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +77,28 @@ public class OfferActivity extends BaseActivity {
                 if(selectedFilesNames.size() == 0) {
                     mSelectedFilesLabel.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        mExpressOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mExpressOrderBtn.setBackgroundColor(ContextCompat.getColor(OfferActivity.this, R.color.menu_icons_color));
+                mExpressOrderBtn.setTextColor(ContextCompat.getColor(OfferActivity.this, R.color.white));
+
+                mNormalOrderBtn.setBackgroundResource(R.drawable.button_border_no_corner_radius);
+                mNormalOrderBtn.setTextColor(ContextCompat.getColor(OfferActivity.this, R.color.menu_icons_color));
+            }
+        });
+
+        mNormalOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNormalOrderBtn.setBackgroundColor(ContextCompat.getColor(OfferActivity.this, R.color.menu_icons_color));
+                mNormalOrderBtn.setTextColor(ContextCompat.getColor(OfferActivity.this, R.color.white));
+
+                mExpressOrderBtn.setBackgroundResource(R.drawable.button_border_no_corner_radius);
+                mExpressOrderBtn.setTextColor(ContextCompat.getColor(OfferActivity.this, R.color.menu_icons_color));
             }
         });
     }
