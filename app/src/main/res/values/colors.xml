@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#912213</color>
     <color name="colorPrimaryDark">#57150b</color>
-    <color name="colorAccent">#de8025</color>
+    <color name="colorAccent">#8f110e</color>
 
     <color name="login_items_color">#FF858282</color>
     <color name="login_items_color_transperent">#55858282</color>
@@ -13,4 +13,5 @@
     <color name="red_border_color">#518f110e</color>
     <color name="data_labels_text_color">#8c8c8c</color>
     <color name="white">#FFFFFF</color>
+    <color name="entered_text_color">#8e8f110e</color>
 </resources>
