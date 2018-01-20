@@ -25,6 +25,7 @@
     <string name="offer_translation_special">Specialized</string>
     <string name="offer_translation_normal">Non-specialized</string>
     <string name="offer_description">Notes</string>
+    <string name="offer_languages">Languages</string>
     <string name="offer_language_from">From language</string>
     <string name="offer_language_to">To language</string>
     <string name="offer_email">Get response on email</string>

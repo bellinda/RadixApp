@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ public class OfferActivity extends BaseActivity {
     private TagGroup mSelectedFilesGroup;
     private TextView mSelectedFilesLabel;
     private Spinner mFromSpinner;
+    private Spinner mToSpinner;
 
     private List<String> selectedFilesNames = new ArrayList<>();
 
@@ -47,42 +47,51 @@ public class OfferActivity extends BaseActivity {
         mSelectedFilesGroup = (TagGroup) findViewById(R.id.tag_group);
         mSelectedFilesLabel = (TextView) findViewById(R.id.selected_files);
         mFromSpinner = (Spinner) findViewById(R.id.from_spinner);
+        mToSpinner = (Spinner) findViewById(R.id.to_spinner);
 
-        mSelectFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                // browser.
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
+        setSupportActionBar(myToolbar);
 
-                // Filter to only show results that can be "opened", such as a
-                // file (as opposed to a list of contacts or timezones)
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
+        CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
+        ctl.setTitle("Request an offer");
 
-                // Filter to show only images, using the image MIME data type.
-                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                // To search for all documents available via installed storage providers,
-                // it would be "*/*".
-                intent.setType("*/*");
-
-                startActivityForResult(intent, READ_REQUEST_CODE);
-            }
-        });
-
-        mSelectedFilesGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
-            @Override
-            public void onTagClick(String tag) {
-                selectedFilesNames.remove(tag);
-                mSelectedFilesGroup.setTags(selectedFilesNames);
-                if(selectedFilesNames.size() == 0) {
-                    mSelectedFilesLabel.setVisibility(View.GONE);
-                }
-            }
-        });
-
+//        mSelectFile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+//                // browser.
+//                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//
+//                // Filter to only show results that can be "opened", such as a
+//                // file (as opposed to a list of contacts or timezones)
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//
+//                // Filter to show only images, using the image MIME data type.
+//                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+//                // To search for all documents available via installed storage providers,
+//                // it would be "*/*".
+//                intent.setType("*/*");
+//
+//                startActivityForResult(intent, READ_REQUEST_CODE);
+//            }
+//        });
+//
+//        mSelectedFilesGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
+//            @Override
+//            public void onTagClick(String tag) {
+//                selectedFilesNames.remove(tag);
+//                mSelectedFilesGroup.setTags(selectedFilesNames);
+//                if(selectedFilesNames.size() == 0) {
+//                    mSelectedFilesLabel.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, getResources().getStringArray(R.array.languages) );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         mFromSpinner.setAdapter(langAdapter);
+
+        mToSpinner.setAdapter(langAdapter);
     }
 
     @Override
