@@ -33,7 +33,7 @@
     </style>
 
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/menu_icons_color</item>
+        <item name="android:textColor">@color/login_items_color</item>
         <item name="android:textSize">14sp</item>
     </style>
 
