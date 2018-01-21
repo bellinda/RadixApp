@@ -15,7 +15,7 @@
     <string name="login_no_account_text">Don\'t have an account? Sign up here ></string>
 
     <string name="offer_title">Request offer</string>
-    <string name="offer_select_document">Select document</string>
+    <string name="offer_select_document">Select documents (one by time)</string>
     <string name="offer_selected_documents">Selected documents:</string>
     <string name="offer_full_name">Full name</string>
     <string name="offer_order_type">Order type</string>
@@ -24,11 +24,12 @@
     <string name="offer_translation_type">Translation type</string>
     <string name="offer_translation_special">Specialized</string>
     <string name="offer_translation_normal">Non-specialized</string>
-    <string name="offer_description">Notes</string>
+    <string name="offer_description">Add notes to your order</string>
     <string name="offer_languages">Languages</string>
     <string name="offer_language_from">From language</string>
     <string name="offer_language_to">To language</string>
     <string name="offer_email">Get response on email</string>
     <string name="offer_current_email">Current email</string>
     <string name="offer_other_email">Other email</string>
+    <string name="offer_submit">Submit</string>
 </resources>

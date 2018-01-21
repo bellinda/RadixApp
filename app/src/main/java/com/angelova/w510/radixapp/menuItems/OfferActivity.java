@@ -1,21 +1,33 @@
 package com.angelova.w510.radixapp.menuItems;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.text.method.KeyListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.R;
+import com.angelova.w510.radixapp.models.Document;
+import com.angelova.w510.radixapp.models.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +38,23 @@ public class OfferActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
 
-    private LinearLayout mSelectFile;
+    private RadioGroup mNameRadioGroup;
+    private RadioButton mOtherNameRb;
+    private EditText mNameInput;
+    private LinearLayout mSelectFiles;
     private TagGroup mSelectedFilesGroup;
     private TextView mSelectedFilesLabel;
+    private RadioButton mExpressOrderRb;
+    private RadioButton mNormalOrderRb;
+    private RadioButton mSpecialTranslRb;
+    private RadioButton mNonSpecialTranslRb;
     private Spinner mFromSpinner;
     private Spinner mToSpinner;
+    private EditText mNotesInput;
+    private RadioGroup mEmailRadioGroup;
+    private RadioButton mOtherEmailRb;
+    private EditText mEmailInput;
+    private Button mSubmitBtn;
 
     private List<String> selectedFilesNames = new ArrayList<>();
 
@@ -43,11 +67,23 @@ public class OfferActivity extends BaseActivity {
     }
 
     private void initializeActivity() {
-        mSelectFile = (LinearLayout) findViewById(R.id.select);
+        mNameRadioGroup = (RadioGroup) findViewById(R.id.radio_group_name);
+        mOtherNameRb = (RadioButton) findViewById(R.id.other_name);
+        mNameInput = (EditText) findViewById(R.id.name_input);
+        mSelectFiles = (LinearLayout) findViewById(R.id.select_documents_layout);
         mSelectedFilesGroup = (TagGroup) findViewById(R.id.tag_group);
         mSelectedFilesLabel = (TextView) findViewById(R.id.selected_files);
+        mExpressOrderRb = (RadioButton) findViewById(R.id.express_order);
+        mNormalOrderRb = (RadioButton) findViewById(R.id.normal_order);
+        mSpecialTranslRb = (RadioButton) findViewById(R.id.special_transl);
+        mNonSpecialTranslRb = (RadioButton) findViewById(R.id.non_special_transl);
         mFromSpinner = (Spinner) findViewById(R.id.from_spinner);
         mToSpinner = (Spinner) findViewById(R.id.to_spinner);
+        mNotesInput = (EditText) findViewById(R.id.notes_input);
+        mEmailRadioGroup = (RadioGroup) findViewById(R.id.radio_group_email);
+        mOtherEmailRb = (RadioButton) findViewById(R.id.new_email_rb);
+        mEmailInput = (EditText) findViewById(R.id.email_input);
+        mSubmitBtn = (Button) findViewById(R.id.submit_btn);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
         setSupportActionBar(myToolbar);
@@ -55,43 +91,182 @@ public class OfferActivity extends BaseActivity {
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
         ctl.setTitle("Request an offer");
 
-//        mSelectFile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-//                // browser.
-//                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//
-//                // Filter to only show results that can be "opened", such as a
-//                // file (as opposed to a list of contacts or timezones)
-//                intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//                // Filter to show only images, using the image MIME data type.
-//                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-//                // To search for all documents available via installed storage providers,
-//                // it would be "*/*".
-//                intent.setType("*/*");
-//
-//                startActivityForResult(intent, READ_REQUEST_CODE);
-//            }
-//        });
-//
-//        mSelectedFilesGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
-//            @Override
-//            public void onTagClick(String tag) {
-//                selectedFilesNames.remove(tag);
-//                mSelectedFilesGroup.setTags(selectedFilesNames);
-//                if(selectedFilesNames.size() == 0) {
-//                    mSelectedFilesLabel.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-//
+        mNameInput.setTag(mNameInput.getKeyListener());
+        mNameInput.setKeyListener(null);
+
+        mEmailInput.setTag(mEmailInput.getKeyListener());
+        mEmailInput.setKeyListener(null);
+
+        mNameRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.default_name) {
+                    mNameInput.setTag(mNameInput.getKeyListener());
+                    mNameInput.setKeyListener(null);
+                } else if (checkedId == R.id.other_name) {
+                    mNameInput.setKeyListener((KeyListener) mNameInput.getTag());
+                    mNameInput.setEnabled(true);
+                }
+            }
+        });
+
+        mEmailRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.default_email_rb) {
+                    mEmailInput.setTag(mEmailInput.getKeyListener());
+                    mEmailInput.setKeyListener(null);
+                } else if (checkedId == R.id.new_email_rb) {
+                    mEmailInput.setKeyListener((KeyListener) mEmailInput.getTag());
+                    mEmailInput.setEnabled(true);
+                }
+            }
+        });
+
+        mSelectFiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+                // browser.
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                // Filter to show only images, using the image MIME data type.
+                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+                // To search for all documents available via installed storage providers,
+                // it would be "*/*".
+                intent.setType("*/*");
+
+                startActivityForResult(intent, READ_REQUEST_CODE);
+            }
+        });
+
+        mSelectedFilesGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
+            @Override
+            public void onTagClick(String tag) {
+                selectedFilesNames.remove(tag);
+                mSelectedFilesGroup.setTags(selectedFilesNames);
+                if(selectedFilesNames.size() == 0) {
+                    mSelectedFilesLabel.setVisibility(View.GONE);
+                }
+            }
+        });
+
         ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, getResources().getStringArray(R.array.languages) );
         langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         mFromSpinner.setAdapter(langAdapter);
 
         mToSpinner.setAdapter(langAdapter);
+
+        mNotesInput.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.notes_input) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+
+        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mOtherNameRb.isChecked() && (mNameInput.getText() == null || mNameInput.getText().toString().isEmpty())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please enter the name you want to use for this offer").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if(!mExpressOrderRb.isChecked() && !mNormalOrderRb.isChecked()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please select the type of your order").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if (!mSpecialTranslRb.isChecked() && !mNonSpecialTranslRb.isChecked()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please select the type of your translation").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if(mOtherEmailRb.isChecked() && (mEmailInput.getText() == null || mEmailInput.getText().toString().isEmpty())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please enter the email on which you want to get a response to your request").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if (mOtherEmailRb.isChecked() && mEmailInput.getText() != null && !mEmailInput.getText().toString().isEmpty() &&
+                        !isValidEmail(mEmailInput.getText().toString())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please enter a valid email address for getting the respnse of your request").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else if (selectedFilesNames.size() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                    builder.setMessage("Please select the files, for which translation you are requesting an offer").setTitle("Warning");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    Offer offer = new Offer();
+                    //TODO: get name from profile
+                    offer.setName(mOtherNameRb.isChecked() ? mNameInput.getText().toString() : "Someone else");
+                    offer.setFromLanguage(mFromSpinner.getSelectedItem().toString());
+                    offer.setToLanguage(mToSpinner.getSelectedItem().toString());
+                    //TODO: get email from profile
+                    offer.setEmail(mOtherEmailRb.isChecked() ? mEmailInput.getText().toString() : "someone.else@gmail.com");
+                    if(mNotesInput.getText() != null) {
+                        offer.setNotes(mNotesInput.getText().toString());
+                    }
+                    offer.setOrderType(mExpressOrderRb.isChecked() ? "Express" : "Normal");
+                    offer.setTranslationType(mSpecialTranslRb.isChecked() ? "Specialized" : "Non-specialized");
+                    List<Document> documents = new ArrayList<>();
+                    for(String fileName : selectedFilesNames) {
+                        Document currDocument = new Document();
+                        currDocument.setName(fileName);
+                        documents.add(currDocument);
+                    }
+                    offer.setDocuments(documents);
+
+                    //TODO:submit to server
+                }
+            }
+        });
     }
 
     @Override
@@ -163,6 +338,14 @@ public class OfferActivity extends BaseActivity {
             }
         } finally {
             cursor.close();
+        }
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (TextUtils.isEmpty(target)) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
 }

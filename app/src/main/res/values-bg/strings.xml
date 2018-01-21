@@ -24,11 +24,12 @@
     <string name="offer_translation_type">Тип на превода</string>
     <string name="offer_translation_special">Специализиран</string>
     <string name="offer_translation_normal">Неспециализиран</string>
-    <string name="offer_description">Бележки</string>
+    <string name="offer_description">Добавете белжки към поръчката</string>
     <string name="offer_languages">Езици</string>
     <string name="offer_language_from">От език</string>
     <string name="offer_language_to">На език</string>
     <string name="offer_email">Емайл за получаване на отговор</string>
     <string name="offer_current_email">Текущият имейл</string>
     <string name="offer_other_email">Друг имейл</string>
+    <string name="offer_submit">Изпрати</string>
 </resources>
