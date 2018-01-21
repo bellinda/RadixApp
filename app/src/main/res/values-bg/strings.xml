@@ -14,6 +14,12 @@
     <string name="login_forgot_pass_text">Забравена парола?</string>
     <string name="login_no_account_text">Нямате профил? Регистрирайте се тук ></string>
 
+    <string name="register_name_hint">Две имена</string>
+    <string name="register_email_hint">Е-мейл</string>
+    <string name="register_password_hint">Парола</string>
+    <string name="register_confirm_password_hint">Повторение на паролата</string>
+    <string name="register_btn_title">Регистрация</string>
+
     <string name="offer_title">Поискай оферта</string>
     <string name="offer_select_document">Избери документ</string>
     <string name="offer_selected_documents">Избрани документи:</string>

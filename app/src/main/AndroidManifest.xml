@@ -23,7 +23,8 @@
         <activity android:name=".menuItems.PromotionsActivity" />
         <activity android:name=".menuItems.PricesActivity" />
         <activity android:name=".menuItems.LanguagesActivity" />
-        <activity android:name=".menuItems.AboutActivity"></activity>
+        <activity android:name=".menuItems.AboutActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

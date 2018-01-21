@@ -52,7 +52,11 @@ public class LoginActivity extends AppCompatActivity {
         mSignUpNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+                // close this activity
+                //finish();
             }
         });
     }
