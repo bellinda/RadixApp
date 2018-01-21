@@ -182,66 +182,18 @@ public class OfferActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(mOtherNameRb.isChecked() && (mNameInput.getText() == null || mNameInput.getText().toString().isEmpty())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please enter the name you want to use for this offer").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please enter the name you want to use for this offer", "Warning");
                 } else if(!mExpressOrderRb.isChecked() && !mNormalOrderRb.isChecked()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please select the type of your order").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please select the type of your order", "Warning");
                 } else if (!mSpecialTranslRb.isChecked() && !mNonSpecialTranslRb.isChecked()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please select the type of your translation").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please select the type of your translation", "Warning");
                 } else if(mOtherEmailRb.isChecked() && (mEmailInput.getText() == null || mEmailInput.getText().toString().isEmpty())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please enter the email on which you want to get a response to your request").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please enter the email on which you want to get a response to your request", "Warning");
                 } else if (mOtherEmailRb.isChecked() && mEmailInput.getText() != null && !mEmailInput.getText().toString().isEmpty() &&
                         !isValidEmail(mEmailInput.getText().toString())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please enter a valid email address for getting the respnse of your request").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please enter a valid email address for getting the respnse of your request", "Warning");
                 } else if (selectedFilesNames.size() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                    builder.setMessage("Please select the files, for which translation you are requesting an offer").setTitle("Warning");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    showAlertDialogNow("Please select the files, for which translation you are requesting an offer", "Warning");
                 } else {
                     Offer offer = new Offer();
                     //TODO: get name from profile
@@ -341,11 +293,23 @@ public class OfferActivity extends BaseActivity {
         }
     }
 
-    public final static boolean isValidEmail(CharSequence target) {
+    public static boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             return false;
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    private void showAlertDialogNow(String message, String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+        builder.setMessage(message).setTitle(title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
