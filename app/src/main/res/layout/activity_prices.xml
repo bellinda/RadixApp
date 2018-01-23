@@ -2,8 +2,567 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.angelova.w510.radixapp.menuItems.PricesActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/prices_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:titleTextColor="@android:color/white"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29"
+        android:id="@+id/left_standard_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.71"
+        android:id="@+id/right_standard_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.13"
+        android:id="@+id/top_standard_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.51"
+        android:id="@+id/bottom_standard_guideline" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="7dp"
+        card_view:cardMaxElevation="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_standard_guideline"
+        app:layout_constraintTop_toTopOf="@+id/top_standard_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/right_standard_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_standard_guideline">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="Standard Order"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:background="@color/standard_order_color"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/menu_icons_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/standard_price_no_discount">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/standard_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.04"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/standard_order_color"
+                    android:id="@+id/standard_price_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/standard_price_layout_with_discount"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/standard_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.03"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/standard_order_color"
+                    android:id="@+id/standard_price_after_discount_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:id="@+id/discount_standard_price_layout"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="0.04"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/standard_price_before_discount_text"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="7"
+                        android:gravity="center|right"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:rotation="-45"
+                            android:layout_weight="5"
+                            android:background="@color/standard_order_color"
+                            />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="€ / word"
+                    android:gravity="center"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="€ / word"
+                android:gravity="center|top"
+                android:textSize="20sp"
+                android:id="@+id/no_discount_standard_price_lower_layout"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07"
+        android:id="@+id/left_spec_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.49"
+        android:id="@+id/right_spec_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.56"
+        android:id="@+id/top_spec_exp_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.94"
+        android:id="@+id/bottom_spec_exp_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.51"
+        android:id="@+id/left_exp_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93"
+        android:id="@+id/right_exp_guideline" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="7dp"
+        card_view:cardMaxElevation="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_spec_guideline"
+        app:layout_constraintTop_toTopOf="@+id/top_spec_exp_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/right_spec_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_spec_exp_guideline">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="Specialized Translation"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:background="@color/specialized_order_color"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/menu_icons_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/spec_price_no_discount_layout">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/specialized_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.06"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/specialized_order_color"
+                    android:id="@+id/spec_price_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/spec_price_layout_with_discount"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/standard_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.05"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/standard_order_color"
+                    android:id="@+id/spec_price_after_discount_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:id="@+id/discount_spec_price_layout"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="0.06"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/spec_price_before_discount_text"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="7"
+                        android:gravity="center|right"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:rotation="-45"
+                            android:layout_weight="5"
+                            android:background="@color/standard_order_color"
+                            />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="€ / word"
+                    android:gravity="center"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="€ / word"
+                android:gravity="center|top"
+                android:textSize="20sp"
+                android:id="@+id/no_discount_spec_price_lower_layout"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="7dp"
+        card_view:cardMaxElevation="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_exp_guideline"
+        app:layout_constraintTop_toTopOf="@+id/top_spec_exp_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/right_exp_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_spec_exp_guideline">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="Express Order"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:background="@color/express_order_color"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/menu_icons_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/exp_price_no_discount_layout">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/express_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.08"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/express_order_color"
+                    android:id="@+id/express_price_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="7"
+                android:id="@+id/exp_price_layout_with_discount"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="from"
+                    android:gravity="center|right"
+                    android:textColor="@color/standard_order_color"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text="0.07"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:textColor="@color/standard_order_color"
+                    android:id="@+id/exp_price_after_discount_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:id="@+id/discount_exp_price_layout"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="0.08"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/black"
+                        android:id="@+id/exp_price_before_discount_text"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="7"
+                        android:gravity="center|right"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="4dp"
+                            android:rotation="-45"
+                            android:layout_weight="5"
+                            android:background="@color/standard_order_color"
+                            />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="€ / word"
+                    android:gravity="center"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="€ / word"
+                android:gravity="center|top"
+                android:textSize="20sp"
+                android:id="@+id/no_discount_exp_price_lower_layout"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
