@@ -1,6 +1,7 @@
 package com.angelova.w510.radixapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 
 import com.angelova.w510.radixapp.menuItems.OfferActivity;
 import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.tasks.RegisterTask;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -51,11 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!mPasswordInput.getText().toString().equals(mConfirmPassword.getText().toString())) {
                     showAlertDialogNow("Your password doesn't match the confirmation one. Please check your password", "Warning");
                 } else {
-                    Profile profile = new Profile();
-                    profile.setName(mNameInput.getText().toString());
-                    profile.setEmail(mEmailInput.getText().toString());
-                    profile.setPassword(mPasswordInput.getText().toString());
-                    //TODO: send the profile for registration to the server
+                    String fullName = mNameInput.getText().toString();
+                    String email = mEmailInput.getText().toString();
+                    String password = mPasswordInput.getText().toString();
+                    new RegisterTask(RegisterActivity.this, "users/register", fullName, password, email).execute();
                 }
             }
         });
@@ -79,5 +80,26 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    public void showRegistrationStatus(String status) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setMessage(status).setTitle("Registration");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showErrorMessage(String errorMsg) {
+        showAlertDialogNow(errorMsg, "Registration");
     }
 }
