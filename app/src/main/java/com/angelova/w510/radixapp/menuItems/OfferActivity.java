@@ -3,8 +3,10 @@ package com.angelova.w510.radixapp.menuItems;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,6 +30,8 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.models.Document;
 import com.angelova.w510.radixapp.models.Offer;
+import com.angelova.w510.radixapp.models.Profile;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,10 @@ public class OfferActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
 
+    public static final String SHARED_PROFILE_KEY = "profile";
+
     private RadioGroup mNameRadioGroup;
+    private RadioButton mCurrentNameRb;
     private RadioButton mOtherNameRb;
     private EditText mNameInput;
     private LinearLayout mSelectFiles;
@@ -52,9 +59,12 @@ public class OfferActivity extends BaseActivity {
     private Spinner mToSpinner;
     private EditText mNotesInput;
     private RadioGroup mEmailRadioGroup;
+    private RadioButton mCurrentEmailRb;
     private RadioButton mOtherEmailRb;
     private EditText mEmailInput;
     private Button mSubmitBtn;
+
+    private Profile mProfile;
 
     private List<String> selectedFilesNames = new ArrayList<>();
 
@@ -68,6 +78,7 @@ public class OfferActivity extends BaseActivity {
 
     private void initializeActivity() {
         mNameRadioGroup = (RadioGroup) findViewById(R.id.radio_group_name);
+        mCurrentNameRb = (RadioButton) findViewById(R.id.default_name);
         mOtherNameRb = (RadioButton) findViewById(R.id.other_name);
         mNameInput = (EditText) findViewById(R.id.name_input);
         mSelectFiles = (LinearLayout) findViewById(R.id.select_documents_layout);
@@ -81,9 +92,12 @@ public class OfferActivity extends BaseActivity {
         mToSpinner = (Spinner) findViewById(R.id.to_spinner);
         mNotesInput = (EditText) findViewById(R.id.notes_input);
         mEmailRadioGroup = (RadioGroup) findViewById(R.id.radio_group_email);
+        mCurrentEmailRb = (RadioButton) findViewById(R.id.default_email_rb);
         mOtherEmailRb = (RadioButton) findViewById(R.id.new_email_rb);
         mEmailInput = (EditText) findViewById(R.id.email_input);
         mSubmitBtn = (Button) findViewById(R.id.submit_btn);
+
+        mProfile = getProfile();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
         setSupportActionBar(myToolbar);
@@ -91,8 +105,12 @@ public class OfferActivity extends BaseActivity {
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
         ctl.setTitle("Request an offer");
 
+        mCurrentNameRb.setText(mProfile.getName());
+
         mNameInput.setTag(mNameInput.getKeyListener());
         mNameInput.setKeyListener(null);
+
+        mCurrentEmailRb.setText(mProfile.getEmail());
 
         mEmailInput.setTag(mEmailInput.getKeyListener());
         mEmailInput.setKeyListener(null);
@@ -311,5 +329,17 @@ public class OfferActivity extends BaseActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private Profile getProfile() {
+        //get current profile from shared preferences (is available)
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
     }
 }

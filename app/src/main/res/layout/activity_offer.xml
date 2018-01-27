@@ -99,7 +99,7 @@
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Someone Else"
+                                tools:text="Someone Else"
                                 android:id="@+id/default_name"/>
 
                             <RadioButton
