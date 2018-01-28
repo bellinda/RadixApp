@@ -206,26 +206,42 @@
         app:layout_constraintGuide_percent="0.81"
         android:id="@+id/right_btn_guideline"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="@id/left_btn_guideline"
         app:layout_constraintRight_toRightOf="@id/right_btn_guideline"
         app:layout_constraintTop_toTopOf="@id/top_btn_guideline"
         app:layout_constraintBottom_toTopOf="@id/bottom_btn_guideline"
-        android:background="@drawable/login_btn_background"
-        android:text="@string/login_btn_title"
-        android:textColor="@color/login_btn_text_color"
-        android:textAllCaps="false"
-        android:textSize="@dimen/login_btn_title_size"
-        android:id="@+id/login_btn"
+        android:id="@+id/login_btn_layout"
         android:gravity="center"
-        android:foregroundGravity="center"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_btn_background"
+            android:text="@string/login_btn_title"
+            android:textColor="@color/login_btn_text_color"
+            android:textAllCaps="false"
+            android:textSize="@dimen/login_btn_title_size"
+            android:id="@+id/login_btn"
+            android:gravity="center"
+            android:foregroundGravity="center"
+            android:visibility="visible"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/login_btn_loader"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/login_btn"
+        app:layout_constraintTop_toBottomOf="@id/login_btn_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/login_btn_text_color"

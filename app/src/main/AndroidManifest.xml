@@ -3,6 +3,9 @@
     package="com.angelova.w510.radixapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +29,8 @@
         <activity android:name=".menuItems.PricesActivity" />
         <activity android:name=".menuItems.LanguagesActivity" />
         <activity android:name=".menuItems.AboutActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ForgotPassActivity"></activity>
     </application>
 
 </manifest>

@@ -37,5 +37,6 @@
     <string name="offer_email">Get response on email</string>
     <string name="offer_current_email">Current email</string>
     <string name="offer_other_email">Other email</string>
+    <string name="offer_phone">Phone number</string>
     <string name="offer_submit">Submit</string>
 </resources>

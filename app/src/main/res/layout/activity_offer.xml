@@ -498,6 +498,46 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/phone_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            android:text="@string/offer_phone"
+                            android:textSize="@dimen/labels_text_size" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/phone_label"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/phone_input"
+                            android:inputType="phone"/>
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="3dp"
+                    card_view:contentPadding="20dp"
+                    card_view:cardElevation="7dp"
+                    card_view:cardMaxElevation="10dp"
+                    android:layout_margin="10dp">
+
+                    <android.support.constraint.ConstraintLayout
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
                             android:id="@+id/documents_label"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -572,18 +612,34 @@
                         app:layout_constraintGuide_percent="0.75"
                         android:id="@+id/right_guideline" />
 
-                    <Button
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         app:layout_constraintLeft_toLeftOf="@+id/left_guideline"
                         app:layout_constraintRight_toRightOf="@+id/right_guideline"
-                        android:layout_gravity="center"
-                        android:background="@drawable/button_with_click"
-                        android:text="@string/offer_submit"
-                        android:textAllCaps="false"
-                        android:textColor="@color/menu_icons_color"
-                        android:textSize="@dimen/labels_text_size"
-                        android:id="@+id/submit_btn"/>
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@drawable/button_with_click"
+                            android:text="@string/offer_submit"
+                            android:textAllCaps="false"
+                            android:textColor="@color/menu_icons_color"
+                            android:textSize="@dimen/labels_text_size"
+                            android:id="@+id/submit_btn"/>
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/submit_loader"
+                            android:visibility="gone"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+
+
                 </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>

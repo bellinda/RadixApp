@@ -1,5 +1,7 @@
 package com.angelova.w510.radixapp.models;
 
+import android.net.Uri;
+
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -16,7 +18,8 @@ public class Offer {
     private String translationType;
     private String notes;
     private String email;
-    private List<Document> documents;
+    private String phone;
+    private List<Uri> documentUris;
 
     public String getName() {
         return name;
@@ -74,11 +77,19 @@ public class Offer {
         this.email = email;
     }
 
-    public List<Document> getDocuments() {
-        return documents;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Uri> getDocumentUris () {
+        return documentUris;
+    }
+
+    public void setDocumentUris(List<Uri> documentUris) {
+        this.documentUris = documentUris;
     }
 }

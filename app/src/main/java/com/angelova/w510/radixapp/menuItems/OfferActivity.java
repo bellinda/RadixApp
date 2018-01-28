@@ -1,46 +1,65 @@
 package com.angelova.w510.radixapp.menuItems;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
+import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
-import com.angelova.w510.radixapp.models.Document;
+import com.angelova.w510.radixapp.requests_utils.ServiceGenerator;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.services.FileUploadService;
+import com.angelova.w510.radixapp.utils.FileUtils;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.gujun.android.taggroup.TagGroup;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OfferActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 2077;
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
@@ -62,11 +81,14 @@ public class OfferActivity extends BaseActivity {
     private RadioButton mCurrentEmailRb;
     private RadioButton mOtherEmailRb;
     private EditText mEmailInput;
+    private EditText mPhoneInput;
     private Button mSubmitBtn;
+    private ProgressBar mSubmitLoader;
 
     private Profile mProfile;
 
     private List<String> selectedFilesNames = new ArrayList<>();
+    private List<Uri> selectedUris = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +117,14 @@ public class OfferActivity extends BaseActivity {
         mCurrentEmailRb = (RadioButton) findViewById(R.id.default_email_rb);
         mOtherEmailRb = (RadioButton) findViewById(R.id.new_email_rb);
         mEmailInput = (EditText) findViewById(R.id.email_input);
+        mPhoneInput = (EditText) findViewById(R.id.phone_input);
         mSubmitBtn = (Button) findViewById(R.id.submit_btn);
+        mSubmitLoader = (ProgressBar) findViewById(R.id.submit_loader);
 
         mProfile = getProfile();
+
+        selectedFilesNames = new ArrayList<>();
+        selectedUris = new ArrayList<>();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
         setSupportActionBar(myToolbar);
@@ -146,21 +173,14 @@ public class OfferActivity extends BaseActivity {
         mSelectFiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                // browser.
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                int permissionCheck = ContextCompat.checkSelfPermission(OfferActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-                // Filter to only show results that can be "opened", such as a
-                // file (as opposed to a list of contacts or timezones)
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                // Filter to show only images, using the image MIME data type.
-                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                // To search for all documents available via installed storage providers,
-                // it would be "*/*".
-                intent.setType("*/*");
-
-                startActivityForResult(intent, READ_REQUEST_CODE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(OfferActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+                } else {
+                    getFilesFromStorage();
+                }
             }
         });
 
@@ -199,6 +219,9 @@ public class OfferActivity extends BaseActivity {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSubmitBtn.setVisibility(View.GONE);
+                mSubmitLoader.setVisibility(View.VISIBLE);
+
                 if(mOtherNameRb.isChecked() && (mNameInput.getText() == null || mNameInput.getText().toString().isEmpty())) {
                     showAlertDialogNow("Please enter the name you want to use for this offer", "Warning");
                 } else if(!mExpressOrderRb.isChecked() && !mNormalOrderRb.isChecked()) {
@@ -210,105 +233,88 @@ public class OfferActivity extends BaseActivity {
                 } else if (mOtherEmailRb.isChecked() && mEmailInput.getText() != null && !mEmailInput.getText().toString().isEmpty() &&
                         !isValidEmail(mEmailInput.getText().toString())) {
                     showAlertDialogNow("Please enter a valid email address for getting the respnse of your request", "Warning");
+                } else if (mPhoneInput.getText() == null || mPhoneInput.getText().toString().isEmpty()) {
+                    showAlertDialogNow("Please enter your phone", "Warning");
                 } else if (selectedFilesNames.size() == 0) {
                     showAlertDialogNow("Please select the files, for which translation you are requesting an offer", "Warning");
                 } else {
                     Offer offer = new Offer();
-                    //TODO: get name from profile
-                    offer.setName(mOtherNameRb.isChecked() ? mNameInput.getText().toString() : "Someone else");
+                    offer.setName(mOtherNameRb.isChecked() ? mNameInput.getText().toString() : mProfile.getName());
                     offer.setFromLanguage(mFromSpinner.getSelectedItem().toString());
                     offer.setToLanguage(mToSpinner.getSelectedItem().toString());
-                    //TODO: get email from profile
-                    offer.setEmail(mOtherEmailRb.isChecked() ? mEmailInput.getText().toString() : "someone.else@gmail.com");
+                    offer.setEmail(mOtherEmailRb.isChecked() ? mEmailInput.getText().toString() : mProfile.getEmail());
                     if(mNotesInput.getText() != null) {
                         offer.setNotes(mNotesInput.getText().toString());
                     }
                     offer.setOrderType(mExpressOrderRb.isChecked() ? "Express" : "Normal");
                     offer.setTranslationType(mSpecialTranslRb.isChecked() ? "Specialized" : "Non-specialized");
-                    List<Document> documents = new ArrayList<>();
-                    for(String fileName : selectedFilesNames) {
-                        Document currDocument = new Document();
-                        currDocument.setName(fileName);
-                        documents.add(currDocument);
-                    }
-                    offer.setDocuments(documents);
+                    offer.setPhone(mPhoneInput.getText().toString());
+                    offer.setDocumentUris(selectedUris);
 
-                    //TODO:submit to server
+                    uploadFile(offer);
                 }
             }
         });
     }
 
+    private void getFilesFromStorage() {
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.setType("*/*");
+        startActivityForResult(i, READ_REQUEST_CODE);
+    }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
-
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
-
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                System.out.println("URI: " + uri.toString());
-//                showImage(uri);
-                dumpImageMetaData(uri);
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getFilesFromStorage();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
             }
         }
     }
 
-    public void dumpImageMetaData(Uri uri) {
-
-        // The query, since it only applies to a single document, will only return
-        // one row. There's no need to filter, sort, or select fields, since we want
-        // all fields for one document.
-        Cursor cursor = getContentResolver()
-                .query(uri, null, null, null, null, null);
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri = data.getData();
+        // do somthing...
         try {
-            // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
-            // "if there's anything to look at, look at it" conditionals.
-            if (cursor != null && cursor.moveToFirst()) {
+            Cursor cursor = getContentResolver()
+                    .query(data.getData(), null, null, null, null, null);
+            String displayName = "";
 
-                // Note it's called "Display Name".  This is
-                // provider-specific, and might not necessarily be the file name.
-                String displayName = cursor.getString(
-                        cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                System.out.println("Display Name: " + displayName);
+            try {
+                // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
+                // "if there's anything to look at, look at it" conditionals.
+                if (cursor != null && cursor.moveToFirst()) {
 
-                if(!selectedFilesNames.contains(displayName)) {
-                    selectedFilesNames.add(displayName);
-                    mSelectedFilesGroup.setTags(selectedFilesNames);
-                    if (mSelectedFilesLabel.getVisibility() == View.GONE) {
-                        mSelectedFilesLabel.setVisibility(View.VISIBLE);
-                    }
+                    // Note it's called "Display Name".  This is
+                    // provider-specific, and might not necessarily be the file name.
+                    displayName = cursor.getString(
+                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 }
-
-                int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-                // If the size is unknown, the value stored is null.  But since an
-                // int can't be null in Java, the behavior is implementation-specific,
-                // which is just a fancy term for "unpredictable".  So as
-                // a rule, check if it's null before assigning to an int.  This will
-                // happen often:  The storage API allows for remote files, whose
-                // size might not be locally known.
-                String size = null;
-                if (!cursor.isNull(sizeIndex)) {
-                    // Technically the column stores an int, but cursor.getString()
-                    // will do the conversion automatically.
-                    size = cursor.getString(sizeIndex);
-                } else {
-                    size = "Unknown";
-                }
-                System.out.println("Size: " + size);
+            } finally {
+                cursor.close();
             }
-        } finally {
-            cursor.close();
+
+            if(!selectedFilesNames.contains(displayName)) {
+                selectedFilesNames.add(displayName);
+                mSelectedFilesGroup.setTags(selectedFilesNames);
+                if (mSelectedFilesLabel.getVisibility() == View.GONE) {
+                    mSelectedFilesLabel.setVisibility(View.VISIBLE);
+                }
+                selectedUris.add(uri);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public static boolean isValidEmail(CharSequence target) {
@@ -341,5 +347,111 @@ public class OfferActivity extends BaseActivity {
             profile = gson.fromJson(json, Profile.class);
         }
         return profile;
+    }
+
+    private void uploadFile(Offer offer) {
+        // create upload service client
+        FileUploadService service =
+                ServiceGenerator.createService(FileUploadService.class, mProfile.getToken());
+
+        // MultipartBody.Part is used to send also the actual file name
+        List<MultipartBody.Part> files = new ArrayList<>();
+        for(Uri uri : selectedUris) {
+            // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+            // use the FileUtils to get the actual file by uri
+            File file = FileUtils.getFile(this, uri);
+
+            // create RequestBody instance from file
+            RequestBody requestFile =
+                    RequestBody.create(
+                            MediaType.parse(getContentResolver().getType(uri)),
+                            file
+                    );
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+            files.add(body);
+        }
+
+
+        // add another part within the multipart request
+        Map<String, RequestBody> params = new HashMap<>();
+
+        RequestBody fullName =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getName());
+
+        RequestBody phone =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getPhone());
+
+        RequestBody email =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getEmail());
+
+        RequestBody orderType =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getOrderType());
+
+        RequestBody translationType =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getTranslationType());
+
+        RequestBody fromLanguage =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getFromLanguage());
+
+        RequestBody toLanguage =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getToLanguage());
+
+        RequestBody notes =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getNotes());
+
+        params.put("fullName", fullName);
+        params.put("phone", phone);
+        params.put("email", email);
+        params.put("orderType", orderType);
+        params.put("translationType", translationType);
+        params.put("fromLanguage", fromLanguage);
+        params.put("toLanguage", toLanguage);
+        params.put("notes", notes);
+
+        //execute the request
+        Call<ResponseBody> call = service.upload(params, files);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.v("Upload", "success");
+                mSubmitLoader.setVisibility(View.GONE);
+                mSubmitBtn.setVisibility(View.VISIBLE);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+                builder.setMessage("Your request is uploaded successfully!").setTitle("Request an ofer");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                        Intent i = new Intent(OfferActivity.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(i);
+                        // close this activity
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+                mSubmitLoader.setVisibility(View.GONE);
+                mSubmitBtn.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

@@ -37,5 +37,6 @@
     <string name="offer_email">Емайл за получаване на отговор</string>
     <string name="offer_current_email">Текущият имейл</string>
     <string name="offer_other_email">Друг имейл</string>
+    <string name="offer_phone">Телфонен номер</string>
     <string name="offer_submit">Изпрати</string>
 </resources>

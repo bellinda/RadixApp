@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.LoginTask;
+import com.angelova.w510.radixapp.tasks.LogoutTask;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mLoginBtn;
     private TextView mForgotPass;
     private TextView mSignUpNew;
+    private ProgressBar mLoginLoader;
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
@@ -43,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginBtn = (Button) findViewById(R.id.login_btn);
         mForgotPass = (TextView) findViewById(R.id.forgot_pass);
         mSignUpNew = (TextView) findViewById(R.id.sign_up);
+        mLoginLoader = (ProgressBar) findViewById(R.id.login_btn_loader);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +56,9 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (mPasswordInput.getText() == null || mPasswordInput.getText().toString().isEmpty()) {
                     showAlertDialogNow("Please enter your password before trying to login", "Warning");
                 } else {
-                    new LoginTask(LoginActivity.this, "users/login", mEmailInput.getText().toString(), mPasswordInput.getText().toString()).execute();
+                    mLoginBtn.setVisibility(View.GONE);
+                    mLoginLoader.setVisibility(View.VISIBLE);
+                    new LogoutTask(LoginActivity.this, "users/logout", mEmailInput.getText().toString()).execute();
                 }
             }
         });
@@ -88,6 +94,10 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void handleSuccessfulLogout(JSONObject receivedData) {
+        new LoginTask(LoginActivity.this, "users/login", mEmailInput.getText().toString(), mPasswordInput.getText().toString()).execute();
+    }
+
     public void handleSuccessfulLogin(JSONObject receivedData) {
         Profile profile = new Profile();
         profile.setEmail(mEmailInput.getText().toString());
@@ -99,6 +109,9 @@ public class LoginActivity extends AppCompatActivity {
             jse.printStackTrace();
         }
         saveProfile(profile);
+
+        mLoginLoader.setVisibility(View.GONE);
+        mLoginBtn.setVisibility(View.VISIBLE);
 
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
