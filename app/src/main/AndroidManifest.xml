@@ -30,7 +30,8 @@
         <activity android:name=".menuItems.LanguagesActivity" />
         <activity android:name=".menuItems.AboutActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgotPassActivity"></activity>
+        <activity android:name=".ForgotPassActivity" />
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

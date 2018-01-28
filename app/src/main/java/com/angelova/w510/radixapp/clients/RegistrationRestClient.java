@@ -22,6 +22,16 @@ public class RegistrationRestClient {
         client.post(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
+    public static void resetUserPassword(Context context, String url, HttpEntity entity, String contentType, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending POST request for resetting user password to " + getAbsoluteUrl(url));
+        client.post(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
+    }
+
+    public static void setNewUserPassword(Context context, String url, HttpEntity entity, String contentType, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending POST request for setting new user password to " + getAbsoluteUrl(url));
+        client.post(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
+    }
+
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }

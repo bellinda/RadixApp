@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -66,7 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         mForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(LoginActivity.this, ForgotPassActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
             }
         });
 
@@ -99,24 +102,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void handleSuccessfulLogin(JSONObject receivedData) {
-        Profile profile = new Profile();
-        profile.setEmail(mEmailInput.getText().toString());
         try {
+            Profile profile = new Profile();
+            profile.setEmail(mEmailInput.getText().toString());
             profile.setToken(receivedData.getString("token"));
             profile.setName(receivedData.getString("fullName"));
             profile.setUserId(receivedData.getString("userID"));
+            saveProfile(profile);
+
+            mLoginLoader.setVisibility(View.GONE);
+            mLoginBtn.setVisibility(View.VISIBLE);
+
+            boolean shouldResetPass = receivedData.getBoolean("needsNewPassSet");
+            if(shouldResetPass) {
+                showSetNewPasswordLayout();
+            } else {
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+                // close this activity
+                finish();
+            }
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
-        saveProfile(profile);
+    }
 
-        mLoginLoader.setVisibility(View.GONE);
-        mLoginBtn.setVisibility(View.VISIBLE);
-
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+    private void showSetNewPasswordLayout() {
+        Intent i = new Intent(LoginActivity.this, ResetPasswordActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
-        // close this activity
         finish();
     }
 
