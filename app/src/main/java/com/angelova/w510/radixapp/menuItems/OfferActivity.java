@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.requests_utils.ServiceGenerator;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Profile;
@@ -326,15 +327,12 @@ public class OfferActivity extends BaseActivity {
     }
 
     private void showAlertDialogNow(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-        builder.setMessage(message).setTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     private Profile getProfile() {
@@ -428,12 +426,9 @@ public class OfferActivity extends BaseActivity {
                 mSubmitLoader.setVisibility(View.GONE);
                 mSubmitBtn.setVisibility(View.VISIBLE);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
-                builder.setMessage("Your request is uploaded successfully!").setTitle("Request an ofer");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-
+                WarnDialog warning = new WarnDialog(OfferActivity.this, "Request an offer", "Your request is uploaded successfully!", new WarnDialog.DialogClickListener() {
+                    @Override
+                    public void onClick() {
                         Intent i = new Intent(OfferActivity.this, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(i);
@@ -441,9 +436,7 @@ public class OfferActivity extends BaseActivity {
                         finish();
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                warning.show();
             }
 
             @Override

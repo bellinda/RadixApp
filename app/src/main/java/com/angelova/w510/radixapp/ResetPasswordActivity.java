@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.ResetPasswordTask;
 import com.angelova.w510.radixapp.tasks.SetNewPasswordTask;
@@ -61,24 +62,18 @@ public class ResetPasswordActivity extends AppCompatActivity {
     }
 
     private void showAlertDialogNow(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ResetPasswordActivity.this);
-        builder.setMessage(message).setTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void handleSuccessfulPasswordSet(JSONObject receivedData) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ResetPasswordActivity.this);
-        builder.setMessage("Your password is set successfully. Please login in your profile with it.").setTitle("Password set");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-
+        WarnDialog warning = new WarnDialog(this, "Password set", "Your password is set successfully. Please login in your profile with it.", new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
                 Intent i = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
@@ -86,8 +81,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void showErrorMessage(String errorMsg) {

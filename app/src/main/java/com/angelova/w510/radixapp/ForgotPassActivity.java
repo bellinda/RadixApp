@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.tasks.ResetPasswordTask;
 
 import org.json.JSONObject;
@@ -43,31 +44,24 @@ public class ForgotPassActivity extends AppCompatActivity {
     }
 
     private void showAlertDialogNow(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPassActivity.this);
-        builder.setMessage(message).setTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void handleSuccessfulPasswordReset(JSONObject receivedData) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPassActivity.this);
-        builder.setMessage("Please check your email for your new password").setTitle("Reset password");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-
+        final WarnDialog warning = new WarnDialog(this, "Reset password", "Please check your email for your new password", new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
                 Intent i = new Intent(ForgotPassActivity.this, LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void showErrorMessage(String errorMsg) {

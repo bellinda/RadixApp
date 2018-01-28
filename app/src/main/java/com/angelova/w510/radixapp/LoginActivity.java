@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.LoginTask;
 import com.angelova.w510.radixapp.tasks.LogoutTask;
@@ -86,15 +87,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showAlertDialogNow(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setMessage(message).setTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void handleSuccessfulLogout(JSONObject receivedData) {

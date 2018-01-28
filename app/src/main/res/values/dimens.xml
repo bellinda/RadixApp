@@ -4,4 +4,8 @@
     <dimen name="login_btn_title_size">26sp</dimen>
     <dimen name="activity_title_size">22sp</dimen>
     <dimen name="labels_text_size">18sp</dimen>
+    <dimen name="input_field_height">45dp</dimen>
+    <dimen name="warn_dialog_button_height">45dp</dimen>
+    <dimen name="warn_dialog_buttons_text_size">18sp</dimen>
+    <dimen name="warn_dialog_title_text_size">18sp</dimen>
 </resources>

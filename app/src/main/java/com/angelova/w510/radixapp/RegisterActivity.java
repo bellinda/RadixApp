@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.menuItems.OfferActivity;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.RegisterTask;
@@ -63,15 +64,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void showAlertDialogNow(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-        builder.setMessage(message).setTitle(title);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public static boolean isValidEmail(CharSequence target) {
@@ -83,20 +81,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void showRegistrationStatus(String status) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-        builder.setMessage(status).setTitle("Registration");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-
+        WarnDialog warning = new WarnDialog(this, "Registration", status, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
                 finish();
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        warning.show();
     }
 
     public void showErrorMessage(String errorMsg) {
