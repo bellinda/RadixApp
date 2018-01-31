@@ -47,4 +47,12 @@
     <string name="offer_other_email">Other email</string>
     <string name="offer_phone">Phone number</string>
     <string name="offer_submit">Submit</string>
+
+    <string name="order_title">Make an order</string>
+    <string name="order_from_offer_title">Got an offer before the order?</string>
+    <string name="order_has_offer">Yes</string>
+    <string name="order_not_has_offer">No</string>
+    <string name="order_enter_offer_id_text">Please enter the ID of your offer and click the check button to get the main data pre-populated for you</string>
+    <string name="order_delivery_date">Expected delivery date</string>
+    <string name="order_delivery_date_text">Choose the date on which you would like to get your order ready</string>
 </resources>

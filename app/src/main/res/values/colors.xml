@@ -15,6 +15,8 @@
     <color name="data_labels_text_color">#8c8c8c</color>
     <color name="white">#FFFFFF</color>
     <color name="entered_text_color">#8e8f110e</color>
+    <color name="black">#000000</color>
+    <color name="black_transparent">#91000000</color>
 
     <color name="standard_order_color">#b43e3b</color>
     <color name="specialized_order_color">#B51F1B</color>
