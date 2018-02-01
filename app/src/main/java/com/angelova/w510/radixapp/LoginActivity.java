@@ -144,6 +144,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void showErrorMessage(String errorMsg) {
+        mLoginLoader.setVisibility(View.GONE);
+        mLoginBtn.setVisibility(View.VISIBLE);
+        
         showAlertDialogNow(errorMsg, "Warning");
     }
 }
