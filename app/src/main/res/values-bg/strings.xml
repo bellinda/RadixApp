@@ -55,4 +55,8 @@
     <string name="order_enter_offer_id_text">Моля въведете идентификационния номер на Вашата оферта и натиснете тикчето, за да Ви се попълнят всички налични данни</string>
     <string name="order_delivery_date">Оаквана дата на получаване</string>
     <string name="order_delivery_date_text">Моля изберете датата, на която бихте желали поръчката Ви да е готова</string>
+    <string name="order_delivery_type_label">Как желаете да получите Вашата поръчка, когато тя е готова?</string>
+    <string name="order_delivery_on_email">На Е-мейл</string>
+    <string name="order_delivery_from_office">Лично, от нашия офис</string>
+    <string name="order_delivery_by_post">С доставка</string>
 </resources>

@@ -57,6 +57,10 @@ public class OrderActivity extends BaseActivity {
     private RadioButton mNormalOrderRb;
     private TextView mDeliveryDateText;
     private ImageView mDeliveryDateBtn;
+    private RadioGroup mDeliveryTypeRg;
+    private RadioButton mDelFromOfficeRb;
+    private RadioButton mDelOnEmailRb;
+    private RadioButton mDelByPostRb;
 
     private Profile mProfile;
 
@@ -91,6 +95,10 @@ public class OrderActivity extends BaseActivity {
         mNormalOrderRb = (RadioButton) findViewById(R.id.normal_order);
         mDeliveryDateText = (TextView) findViewById(R.id.delivery_date_text);
         mDeliveryDateBtn = (ImageView) findViewById(R.id.select_date_btn);
+        mDeliveryTypeRg = (RadioGroup) findViewById(R.id.radio_group_delivery_type);
+        mDelFromOfficeRb = (RadioButton) findViewById(R.id.from_office_rb);
+        mDelOnEmailRb = (RadioButton) findViewById(R.id.on_email_rb);
+        mDelByPostRb = (RadioButton) findViewById(R.id.by_courrier_rb);
 
         mProfile = getProfile();
 
