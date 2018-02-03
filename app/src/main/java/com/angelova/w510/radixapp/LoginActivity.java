@@ -1,8 +1,11 @@
 package com.angelova.w510.radixapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,9 +61,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (mPasswordInput.getText() == null || mPasswordInput.getText().toString().isEmpty()) {
                     showAlertDialogNow("Please enter your password before trying to login", "Warning");
                 } else {
-                    mLoginBtn.setVisibility(View.GONE);
-                    mLoginLoader.setVisibility(View.VISIBLE);
-                    new LogoutTask(LoginActivity.this, "users/logout", mEmailInput.getText().toString()).execute();
+                    if(isNetworkAvailable()) {
+                        mLoginBtn.setVisibility(View.GONE);
+                        mLoginLoader.setVisibility(View.VISIBLE);
+                        new LogoutTask(LoginActivity.this, "users/logout", mEmailInput.getText().toString()).execute();
+                    } else {
+                        showAlertDialogNow("No internet connection. Please turn on your Wi-Fi ir mobile data", "Warning");
+                    }
                 }
             }
         });
@@ -146,7 +153,14 @@ public class LoginActivity extends AppCompatActivity {
     public void showErrorMessage(String errorMsg) {
         mLoginLoader.setVisibility(View.GONE);
         mLoginBtn.setVisibility(View.VISIBLE);
-        
+
         showAlertDialogNow(errorMsg, "Warning");
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
