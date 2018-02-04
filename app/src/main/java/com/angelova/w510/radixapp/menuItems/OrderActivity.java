@@ -383,6 +383,9 @@ public class OrderActivity extends BaseActivity {
                     if(mAnticipatedPrice.getText() != null && !mAnticipatedPrice.getText().toString().isEmpty()) {
                         order.setAnticipatedPrice(mAnticipatedPrice.getText().toString());
                     }
+                    if(mOfferIdInput.getText() != null && !mOfferIdInput.getText().toString().isEmpty()) {
+                        order.setInquiryToDelete(mOfferIdInput.getText().toString());
+                    }
                     order.setDocumentsFromOffer(existingFileNames);
                     order.setDocumentUris(selectedUris);
 
@@ -450,40 +453,41 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri uri = data.getData();
-        // do somthing...
-        try {
-            Cursor cursor = getContentResolver()
-                    .query(data.getData(), null, null, null, null, null);
-            String displayName = "";
-
+        if(data != null) {
+            Uri uri = data.getData();
+            // do somthing...
             try {
-                // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
-                // "if there's anything to look at, look at it" conditionals.
-                if (cursor != null && cursor.moveToFirst()) {
+                Cursor cursor = getContentResolver()
+                        .query(data.getData(), null, null, null, null, null);
+                String displayName = "";
 
-                    // Note it's called "Display Name".  This is
-                    // provider-specific, and might not necessarily be the file name.
-                    displayName = cursor.getString(
-                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
+                try {
+                    // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
+                    // "if there's anything to look at, look at it" conditionals.
+                    if (cursor != null && cursor.moveToFirst()) {
 
-            if(!selectedFilesNames.contains(displayName)) {
-                selectedFilesNames.add(displayName);
-                mSelectedFilesGroup.setTags(selectedFilesNames);
-                if (mSelectedFilesLabel.getVisibility() == View.GONE) {
-                    mSelectedFilesLabel.setVisibility(View.VISIBLE);
+                        // Note it's called "Display Name".  This is
+                        // provider-specific, and might not necessarily be the file name.
+                        displayName = cursor.getString(
+                                cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
                 }
-                selectedUris.add(uri);
+
+                if (!selectedFilesNames.contains(displayName)) {
+                    selectedFilesNames.add(displayName);
+                    mSelectedFilesGroup.setTags(selectedFilesNames);
+                    if (mSelectedFilesLabel.getVisibility() == View.GONE) {
+                        mSelectedFilesLabel.setVisibility(View.VISIBLE);
+                    }
+                    selectedUris.add(uri);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
         super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     public void showOfferDetails(JSONObject receivedData) {
@@ -550,7 +554,7 @@ public class OrderActivity extends BaseActivity {
 
             String myFormat = "yyyy-MM-dd'T'HH:mm";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-            if(receivedData.has("expectedDeliveryDate")) {
+            if(receivedData.has("expectedDeliveryDate") && !receivedData.getString("expectedDeliveryDate").isEmpty()) {
                 String desiredDeliveryDate = receivedData.getString("expectedDeliveryDate");
                 try {
                     Date desiredDeliveryDateAsDate = sdf.parse(desiredDeliveryDate);
@@ -652,6 +656,14 @@ public class OrderActivity extends BaseActivity {
                             okhttp3.MultipartBody.FORM, order.getAnticipatedPrice());
 
             params.put("anticipatedPrice", anticipatedPrice);
+        }
+
+        if(order.getInquiryToDelete() != null) {
+            RequestBody inquiryToDelete =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, order.getInquiryToDelete());
+
+            params.put("inquiryToDelete", inquiryToDelete);
         }
 
 //        for(int i = 0; i < order.getDocumentsFromOffer().size(); i++) {

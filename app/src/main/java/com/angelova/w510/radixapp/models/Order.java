@@ -21,6 +21,7 @@ public class Order {
     private String desiredDeliveryDate;
     private String pickUpMethod;
     private String anticipatedPrice;
+    private String inquiryToDelete;
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
 
@@ -110,6 +111,14 @@ public class Order {
 
     public void setAnticipatedPrice(String anticipatedPrice) {
         this.anticipatedPrice = anticipatedPrice;
+    }
+
+    public String getInquiryToDelete() {
+        return inquiryToDelete;
+    }
+
+    public void setInquiryToDelete(String inquiryToDelete) {
+        this.inquiryToDelete = inquiryToDelete;
     }
 
     public List<Uri> getDocumentUris() {

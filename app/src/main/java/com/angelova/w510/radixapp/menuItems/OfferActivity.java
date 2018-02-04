@@ -358,37 +358,39 @@ public class OfferActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri uri = data.getData();
-        // do somthing...
-        try {
-            Cursor cursor = getContentResolver()
-                    .query(data.getData(), null, null, null, null, null);
-            String displayName = "";
-
+        if(data != null) {
+            Uri uri = data.getData();
+            // do somthing...
             try {
-                // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
-                // "if there's anything to look at, look at it" conditionals.
-                if (cursor != null && cursor.moveToFirst()) {
+                Cursor cursor = getContentResolver()
+                        .query(data.getData(), null, null, null, null, null);
+                String displayName = "";
 
-                    // Note it's called "Display Name".  This is
-                    // provider-specific, and might not necessarily be the file name.
-                    displayName = cursor.getString(
-                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
+                try {
+                    // moveToFirst() returns false if the cursor has 0 rows.  Very handy for
+                    // "if there's anything to look at, look at it" conditionals.
+                    if (cursor != null && cursor.moveToFirst()) {
 
-            if(!selectedFilesNames.contains(displayName)) {
-                selectedFilesNames.add(displayName);
-                mSelectedFilesGroup.setTags(selectedFilesNames);
-                if (mSelectedFilesLabel.getVisibility() == View.GONE) {
-                    mSelectedFilesLabel.setVisibility(View.VISIBLE);
+                        // Note it's called "Display Name".  This is
+                        // provider-specific, and might not necessarily be the file name.
+                        displayName = cursor.getString(
+                                cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
                 }
-                selectedUris.add(uri);
+
+                if (!selectedFilesNames.contains(displayName)) {
+                    selectedFilesNames.add(displayName);
+                    mSelectedFilesGroup.setTags(selectedFilesNames);
+                    if (mSelectedFilesLabel.getVisibility() == View.GONE) {
+                        mSelectedFilesLabel.setVisibility(View.VISIBLE);
+                    }
+                    selectedUris.add(uri);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
         super.onActivityResult(requestCode, resultCode, data);
 
