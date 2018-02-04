@@ -3,13 +3,12 @@ package com.angelova.w510.radixapp.models;
 import android.net.Uri;
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
- * Created by W510 on 21.1.2018 г..
+ * Created by W510 on 4.2.2018 г..
  */
 
-public class Offer {
+public class Order {
 
     private String name;
     private String fromLanguage;
@@ -20,7 +19,10 @@ public class Offer {
     private String email;
     private String phone;
     private String desiredDeliveryDate;
+    private String pickUpMethod;
+    private String anticipatedPrice;
     private List<Uri> documentUris;
+    private List<String> documentsFromOffer;
 
     public String getName() {
         return name;
@@ -94,11 +96,35 @@ public class Offer {
         this.desiredDeliveryDate = desiredDeliveryDate;
     }
 
-    public List<Uri> getDocumentUris () {
+    public String getPickUpMethod() {
+        return pickUpMethod;
+    }
+
+    public void setPickUpMethod(String pickUpMethod) {
+        this.pickUpMethod = pickUpMethod;
+    }
+
+    public String getAnticipatedPrice() {
+        return anticipatedPrice;
+    }
+
+    public void setAnticipatedPrice(String anticipatedPrice) {
+        this.anticipatedPrice = anticipatedPrice;
+    }
+
+    public List<Uri> getDocumentUris() {
         return documentUris;
     }
 
     public void setDocumentUris(List<Uri> documentUris) {
         this.documentUris = documentUris;
+    }
+
+    public List<String> getDocumentsFromOffer() {
+        return documentsFromOffer;
+    }
+
+    public void setDocumentsFromOffer(List<String> documentsFromOffer) {
+        this.documentsFromOffer = documentsFromOffer;
     }
 }

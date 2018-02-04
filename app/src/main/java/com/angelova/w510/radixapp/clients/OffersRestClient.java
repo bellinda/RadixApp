@@ -6,6 +6,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import cz.msebera.android.httpclient.HttpEntity;
+
 /**
  * Created by W510 on 27.1.2018 г..
  */
@@ -20,6 +22,12 @@ public class OffersRestClient {
         System.out.println("Sending GET request for getting all offers of the user to " + getAbsoluteUrl(url));
         client.addHeader(headerKey, headerValue);
         client.get(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void getOne(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending GET request for getting an offer by id to " + getAbsoluteUrl(url));
+        client.addHeader(headerKey, headerValue);
+        client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

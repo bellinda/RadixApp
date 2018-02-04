@@ -1,7 +1,8 @@
 package com.angelova.w510.radixapp.menuItems;
 
 import android.Manifest;
-import android.content.DialogInterface;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,7 +14,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
@@ -22,13 +22,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
@@ -42,9 +45,13 @@ import com.angelova.w510.radixapp.utils.FileUtils;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import me.gujun.android.taggroup.TagGroup;
@@ -85,11 +92,17 @@ public class OfferActivity extends BaseActivity {
     private EditText mPhoneInput;
     private Button mSubmitBtn;
     private ProgressBar mSubmitLoader;
+    private TextView mDeliveryDateText;
+    private ImageView mDeliveryDateBtn;
+    private TextView mDeliveryTimeText;
+    private ImageView mDeliveryTimeBtn;
 
     private Profile mProfile;
 
     private List<String> selectedFilesNames = new ArrayList<>();
     private List<Uri> selectedUris = new ArrayList<>();
+
+    private final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +134,10 @@ public class OfferActivity extends BaseActivity {
         mPhoneInput = (EditText) findViewById(R.id.phone_input);
         mSubmitBtn = (Button) findViewById(R.id.submit_btn);
         mSubmitLoader = (ProgressBar) findViewById(R.id.submit_loader);
+        mDeliveryDateText = (TextView) findViewById(R.id.delivery_date_text);
+        mDeliveryDateBtn = (ImageView) findViewById(R.id.select_date_btn);
+        mDeliveryTimeText = (TextView) findViewById(R.id.delivery_time_text);
+        mDeliveryTimeBtn = (ImageView) findViewById(R.id.select_time_btn);
 
         mProfile = getProfile();
 
@@ -250,12 +267,71 @@ public class OfferActivity extends BaseActivity {
                     offer.setOrderType(mExpressOrderRb.isChecked() ? "Express" : "Normal");
                     offer.setTranslationType(mSpecialTranslRb.isChecked() ? "Specialized" : "Non-specialized");
                     offer.setPhone(mPhoneInput.getText().toString());
+                    String myFormat = "yyyy-MM-dd'T'HH:mm"; //In which you need put here
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    offer.setDesiredDeliveryDate(sdf.format(myCalendar.getTime()));
                     offer.setDocumentUris(selectedUris);
 
-                    uploadFile(offer);
+                    uploadOffer(offer);
                 }
             }
         });
+
+        mDeliveryDateBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(OfferActivity.this, dateSetListener, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        updateDeliveryDate();
+        myCalendar.set(Calendar.HOUR_OF_DAY, 9);
+        myCalendar.set(Calendar.MINUTE, 0);
+
+        mDeliveryTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(OfferActivity.this, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY),
+                        myCalendar.get(Calendar.MINUTE), true).show();
+            }
+        });
+    }
+
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDeliveryDate();
+        }
+
+    };
+
+    private void updateDeliveryDate() {
+        String myFormat = "dd MMM yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        mDeliveryDateText.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            myCalendar.set(Calendar.MINUTE, minute);
+            updateDeliveryTime();
+        }
+    };
+
+    private void updateDeliveryTime() {
+        //String time = String.format("%d:%d", myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE));
+        String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(myCalendar.getTime());
+        mDeliveryTimeText.setText(time);
     }
 
     private void getFilesFromStorage() {
@@ -347,7 +423,7 @@ public class OfferActivity extends BaseActivity {
         return profile;
     }
 
-    private void uploadFile(Offer offer) {
+    private void uploadOffer(Offer offer) {
         // create upload service client
         FileUploadService service =
                 ServiceGenerator.createService(FileUploadService.class, mProfile.getToken());
@@ -366,7 +442,7 @@ public class OfferActivity extends BaseActivity {
                             file
                     );
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+                    MultipartBody.Part.createFormData("elements", file.getName(), requestFile);
             files.add(body);
         }
 
@@ -406,6 +482,10 @@ public class OfferActivity extends BaseActivity {
                 RequestBody.create(
                         okhttp3.MultipartBody.FORM, offer.getNotes());
 
+        RequestBody desiredDeliveryDate =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, offer.getDesiredDeliveryDate());
+
         params.put("fullName", fullName);
         params.put("phone", phone);
         params.put("email", email);
@@ -414,6 +494,7 @@ public class OfferActivity extends BaseActivity {
         params.put("fromLanguage", fromLanguage);
         params.put("toLanguage", toLanguage);
         params.put("notes", notes);
+        params.put("desiredDeliveryDate", desiredDeliveryDate);
 
         //execute the request
         Call<ResponseBody> call = service.upload(params, files);

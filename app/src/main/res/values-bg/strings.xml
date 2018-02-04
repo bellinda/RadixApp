@@ -53,10 +53,16 @@
     <string name="order_has_offer">Да</string>
     <string name="order_not_has_offer">Не</string>
     <string name="order_enter_offer_id_text">Моля въведете идентификационния номер на Вашата оферта и натиснете тикчето, за да Ви се попълнят всички налични данни</string>
-    <string name="order_delivery_date">Оаквана дата на получаване</string>
+    <string name="order_delivery_date">Очаквана дата на получаване</string>
     <string name="order_delivery_date_text">Моля изберете датата, на която бихте желали поръчката Ви да е готова</string>
+    <string name="order_delivery_time_text">Моля изберете часа, когато бихте желали поръчката Ви да е готова (ако имате предпочитания)</string>
     <string name="order_delivery_type_label">Как желаете да получите Вашата поръчка, когато тя е готова?</string>
     <string name="order_delivery_on_email">На Е-мейл</string>
     <string name="order_delivery_from_office">Лично, от нашия офис</string>
     <string name="order_delivery_by_post">С доставка</string>
+    <string name="order_price_label">Прогнозна цена</string>
+    <string name="order_price_text">Това поле не е задължително. Моля попълнете го само ако имате ориентировъчна представа колко ще струва поръчката Ви. В имейла за потвърждение ще получите крайната цена и детайли за плащането й.</string>
+    <string name="order_price_currency">€</string>
+
+    <string name="loader_dialog_text">Зареждане&#8230;</string>
 </resources>

@@ -538,6 +538,136 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/desired_delivery_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            android:text="@string/order_delivery_date"
+                            android:textSize="@dimen/labels_text_size" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/desired_delivery_label"
+                            android:text="@string/order_delivery_date_text"
+                            android:id="@+id/desired_delivery_date_description"
+                            android:layout_marginTop="20dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/desired_delivery_date_description"
+                            android:weightSum="8"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/desired_delivery_date_layout">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:text="01/31/2018"
+                                android:id="@+id/delivery_date_text"
+                                android:background="@drawable/spinner_bgr"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:textSize="@dimen/date_text_size"
+                                android:textColor="@color/menu_icons_color"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/ic_date"
+                                    android:id="@+id/select_date_btn"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/desired_delivery_date_layout"
+                            android:text="@string/order_delivery_time_text"
+                            android:id="@+id/desired_delivery_time_description"
+                            android:layout_marginTop="20dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/desired_delivery_time_description"
+                            android:weightSum="8"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/desired_delivery_time_layout">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:text="09:00"
+                                android:id="@+id/delivery_time_text"
+                                android:background="@drawable/spinner_bgr"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:textSize="@dimen/date_text_size"
+                                android:textColor="@color/menu_icons_color"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/ic_time"
+                                    android:id="@+id/select_time_btn"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="3dp"
+                    card_view:contentPadding="20dp"
+                    card_view:cardElevation="7dp"
+                    card_view:cardMaxElevation="10dp"
+                    android:layout_margin="10dp">
+
+                    <android.support.constraint.ConstraintLayout
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
                             android:id="@+id/documents_label"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

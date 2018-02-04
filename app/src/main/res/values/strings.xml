@@ -53,10 +53,16 @@
     <string name="order_has_offer">Yes</string>
     <string name="order_not_has_offer">No</string>
     <string name="order_enter_offer_id_text">Please enter the ID of your offer and click the check button to get the main data pre-populated for you</string>
-    <string name="order_delivery_date">Expected delivery date</string>
+    <string name="order_delivery_date">Desired delivery date</string>
     <string name="order_delivery_date_text">Choose the date on which you would like to get your order ready</string>
+    <string name="order_delivery_time_text">Choose the time in which you would like to get your order ready (if any)</string>
     <string name="order_delivery_type_label">How do you want to get your order when it is ready</string>
     <string name="order_delivery_on_email">On Email</string>
     <string name="order_delivery_from_office">From our office</string>
     <string name="order_delivery_by_post">By post</string>
+    <string name="order_price_label">Anticipated price</string>
+    <string name="order_price_text">This field is not a mandatory one. Please input it if you have any idea how much it will cost. In the confirmation email you will get the final price for your order from our officers.</string>
+    <string name="order_price_currency">€</string>
+
+    <string name="loader_dialog_text">Loading&#8230;</string>
 </resources>
