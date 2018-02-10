@@ -70,4 +70,5 @@
     <string name="profile_offers_count">Requested Offers</string>
     <string name="profile_orders_count">Orders</string>
     <string name="profile_total_count">Total</string>
+    <string name="profile_edit">Edit profile</string>
 </resources>

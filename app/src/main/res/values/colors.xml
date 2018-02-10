@@ -12,6 +12,7 @@
     <color name="menu_icons_color">#8f110e</color>
     <color name="select_file_border_color">#8e8f110e</color>
     <color name="red_border_color">#518f110e</color>
+    <color name="light_border_color">#FFE9E4D4</color>
     <color name="data_labels_text_color">#8c8c8c</color>
     <color name="white">#FFFFFF</color>
     <color name="entered_text_color">#8e8f110e</color>

@@ -10,4 +10,5 @@
     <dimen name="warn_dialog_title_text_size">18sp</dimen>
     <dimen name="date_text_size">20sp</dimen>
     <dimen name="loader_dialog_text_size">18sp</dimen>
+    <dimen name="profile_initials_text_size">42sp</dimen>
 </resources>
