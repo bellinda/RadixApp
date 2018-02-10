@@ -7,6 +7,7 @@
     <string name="menu_prices">Ценова листа</string>
     <string name="menu_languages">Поддържани езици</string>
     <string name="menu_about">За нас</string>
+    <string name="menu_profile">Профил</string>
 
     <string name="login_email_hint">Е-майл</string>
     <string name="login_password_hint">Парола</string>
@@ -65,4 +66,8 @@
     <string name="order_price_currency">€</string>
 
     <string name="loader_dialog_text">Зареждане&#8230;</string>
+
+    <string name="profile_offers_count">Отправени запитвания</string>
+    <string name="profile_orders_count">Поръчки</string>
+    <string name="profile_total_count">Всичко</string>
 </resources>

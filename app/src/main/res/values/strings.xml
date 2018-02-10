@@ -7,6 +7,7 @@
     <string name="menu_prices">Prices</string>
     <string name="menu_languages">Languages</string>
     <string name="menu_about">About us</string>
+    <string name="menu_profile">Your profile</string>
 
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
@@ -65,4 +66,8 @@
     <string name="order_price_currency">€</string>
 
     <string name="loader_dialog_text">Loading&#8230;</string>
+
+    <string name="profile_offers_count">Requested Offers</string>
+    <string name="profile_orders_count">Orders</string>
+    <string name="profile_total_count">Total</string>
 </resources>

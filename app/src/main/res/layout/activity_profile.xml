@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.angelova.w510.radixapp.menuItems.AboutActivity">
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45"
+        android:id="@+id/bottom_background_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28"
+        android:id="@+id/top_statistic_guideline" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"
+        android:id="@+id/bottom_statistic_guideline" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_background_guideline"
+        android:src="@drawable/road"
+        android:scaleType="centerCrop"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="#77FFFFFF"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFFFF"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_statistic_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_statistic_guideline"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="6"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="2"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="42sp"
+                android:id="@+id/offers_count"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="@string/profile_offers_count"
+                android:gravity="center"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="6"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:text="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="42sp"
+                android:id="@+id/orders_count"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="@string/profile_orders_count"
+                android:gravity="center"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="2"-->
+            <!--android:weightSum="6"-->
+            <!--android:orientation="vertical"-->
+            <!--android:gravity="center">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="4"-->
+                <!--android:text="3"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="42sp"-->
+                <!--android:id="@+id/total_count"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="2"-->
+                <!--android:text="Total"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/white"/>-->
+        <!--</LinearLayout>-->
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

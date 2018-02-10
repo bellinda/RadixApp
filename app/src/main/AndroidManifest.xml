@@ -29,7 +29,7 @@
         <activity android:name=".menuItems.PromotionsActivity" />
         <activity android:name=".menuItems.PricesActivity" />
         <activity android:name=".menuItems.LanguagesActivity" />
-        <activity android:name=".menuItems.AboutActivity" />
+        <activity android:name=".menuItems.ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".ResetPasswordActivity"></activity>
