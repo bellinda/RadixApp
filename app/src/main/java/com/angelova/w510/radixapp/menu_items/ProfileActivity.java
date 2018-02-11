@@ -1,6 +1,7 @@
 package com.angelova.w510.radixapp.menu_items;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,8 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
+import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.list_fragments.AllOffersActivity;
+import com.angelova.w510.radixapp.list_fragments.AllOrdersActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
@@ -22,7 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProfileActivity extends BaseActivity {
@@ -66,14 +73,16 @@ public class ProfileActivity extends BaseActivity {
         mMyOffersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ProfileActivity.this, AllOffersActivity.class);
+                startActivity(intent);
             }
         });
 
         mMyOrdersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ProfileActivity.this, AllOrdersActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -138,6 +147,17 @@ public class ProfileActivity extends BaseActivity {
                     fileNames.add(files.getString(j));
                 }
                 offer.setFileNames(fileNames);
+                String createdOn = data.getString("createdAt");
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+                try {
+                    Date date = originalFormat.parse(createdOn);
+                    String formattedDate = targetFormat.format(date);
+
+                    offer.setCreatedOn(formattedDate);
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
                 offers.add(offer);
             }
             mProfile.setOffers(offers);

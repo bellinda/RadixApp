@@ -23,4 +23,9 @@
     <color name="standard_order_color">#b43e3b</color>
     <color name="specialized_order_color">#B51F1B</color>
     <color name="express_order_color">#8f110e</color>
+
+    <color name="offers_list_languages_color">#A0302E</color>
+    <color name="offers_delimiter_line_color">#43000000</color>
+    <color name="offers_files_count_text_color">#6b0e0b</color>
+    <color name="offers_view_button_text_color">#79000000</color>
 </resources>

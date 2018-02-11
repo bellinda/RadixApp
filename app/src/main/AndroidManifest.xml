@@ -32,7 +32,9 @@
         <activity android:name=".menu_items.ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPassActivity" />
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".list_fragments.AllOffersActivity" />
+        <activity android:name=".list_fragments.AllOrdersActivity"></activity>
     </application>
 
 </manifest>

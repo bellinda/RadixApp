@@ -22,6 +22,7 @@ public class Offer {
     private String desiredDeliveryDate;
     private List<Uri> documentUris;
     private List<String> fileNames;
+    private String createdOn;
 
     public String getName() {
         return name;
@@ -109,5 +110,13 @@ public class Offer {
 
     public void setFileNames(List<String> fileNames) {
         this.fileNames = fileNames;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
     }
 }
