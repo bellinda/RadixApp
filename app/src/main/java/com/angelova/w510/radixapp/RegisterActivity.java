@@ -1,8 +1,6 @@
 package com.angelova.w510.radixapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
-import com.angelova.w510.radixapp.menuItems.OfferActivity;
-import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.RegisterTask;
 
 public class RegisterActivity extends AppCompatActivity {

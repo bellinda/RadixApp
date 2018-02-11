@@ -21,6 +21,7 @@ public class Offer {
     private String phone;
     private String desiredDeliveryDate;
     private List<Uri> documentUris;
+    private List<String> fileNames;
 
     public String getName() {
         return name;
@@ -100,5 +101,13 @@ public class Offer {
 
     public void setDocumentUris(List<Uri> documentUris) {
         this.documentUris = documentUris;
+    }
+
+    public List<String> getFileNames() {
+        return fileNames;
+    }
+
+    public void setFileNames(List<String> fileNames) {
+        this.fileNames = fileNames;
     }
 }

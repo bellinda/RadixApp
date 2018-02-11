@@ -1,5 +1,7 @@
 package com.angelova.w510.radixapp.models;
 
+import java.util.List;
+
 /**
  * Created by W510 on 21.1.2018 г..
  */
@@ -10,6 +12,9 @@ public class Profile {
     private String password;
     private String token;
     private String userId;
+
+    private List<Offer> offers;
+    private List<Order> orders;
 
     public String getName() {
         return name;
@@ -49,5 +54,21 @@ public class Profile {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

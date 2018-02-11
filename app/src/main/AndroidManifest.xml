@@ -23,13 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".menuItems.OfferActivity" />
+        <activity android:name=".menu_items.OfferActivity" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".menuItems.OrderActivity" />
-        <activity android:name=".menuItems.PromotionsActivity" />
-        <activity android:name=".menuItems.PricesActivity" />
-        <activity android:name=".menuItems.LanguagesActivity" />
-        <activity android:name=".menuItems.ProfileActivity" />
+        <activity android:name=".menu_items.OrderActivity" />
+        <activity android:name=".menu_items.PromotionsActivity" />
+        <activity android:name=".menu_items.PricesActivity" />
+        <activity android:name=".menu_items.LanguagesActivity" />
+        <activity android:name=".menu_items.ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".ResetPasswordActivity"></activity>

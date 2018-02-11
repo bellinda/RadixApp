@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.angelova.w510.radixapp.menuItems.ProfileActivity;
-import com.angelova.w510.radixapp.menuItems.OfferActivity;
-import com.angelova.w510.radixapp.menuItems.OrderActivity;
-import com.angelova.w510.radixapp.menuItems.PricesActivity;
+import com.angelova.w510.radixapp.menu_items.ProfileActivity;
+import com.angelova.w510.radixapp.menu_items.OfferActivity;
+import com.angelova.w510.radixapp.menu_items.OrderActivity;
+import com.angelova.w510.radixapp.menu_items.PricesActivity;
 
 public class MainActivity extends BaseActivity {
 

@@ -1,4 +1,4 @@
-package com.angelova.w510.radixapp.menuItems;
+package com.angelova.w510.radixapp.menu_items;
 
 import android.Manifest;
 import android.app.DatePickerDialog;

@@ -18,10 +18,10 @@ public class OffersRestClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void get(Context context, String url, RequestParams params, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
+    public static void get(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
         System.out.println("Sending GET request for getting all offers of the user to " + getAbsoluteUrl(url));
         client.addHeader(headerKey, headerValue);
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+        client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
     public static void getOne(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {

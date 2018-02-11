@@ -19,11 +19,13 @@ public class Order {
     private String email;
     private String phone;
     private String desiredDeliveryDate;
+    private String expectedDeliveryDate;
     private String pickUpMethod;
     private String anticipatedPrice;
     private String inquiryToDelete;
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
+    private List<String> allFileNames;
 
     public String getName() {
         return name;
@@ -97,6 +99,14 @@ public class Order {
         this.desiredDeliveryDate = desiredDeliveryDate;
     }
 
+    public String getExpectedDeliveryDate() {
+        return expectedDeliveryDate;
+    }
+
+    public void setExpectedDeliveryDate(String expectedDeliveryDate) {
+        this.expectedDeliveryDate = expectedDeliveryDate;
+    }
+
     public String getPickUpMethod() {
         return pickUpMethod;
     }
@@ -135,5 +145,13 @@ public class Order {
 
     public void setDocumentsFromOffer(List<String> documentsFromOffer) {
         this.documentsFromOffer = documentsFromOffer;
+    }
+
+    public List<String> getAllFileNames() {
+        return allFileNames;
+    }
+
+    public void setAllFileNames(List<String> allFileNames) {
+        this.allFileNames = allFileNames;
     }
 }

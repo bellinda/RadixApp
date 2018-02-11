@@ -1,4 +1,4 @@
-package com.angelova.w510.radixapp.menuItems;
+package com.angelova.w510.radixapp.menu_items;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -44,7 +44,6 @@ import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.requests_utils.ServiceGenerator;
-import com.angelova.w510.radixapp.services.FileUploadService;
 import com.angelova.w510.radixapp.services.OrderUploadService;
 import com.angelova.w510.radixapp.tasks.GetOfferInfoTask;
 import com.angelova.w510.radixapp.utils.FileUtils;
