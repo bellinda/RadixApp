@@ -71,4 +71,6 @@
     <string name="profile_orders_count">Поръчки</string>
     <string name="profile_total_count">Всичко</string>
     <string name="profile_edit">Редактирай профила</string>
+    <string name="profile_my_offers">Моите оферти</string>
+    <string name="profile_my_orders">Моите поръчки</string>
 </resources>

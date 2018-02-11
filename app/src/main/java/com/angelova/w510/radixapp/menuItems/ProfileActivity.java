@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
@@ -15,7 +16,9 @@ import com.google.gson.Gson;
 public class ProfileActivity extends BaseActivity {
 
     private TextView mProfileInitials;
-    private Button mEditProfileBtn;
+    private LinearLayout mMyOffersItem;
+    private LinearLayout mMyOrdersItem;
+    private LinearLayout mEditProfileItem;
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
@@ -31,13 +34,29 @@ public class ProfileActivity extends BaseActivity {
 
     private void initializeActivity() {
         mProfileInitials = (TextView) findViewById(R.id.profile_initials);
-        mEditProfileBtn = (Button) findViewById(R.id.edit_profile_btn);
+        mMyOffersItem = (LinearLayout) findViewById(R.id.my_offers);
+        mMyOrdersItem = (LinearLayout) findViewById(R.id.my_orders);
+        mEditProfileItem = (LinearLayout) findViewById(R.id.edit_profile);
 
         mProfile = getProfile();
 
         mProfileInitials.setText(getNameInitials(mProfile.getName()));
 
-        mEditProfileBtn.setOnClickListener(new View.OnClickListener() {
+        mMyOffersItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mMyOrdersItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mEditProfileItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

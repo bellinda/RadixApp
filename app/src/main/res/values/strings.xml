@@ -71,4 +71,6 @@
     <string name="profile_orders_count">Orders</string>
     <string name="profile_total_count">Total</string>
     <string name="profile_edit">Edit profile</string>
+    <string name="profile_my_offers">My Offers</string>
+    <string name="profile_my_orders">My Orders</string>
 </resources>
