@@ -18,10 +18,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:listSelector="@android:color/transparent"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:dividerHeight="10dp"></ListView>
+            android:divider="@android:color/transparent"></ListView>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
