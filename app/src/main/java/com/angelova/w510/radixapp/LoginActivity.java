@@ -64,7 +64,13 @@ public class LoginActivity extends AppCompatActivity {
                     if(isNetworkAvailable()) {
                         mLoginBtn.setVisibility(View.GONE);
                         mLoginLoader.setVisibility(View.VISIBLE);
-                        new LogoutTask(LoginActivity.this, "users/logout", mEmailInput.getText().toString()).execute();
+                        Profile profile = getProfile();
+                        if(profile != null && profile.getEmail() != null) {
+                            System.out.println("LOGIN OUT " + profile.getEmail());
+                            new LogoutTask(LoginActivity.this, "users/logout", profile.getEmail()).execute();
+                        } else {
+                            new LogoutTask(LoginActivity.this, "users/logout", mEmailInput.getText().toString()).execute();
+                        }
                     } else {
                         showAlertDialogNow("No internet connection. Please turn on your Wi-Fi ir mobile data", "Warning");
                     }
@@ -148,6 +154,17 @@ public class LoginActivity extends AppCompatActivity {
         String updatedJson = gson.toJson(profile);
         prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
         prefsEditor.apply();
+    }
+
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
     }
 
     public void showErrorMessage(String errorMsg) {
