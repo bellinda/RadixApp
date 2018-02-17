@@ -73,4 +73,7 @@
     <string name="profile_edit">Edit profile</string>
     <string name="profile_my_offers">My Offers</string>
     <string name="profile_my_orders">My Orders</string>
+
+    <string name="all_offers_pending">Pending</string>
+    <string name="all_offers_with_response">Got response</string>
 </resources>

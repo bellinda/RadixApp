@@ -12,4 +12,5 @@
     <dimen name="loader_dialog_text_size">18sp</dimen>
     <dimen name="profile_initials_text_size">42sp</dimen>
     <dimen name="profile_menu_items_text_size">20sp</dimen>
+    <dimen name="lists_header_text_size">24sp</dimen>
 </resources>
