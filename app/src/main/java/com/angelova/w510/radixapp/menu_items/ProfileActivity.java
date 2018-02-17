@@ -169,6 +169,10 @@ public class ProfileActivity extends BaseActivity {
         new GetAllOrdersTask(ProfileActivity.this, "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
     }
 
+    public void handleNoOffersForTheUser() {
+        new GetAllOrdersTask(ProfileActivity.this, "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
+    }
+
     public void handleSuccessfulOrdersDownload(JSONArray receivedData) {
         List<Order> orders = new ArrayList<>();
         try {
@@ -214,6 +218,13 @@ public class ProfileActivity extends BaseActivity {
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
+        //everything is downloaded => show data + hide the loading message
+        mOffersCount.setText(mProfile.getOffers().size() + "");
+        mOrdersCount.setText(mProfile.getOrders().size() + "");
+        loadingDialog.hide();
+    }
+
+    public void handleSuccessWithoutOrdersYet() {
         //everything is downloaded => show data + hide the loading message
         mOffersCount.setText(mProfile.getOffers().size() + "");
         mOrdersCount.setText(mProfile.getOrders().size() + "");

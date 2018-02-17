@@ -8,6 +8,7 @@ import android.os.Looper;
 import com.angelova.w510.radixapp.clients.OffersRestClient;
 import com.angelova.w510.radixapp.menu_items.OrderActivity;
 import com.angelova.w510.radixapp.menu_items.ProfileActivity;
+import com.angelova.w510.radixapp.models.Profile;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -60,7 +61,8 @@ public class GetAllOrdersTask extends AsyncTask<Void, Void, Object> {
                                     if(response.length() > 0) {
                                         ((ProfileActivity) context).handleSuccessfulOrdersDownload(response);
                                     } else {
-                                        ((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
+                                        ((ProfileActivity) context).handleSuccessWithoutOrdersYet();
+                                        //((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
                                     }
                                 }
 

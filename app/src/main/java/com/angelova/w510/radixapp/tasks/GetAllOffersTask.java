@@ -60,7 +60,8 @@ public class GetAllOffersTask extends AsyncTask<Void, Void, Object> {
                                     if(response.length() > 0) {
                                         ((ProfileActivity) context).handleSuccessfulOffersDownload(response);
                                     } else {
-                                        ((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
+                                        ((ProfileActivity) context).handleNoOffersForTheUser();
+                                        //((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
                                     }
                                 }
 
