@@ -26,6 +26,8 @@ public class Order {
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
     private List<String> allFileNames;
+    private boolean isReady;
+    private String createdOn;
 
     public String getName() {
         return name;
@@ -153,5 +155,21 @@ public class Order {
 
     public void setAllFileNames(List<String> allFileNames) {
         this.allFileNames = allFileNames;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public void setReady(boolean isReady) {
+        this.isReady = isReady;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
     }
 }

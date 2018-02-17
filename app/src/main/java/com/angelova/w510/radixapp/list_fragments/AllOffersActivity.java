@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
-import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.OffersAdapter;
 import com.angelova.w510.radixapp.menu_items.OfferActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Profile;
 import com.google.gson.Gson;
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ScrollDirectionListener;
 
 public class AllOffersActivity extends BaseActivity {
 
@@ -51,6 +51,28 @@ public class AllOffersActivity extends BaseActivity {
 
         mOffersAdapter = new OffersAdapter(this, mProfile.getOffers());
         mListView.setAdapter(mOffersAdapter);
+
+        mAddNewOfferBtn.attachToListView(mListView, new ScrollDirectionListener() {
+            @Override
+            public void onScrollDown() {
+                //Log.d("ListViewFragment", "onScrollDown()");
+            }
+
+            @Override
+            public void onScrollUp() {
+                //Log.d("ListViewFragment", "onScrollUp()");
+            }
+        }, new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //Log.d("ListViewFragment", "onScrollStateChanged()");
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //Log.d("ListViewFragment", "onScroll()");
+            }
+        });
 
         mAddNewOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override

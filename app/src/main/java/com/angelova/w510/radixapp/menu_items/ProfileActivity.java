@@ -197,6 +197,16 @@ public class ProfileActivity extends BaseActivity {
                 order.setPickUpMethod(data.getString("pickupMethod"));
                 order.setAnticipatedPrice(data.getString("anticipatedPrice"));
                 order.setExpectedDeliveryDate(data.getString("expectedDeliveryDate"));
+                String createdOn = data.getString("createdAt");
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+                try {
+                    Date date = originalFormat.parse(createdOn);
+                    String formattedDate = targetFormat.format(date);
+                    order.setCreatedOn(formattedDate);
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
                 orders.add(order);
             }
             mProfile.setOrders(orders);
