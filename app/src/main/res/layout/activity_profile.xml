@@ -192,6 +192,38 @@
         <!--</LinearLayout>-->
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/top_circle_guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/right_edit_btn_guideline"
+        android:weightSum="5"
+        android:id="@+id/logout_btn">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@drawable/ic_logout"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="@string/profile_logout_icon_text"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"

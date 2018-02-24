@@ -7,6 +7,7 @@ import android.os.Looper;
 
 import com.angelova.w510.radixapp.LoginActivity;
 import com.angelova.w510.radixapp.clients.LoginRestClient;
+import com.angelova.w510.radixapp.menu_items.ProfileActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -52,7 +53,11 @@ public class LogoutTask extends AsyncTask<Void, Void, Object> {
                                     try {
                                         if (response.has("status")) {
                                             System.out.println(">>>>>>>>>>>>>>>>> " + response.getString("status"));
-                                            ((LoginActivity) context).handleSuccessfulLogout(response);
+                                            if(context instanceof LoginActivity) {
+                                                ((LoginActivity) context).handleSuccessfulLogout(response);
+                                            } else {
+                                                ((ProfileActivity) context).handleSuccessfulLogout();
+                                            }
                                         }
                                     } catch (JSONException jse) {
                                         jse.printStackTrace();

@@ -1,6 +1,8 @@
 package com.angelova.w510.radixapp.menu_items;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.BaseActivity;
-import com.angelova.w510.radixapp.MainActivity;
+import com.angelova.w510.radixapp.LoginActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.dialogs.YesNoDialog;
 import com.angelova.w510.radixapp.list_fragments.AllOffersActivity;
 import com.angelova.w510.radixapp.list_fragments.AllOrdersActivity;
 import com.angelova.w510.radixapp.models.Offer;
@@ -20,6 +23,7 @@ import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.GetAllOffersTask;
 import com.angelova.w510.radixapp.tasks.GetAllOrdersTask;
+import com.angelova.w510.radixapp.tasks.LogoutTask;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -40,6 +44,7 @@ public class ProfileActivity extends BaseActivity {
     private LinearLayout mMyOffersItem;
     private LinearLayout mMyOrdersItem;
     private LinearLayout mEditProfileItem;
+    private LinearLayout mLogoutBtn;
 
     private ProgressDialog loadingDialog;
 
@@ -62,6 +67,7 @@ public class ProfileActivity extends BaseActivity {
         mMyOffersItem = (LinearLayout) findViewById(R.id.my_offers);
         mMyOrdersItem = (LinearLayout) findViewById(R.id.my_orders);
         mEditProfileItem = (LinearLayout) findViewById(R.id.edit_profile);
+        mLogoutBtn = (LinearLayout) findViewById(R.id.logout_btn);
 
         loadingDialog = ProgressDialog.show(ProfileActivity.this, "",
                 getString(R.string.loader_dialog_text), true);
@@ -90,6 +96,26 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        mLogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                YesNoDialog dialog = new YesNoDialog(ProfileActivity.this, getString(R.string.profile_logout_confirmation_msg), new YesNoDialog.DialogClickListener() {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        System.out.println("LOGIN OUT " + mProfile.getEmail());
+                        new LogoutTask(ProfileActivity.this, "users/logout", mProfile.getEmail()).execute();
+                    }
+
+                    @Override
+                    public void onNegativeButtonClicked() {
+
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -229,6 +255,14 @@ public class ProfileActivity extends BaseActivity {
         mOffersCount.setText(mProfile.getOffers().size() + "");
         mOrdersCount.setText(mProfile.getOrders().size() + "");
         loadingDialog.hide();
+    }
+
+    public void handleSuccessfulLogout() {
+        saveProfile(new Profile());
+
+        Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void showErrorMessage(String message) {
