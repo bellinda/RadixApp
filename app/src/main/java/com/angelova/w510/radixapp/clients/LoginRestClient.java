@@ -13,7 +13,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 public class LoginRestClient {
 
-    private static final String BASE_URL = "http://192.168.0.24:3000/";
+    private static final String BASE_URL = "http://192.168.0.101:3000/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
