@@ -158,6 +158,7 @@ public class ProfileActivity extends BaseActivity {
             for(int i = 0; i < receivedData.length(); i++) {
                 JSONObject data = receivedData.getJSONObject(i);
                 Offer offer = new Offer();
+                offer.setId(data.getString("consecutiveID"));
                 offer.setPhone(data.getString("phone"));
                 offer.setEmail(data.getString("email"));
                 offer.setOrderType(data.getString("orderType"));

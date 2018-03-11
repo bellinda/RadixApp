@@ -138,7 +138,8 @@
                     android:background="@drawable/edit_profile_border"
                     android:text="View"
                     android:textAllCaps="false"
-                    android:textColor="@color/offers_view_button_text_color"/>
+                    android:textColor="@color/offers_view_button_text_color"
+                    android:id="@+id/view_btn"/>
             </LinearLayout>
 
             <!--<TextView-->

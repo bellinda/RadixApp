@@ -28,4 +28,5 @@
     <color name="offers_delimiter_line_color">#43000000</color>
     <color name="offers_files_count_text_color">#6b0e0b</color>
     <color name="offers_view_button_text_color">#79000000</color>
+    <color name="offer_details_not_active_item_color">#af912213</color>
 </resources>

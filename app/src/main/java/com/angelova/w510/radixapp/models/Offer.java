@@ -2,6 +2,7 @@ package com.angelova.w510.radixapp.models;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -9,8 +10,9 @@ import java.util.StringTokenizer;
  * Created by W510 on 21.1.2018 г..
  */
 
-public class Offer {
+public class Offer implements Serializable {
 
+    private String id;
     private String name;
     private String fromLanguage;
     private String toLanguage;
@@ -24,6 +26,14 @@ public class Offer {
     private List<String> fileNames;
     private String createdOn;
     private OfferResponse offerResponse;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -1,14 +1,19 @@
 package com.angelova.w510.radixapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
+import com.angelova.w510.radixapp.details_activities.OfferDetailsActivity;
+import com.angelova.w510.radixapp.list_fragments.AllOffersActivity;
+import com.angelova.w510.radixapp.menu_items.OfferActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +34,7 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
     @Override
     @NonNull
     public View getView(int position, View convertView, ViewGroup parent) {
-        Offer offer = getItem(position);
+        final Offer offer = getItem(position);
         OffersAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -42,6 +47,7 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
             viewHolder.toLanguage = (TextView) convertView.findViewById(R.id.to_language);
             viewHolder.filesCount = (TextView) convertView.findViewById(R.id.files_count);
             viewHolder.submittedOn = (TextView) convertView.findViewById(R.id.submitted_on);
+            viewHolder.viewButton = (Button) convertView.findViewById(R.id.view_btn);
 
             convertView.setTag(viewHolder);
         } else {
@@ -53,6 +59,15 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
         viewHolder.filesCount.setText(String.format(Locale.US, "%d file(s)", offer.getFileNames().size()));
         viewHolder.submittedOn.setText(String.format(Locale.US, "Sent On: %s", offer.getCreatedOn()));
 
+        viewHolder.viewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OfferDetailsActivity.class);
+                intent.putExtra("offer", offer);
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 
@@ -61,6 +76,7 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
         TextView toLanguage;
         TextView filesCount;
         TextView submittedOn;
+        Button viewButton;
     }
 
     private String getLanguageAbbreviation(String language) {
