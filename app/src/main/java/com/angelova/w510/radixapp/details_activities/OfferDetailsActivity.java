@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     private TextView mInfoItem;
     private TextView mResponsesItem;
+    private Button mSendResponseBtn;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -91,6 +93,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         mInfoItem = (TextView) findViewById(R.id.main_info_item);
         mResponsesItem = (TextView) findViewById(R.id.responses_item);
+        mSendResponseBtn = (Button) findViewById(R.id.add_new_response_btn);
 
         mInfoItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +102,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
+                mSendResponseBtn.setVisibility(View.GONE);
             }
         });
 
@@ -109,6 +113,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
+                mSendResponseBtn.setVisibility(View.VISIBLE);
             }
         });
 
