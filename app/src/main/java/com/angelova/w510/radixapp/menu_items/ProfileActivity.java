@@ -168,6 +168,7 @@ public class ProfileActivity extends BaseActivity {
                 offer.setToLanguage(data.getString("toLanguage"));
                 offer.setName(data.getString("fullName"));
                 offer.setDesiredDeliveryDate(data.getString("desiredDeliveryDate"));
+                offer.setGotResponse(data.getBoolean("gotResponse"));
                 JSONArray files = data.getJSONArray("file");
                 List<String> fileNames = new ArrayList<>();
                 for(int j = 0; j < files.length(); j++) {

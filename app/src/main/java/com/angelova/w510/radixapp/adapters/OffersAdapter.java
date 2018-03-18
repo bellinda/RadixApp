@@ -26,8 +26,8 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
 
     private Context context;
 
-    public OffersAdapter(Context context, List<Offer> notes) {
-        super(context, R.layout.offers_list_item, notes);
+    public OffersAdapter(Context context, List<Offer> offers) {
+        super(context, R.layout.offers_list_item, offers);
         this.context = context;
     }
 

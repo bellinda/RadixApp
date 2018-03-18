@@ -1,18 +1,33 @@
 package com.angelova.w510.radixapp.details_activities;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
+import com.angelova.w510.radixapp.adapters.ResponsesAdapter;
 import com.angelova.w510.radixapp.models.Offer;
+import com.angelova.w510.radixapp.models.OfferResponse;
+import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.tasks.GetOfferResponsesTask;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -37,6 +52,14 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mPhone;
     private TextView mDesDelDate;
     private TextView mDocumentsList;
+    private ListView mResponsesLayout;
+    private ResponsesAdapter mResponsesAdapter;
+
+    public static final String SHARED_PROFILE_KEY = "profile";
+
+    private Profile mProfile;
+
+    private ProgressDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +70,12 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeActivity() {
+        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+                getString(R.string.loader_dialog_text), true);
+
         offer = (Offer) getIntent().getSerializableExtra("offer");
+
+        mProfile = getProfile();
 
         mTitleWithId = (TextView) findViewById(R.id.header_title);
         mToLang = (TextView) findViewById(R.id.to_lang);
@@ -70,6 +98,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
                 mMainInfoLayout.setVisibility(View.VISIBLE);
+                mResponsesLayout.setVisibility(View.GONE);
             }
         });
 
@@ -79,6 +108,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
                 mMainInfoLayout.setVisibility(View.GONE);
+                mResponsesLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -91,6 +121,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mPhone = (TextView) findViewById(R.id.phone);
         mDesDelDate = (TextView) findViewById(R.id.des_del_date);
         mDocumentsList = (TextView) findViewById(R.id.documents);
+
+        mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
 
         mFullName.setText(offer.getName());
         mOrderType.setText(offer.getOrderType());
@@ -113,6 +145,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
         }
         documentsListBuilder.delete(documentsListBuilder.lastIndexOf("\n"), documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
+
+        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
     }
 
     private String getLanguageAbbreviation(String language) {
@@ -126,5 +160,78 @@ public class OfferDetailsActivity extends AppCompatActivity {
             default:
                 return "EN";
         }
+    }
+
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
+    }
+
+    private void saveProfile(Profile profile) {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefsEditor = appPreferences.edit();
+        Gson gson = new Gson();
+
+        String updatedJson = gson.toJson(profile);
+        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
+        prefsEditor.apply();
+    }
+
+    public void updateOfferDetails(JSONObject receivedResponses) {
+        List<OfferResponse> responses = new ArrayList<>();
+        try {
+            JSONArray adminResponses = receivedResponses.getJSONArray("fromAdmin");
+            for (int i = 0; i < adminResponses.length(); i++) {
+                JSONObject respObj = adminResponses.getJSONObject(i);
+                OfferResponse response = new OfferResponse();
+                response.setQuantity(respObj.getString("quantity"));
+                response.setExpectedDeliveryDate(respObj.getString("expectedDeliveryDate"));
+                response.setUnitPrice(respObj.getString("unitPrice"));
+                response.setAnticipatedPrice(respObj.getString("anticipatedPrice"));
+                response.setCountPer(respObj.getString("countPer"));
+                response.setComment(respObj.getString("comment"));
+                response.setStatus(respObj.getString("status"));
+                response.setCreatedOn(respObj.getString("createdAt"));
+                response.setFromAdmin(true);
+
+                responses.add(response);
+            }
+
+            JSONArray userResponses = receivedResponses.getJSONArray("fromUser");
+            for (int i = 0; i < userResponses.length(); i++) {
+                JSONObject respObj = userResponses.getJSONObject(i);
+                OfferResponse response = new OfferResponse();
+                response.setQuantity(respObj.getString("quantity"));
+                response.setExpectedDeliveryDate(respObj.getString("expectedDeliveryDate"));
+                response.setUnitPrice(respObj.getString("unitPrice"));
+                response.setAnticipatedPrice(respObj.getString("anticipatedPrice"));
+                response.setCountPer(respObj.getString("countPer"));
+                response.setComment(respObj.getString("comment"));
+                response.setStatus(respObj.getString("status"));
+                response.setCreatedOn(respObj.getString("createdAt"));
+                response.setFromAdmin(false);
+
+                responses.add(response);
+            }
+
+            offer.setOfferResponses(responses);
+
+            mResponsesAdapter = new ResponsesAdapter(this, offer.getOfferResponses());
+            mResponsesLayout.setAdapter(mResponsesAdapter);
+
+            mLoadingDialog.hide();
+        } catch (JSONException jse) {
+            jse.printStackTrace();
+        }
+    }
+
+    public void hideLoadingDialog() {
+        mLoadingDialog.hide();
     }
 }

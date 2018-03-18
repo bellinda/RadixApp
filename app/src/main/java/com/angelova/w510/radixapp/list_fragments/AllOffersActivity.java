@@ -104,7 +104,7 @@ public class AllOffersActivity extends BaseActivity {
     private int getPendingOffersCount() {
         int pendingOffersCount = 0;
         for(Offer offer : mProfile.getOffers()) {
-            if(offer.getOfferResponse() == null) {
+            if(!offer.isGotResponse()) {
                 pendingOffersCount++;
             }
         }
@@ -115,7 +115,7 @@ public class AllOffersActivity extends BaseActivity {
     private int getOffersWithResponseCount() {
         int offersWithResponseCount = 0;
         for(Offer offer : mProfile.getOffers()) {
-            if(offer.getOfferResponse() != null) {
+            if(offer.isGotResponse()) {
                 offersWithResponseCount++;
             }
         }

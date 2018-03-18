@@ -30,6 +30,12 @@ public class OffersRestClient {
         client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
+    public static void getOfferResponses(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending GET request for getting all offer responses to " + getAbsoluteUrl(url));
+        client.addHeader(headerKey, headerValue);
+        client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
+    }
+
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }

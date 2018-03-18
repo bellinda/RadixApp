@@ -4,7 +4,6 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by W510 on 21.1.2018 г..
@@ -25,7 +24,8 @@ public class Offer implements Serializable {
     private List<Uri> documentUris;
     private List<String> fileNames;
     private String createdOn;
-    private OfferResponse offerResponse;
+    private List<OfferResponse> offerResponses;
+    private boolean gotResponse;
 
     public String getId() {
         return id;
@@ -131,11 +131,19 @@ public class Offer implements Serializable {
         this.createdOn = createdOn;
     }
 
-    public OfferResponse getOfferResponse() {
-        return offerResponse;
+    public List<OfferResponse> getOfferResponses() {
+        return offerResponses;
     }
 
-    public void setOfferResponse(OfferResponse offerResponse) {
-        this.offerResponse = offerResponse;
+    public void setOfferResponses(List<OfferResponse> offerResponses) {
+        this.offerResponses = offerResponses;
+    }
+
+    public boolean isGotResponse() {
+        return gotResponse;
+    }
+
+    public void setGotResponse(boolean gotResponse) {
+        this.gotResponse = gotResponse;
     }
 }
