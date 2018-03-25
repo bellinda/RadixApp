@@ -36,6 +36,12 @@ public class OffersRestClient {
         client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
+    public static void sendOfferResponse(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending POST request for uploading a user response to " + getAbsoluteUrl(url));
+        client.addHeader(headerKey, headerValue);
+        client.post(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
+    }
+
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }

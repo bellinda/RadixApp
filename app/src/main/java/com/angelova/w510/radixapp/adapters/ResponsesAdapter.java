@@ -1,21 +1,21 @@
 package com.angelova.w510.radixapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
-import com.angelova.w510.radixapp.details_activities.OfferDetailsActivity;
-import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.OfferResponse;
+import com.angelova.w510.radixapp.models.Profile;
+import com.google.gson.Gson;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +30,7 @@ import java.util.TimeZone;
 public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
 
     private Context context;
+    public static final String SHARED_PROFILE_KEY = "profile";
 
     public ResponsesAdapter(Context context, List<OfferResponse> responses) {
         super(context, R.layout.respones_list_item, responses);
@@ -48,6 +49,7 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.respones_list_item, parent, false);
 
+            viewHolder.mResponseTitle = (TextView) convertView.findViewById(R.id.response_title);
             viewHolder.mResponseContent = (TextView) convertView.findViewById(R.id.response_content);
             viewHolder.mResponseFooter = (TextView) convertView.findViewById(R.id.response_footer);
 
@@ -56,16 +58,23 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
             viewHolder = (ResponsesAdapter.ViewHolder) convertView.getTag();
         }
 
-        //TODO: check if answer from admin
-        viewHolder.mResponseContent.setText(buildResponseContent(response));
+        if(response.isFromAdmin()) {
+            viewHolder.mResponseContent.setText(buildResponseFromAdminContent(response));
 
-        String footer = buildFooterText(response);
-        viewHolder.mResponseFooter.setText(footer);
+            String footer = buildAdminFooterText(response);
+            viewHolder.mResponseFooter.setText(footer);
+        } else {
+            viewHolder.mResponseTitle.setText("Your response:");
+            viewHolder.mResponseContent.setText(response.getComment());
+
+            String footer = buildUserFooterText(response);
+            viewHolder.mResponseFooter.setText(footer);
+        }
 
         return convertView;
     }
 
-    private String buildResponseContent(OfferResponse response) {
+    private String buildResponseFromAdminContent(OfferResponse response) {
         StringBuilder content = new StringBuilder();
         String expectedDeliveryDate = convertServerDateToUserTimeZone(response.getExpectedDeliveryDate());
         if(response.getCountPer().equalsIgnoreCase("pages")) {
@@ -81,13 +90,32 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         return content.toString();
     }
 
-    private String buildFooterText(OfferResponse response) {
+    private String buildAdminFooterText(OfferResponse response) {
         StringBuilder builder = new StringBuilder();
         builder.append("Radix Services, ");
 
         String dateInCurrentTimeZone = convertServerDateToUserTimeZone(response.getCreatedOn());
         builder.append(dateInCurrentTimeZone);
 
+        return builder.toString();
+    }
+
+    private String buildUserFooterText(OfferResponse response) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getProfile().getName());
+        builder.append(", ");
+
+        try {
+            String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            SimpleDateFormat formatter = new SimpleDateFormat(serverDateFormat, Locale.UK);
+            Date createdOn = formatter.parse(response.getCreatedOn());
+            String outputFormat = "dd MMM yyyy, HH:mm";
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(outputFormat, Locale.UK);
+            String cratedOnFormatted = dateFormatter.format(createdOn);
+            builder.append(cratedOnFormatted);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         return builder.toString();
     }
 
@@ -113,7 +141,19 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         return ourdate;
     }
 
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
+    }
+
     private static class ViewHolder {
+        TextView mResponseTitle;
         TextView mResponseContent;
         TextView mResponseFooter;
     }

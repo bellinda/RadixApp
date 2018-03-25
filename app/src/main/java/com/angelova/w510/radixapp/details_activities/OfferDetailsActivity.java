@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.ResponsesAdapter;
+import com.angelova.w510.radixapp.dialogs.ResponseDialog;
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.OfferResponse;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.GetOfferResponsesTask;
+import com.angelova.w510.radixapp.tasks.SendResponseTask;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -27,9 +30,11 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class OfferDetailsActivity extends AppCompatActivity {
 
@@ -118,6 +123,27 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 } else {
                     mSendResponseBtn.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        mSendResponseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResponseDialog responseDialog = new ResponseDialog(OfferDetailsActivity.this, new ResponseDialog.DialogClickListener() {
+                    @Override
+                    public void onSendButtonClicked(String comment) {
+                        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+                                getString(R.string.send_response_loading_dialog_text), true);
+
+                        new SendResponseTask(OfferDetailsActivity.this, "inquiries/mobile/postResponses", offer.getId(), comment, mProfile.getToken()).execute();
+                    }
+
+                    @Override
+                    public void onCancelButtonClicked() {
+
+                    }
+                });
+                responseDialog.show();
             }
         });
 
@@ -216,14 +242,16 @@ public class OfferDetailsActivity extends AppCompatActivity {
             for (int i = 0; i < userResponses.length(); i++) {
                 JSONObject respObj = userResponses.getJSONObject(i);
                 OfferResponse response = new OfferResponse();
-                response.setQuantity(respObj.getString("quantity"));
-                response.setExpectedDeliveryDate(respObj.getString("expectedDeliveryDate"));
-                response.setUnitPrice(respObj.getString("unitPrice"));
-                response.setAnticipatedPrice(respObj.getString("anticipatedPrice"));
-                response.setCountPer(respObj.getString("countPer"));
                 response.setComment(respObj.getString("comment"));
-                response.setStatus(respObj.getString("status"));
-                response.setCreatedOn(respObj.getString("createdAt"));
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                try {
+                    Date date = originalFormat.parse(respObj.getString("createdAt"));
+                    originalFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+                    response.setCreatedOn(originalFormat.format(date));
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
                 response.setFromAdmin(false);
 
                 responses.add(response);
@@ -240,7 +268,30 @@ public class OfferDetailsActivity extends AppCompatActivity {
         }
     }
 
+    public void handleSuccessfulResponseUpload() {
+        hideLoadingDialog();
+        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+                getString(R.string.loader_dialog_text), true);
+
+        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
+    }
+
     public void hideLoadingDialog() {
         mLoadingDialog.hide();
+    }
+
+    public void showErrorMessage(String message) {
+        hideLoadingDialog();
+
+        showAlertDialogNow(message, "Warning");
+    }
+
+    private void showAlertDialogNow(String message, String title) {
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
+            }
+        });
+        warning.show();
     }
 }

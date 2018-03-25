@@ -86,4 +86,11 @@
     <string name="dialog_yes_no_title">Confirmation</string>
     <string name="dialog_yes_no_yes_btn">Yes</string>
     <string name="dialog_yes_no_no_btn">No</string>
+
+    <string name="dialog_response_title">Your Response</string>
+    <string name="dialog_response_hint">Write your response here&#8230;</string>
+    <string name="dialog_response_send_btn">Send</string>
+    <string name="dialog_response_cancel_btn">Cancel</string>
+
+    <string name="send_response_loading_dialog_text">Sending response&#8230;</string>
 </resources>

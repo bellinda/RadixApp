@@ -86,4 +86,11 @@
     <string name="dialog_yes_no_title">Потвърждение</string>
     <string name="dialog_yes_no_yes_btn">Да</string>
     <string name="dialog_yes_no_no_btn">Не</string>
+
+    <string name="dialog_response_title">Вашият отговор</string>
+    <string name="dialog_response_hint">Моля въведете Вашия отговор тук&#8230;</string>
+    <string name="dialog_response_send_btn">Изпращане</string>
+    <string name="dialog_response_cancel_btn">Отказ</string>
+
+    <string name="send_response_loading_dialog_text">Изпращане на отговор&#8230;</string>
 </resources>
