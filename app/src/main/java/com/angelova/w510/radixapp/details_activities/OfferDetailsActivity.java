@@ -110,6 +110,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
                 mSendResponseBtn.setVisibility(View.GONE);
+                mNoResponsesView.setVisibility(View.GONE);
             }
         });
 
