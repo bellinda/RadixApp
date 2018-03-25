@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
@@ -48,6 +49,7 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
             viewHolder.filesCount = (TextView) convertView.findViewById(R.id.files_count);
             viewHolder.submittedOn = (TextView) convertView.findViewById(R.id.submitted_on);
             viewHolder.viewButton = (Button) convertView.findViewById(R.id.view_btn);
+            viewHolder.progressIcon = (ImageView) convertView.findViewById(R.id.progress_icon);
 
             convertView.setTag(viewHolder);
         } else {
@@ -58,6 +60,9 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
         viewHolder.toLanguage.setText(getLanguageAbbreviation(offer.getToLanguage()));
         viewHolder.filesCount.setText(String.format(Locale.US, "%d file(s)", offer.getFileNames().size()));
         viewHolder.submittedOn.setText(String.format(Locale.US, "Sent On: %s", offer.getCreatedOn()));
+        if(offer.isGotResponse()) {
+            viewHolder.progressIcon.setBackgroundResource(R.mipmap.ic_got_response);
+        }
 
         viewHolder.viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +82,7 @@ public class OffersAdapter extends ArrayAdapter<Offer> {
         TextView filesCount;
         TextView submittedOn;
         Button viewButton;
+        ImageView progressIcon;
     }
 
     private String getLanguageAbbreviation(String language) {
