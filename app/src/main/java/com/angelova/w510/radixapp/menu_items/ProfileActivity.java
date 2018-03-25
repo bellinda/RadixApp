@@ -33,8 +33,11 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ProfileActivity extends BaseActivity {
 
@@ -167,7 +170,18 @@ public class ProfileActivity extends BaseActivity {
                 offer.setFromLanguage(data.getString("fromLanguage"));
                 offer.setToLanguage(data.getString("toLanguage"));
                 offer.setName(data.getString("fullName"));
-                offer.setDesiredDeliveryDate(data.getString("desiredDeliveryDate"));
+
+                String myFormat = "yyyy-MM-dd'T'HH:mm";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                try {
+                    Date desiredDeliveryDateInUTC = sdf.parse(data.getString("desiredDeliveryDate"));
+                    sdf.setTimeZone(Calendar.getInstance().getTimeZone());
+                    offer.setDesiredDeliveryDate(sdf.format(desiredDeliveryDateInUTC));
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
+
                 offer.setGotResponse(data.getBoolean("gotResponse"));
                 JSONArray files = data.getJSONArray("file");
                 List<String> fileNames = new ArrayList<>();
@@ -177,7 +191,9 @@ public class ProfileActivity extends BaseActivity {
                 offer.setFileNames(fileNames);
                 String createdOn = data.getString("createdAt");
                 SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+                targetFormat.setTimeZone(Calendar.getInstance().getTimeZone());
                 try {
                     Date date = originalFormat.parse(createdOn);
                     String formattedDate = targetFormat.format(date);

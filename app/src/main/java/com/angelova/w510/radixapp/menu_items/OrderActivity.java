@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 import me.gujun.android.taggroup.TagGroup;
@@ -371,6 +372,7 @@ public class OrderActivity extends BaseActivity {
                     order.setPhone(mPhoneInput.getText().toString());
                     String myFormat = "yyyy-MM-dd'T'HH:mm";
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                     order.setDesiredDeliveryDate(sdf.format(myCalendar.getTime()));
                     if(mDelFromOfficeRb.isChecked()) {
                         order.setPickUpMethod("FO");
@@ -553,8 +555,19 @@ public class OrderActivity extends BaseActivity {
 
             String myFormat = "yyyy-MM-dd'T'HH:mm";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
             if(receivedData.has("expectedDeliveryDate") && !receivedData.getString("expectedDeliveryDate").isEmpty()) {
                 String desiredDeliveryDate = receivedData.getString("expectedDeliveryDate");
+                try {
+                    Date desiredDeliveryDateAsDate = sdf.parse(desiredDeliveryDate);
+                    myCalendar.setTime(desiredDeliveryDateAsDate);
+                    updateDeliveryDate();
+                    updateDeliveryTime();
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
+            } else if (receivedData.has("desiredDeliveryDate") && !receivedData.getString("desiredDeliveryDate").isEmpty()) {
+                String desiredDeliveryDate = receivedData.getString("desiredDeliveryDate");
                 try {
                     Date desiredDeliveryDateAsDate = sdf.parse(desiredDeliveryDate);
                     myCalendar.setTime(desiredDeliveryDateAsDate);

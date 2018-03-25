@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import me.gujun.android.taggroup.TagGroup;
 import okhttp3.MediaType;
@@ -269,6 +270,7 @@ public class OfferActivity extends BaseActivity {
                     offer.setPhone(mPhoneInput.getText().toString());
                     String myFormat = "yyyy-MM-dd'T'HH:mm"; //In which you need put here
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                     offer.setDesiredDeliveryDate(sdf.format(myCalendar.getTime()));
                     offer.setDocumentUris(selectedUris);
 
