@@ -94,8 +94,17 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         StringBuilder builder = new StringBuilder();
         builder.append("Radix Services, ");
 
-        String dateInCurrentTimeZone = convertServerDateToUserTimeZone(response.getCreatedOn());
-        builder.append(dateInCurrentTimeZone);
+        try {
+            String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            SimpleDateFormat formatter = new SimpleDateFormat(serverDateFormat, Locale.UK);
+            Date createdOn = formatter.parse(response.getCreatedOn());
+            String outputFormat = "dd MMM yyyy, HH:mm";
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(outputFormat, Locale.UK);
+            String cratedOnFormatted = dateFormatter.format(createdOn);
+            builder.append(cratedOnFormatted);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
 
         return builder.toString();
     }

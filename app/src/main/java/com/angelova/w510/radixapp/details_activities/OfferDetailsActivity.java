@@ -232,7 +232,15 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 response.setCountPer(respObj.getString("countPer"));
                 response.setComment(respObj.getString("comment"));
                 response.setStatus(respObj.getString("status"));
-                response.setCreatedOn(respObj.getString("createdAt"));
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                try {
+                    Date date = originalFormat.parse(respObj.getString("createdAt"));
+                    originalFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+                    response.setCreatedOn(originalFormat.format(date));
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
                 response.setFromAdmin(true);
 
                 responses.add(response);
