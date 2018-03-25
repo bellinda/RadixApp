@@ -78,6 +78,7 @@
 
     <string name="all_offers_pending">Pending</string>
     <string name="all_offers_with_response">Got response</string>
+    <string name="no_responses_received_text">No responses are received for this offer. Please check later again.</string>
 
     <string name="all_orders_not_processed">Not processed</string>
     <string name="all_orders_in_progress">In progress</string>

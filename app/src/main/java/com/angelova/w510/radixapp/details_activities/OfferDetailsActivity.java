@@ -49,6 +49,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mInfoItem;
     private TextView mResponsesItem;
     private Button mSendResponseBtn;
+    private TextView mNoResponsesView;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -99,6 +100,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mInfoItem = (TextView) findViewById(R.id.main_info_item);
         mResponsesItem = (TextView) findViewById(R.id.responses_item);
         mSendResponseBtn = (Button) findViewById(R.id.add_new_response_btn);
+        mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
 
         mInfoItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,9 +121,11 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
                 if(offer.getOfferResponses() != null && offer.getOfferResponses().size() > 0) {
+                    mNoResponsesView.setVisibility(View.GONE);
                     mSendResponseBtn.setVisibility(View.VISIBLE);
                 } else {
                     mSendResponseBtn.setVisibility(View.GONE);
+                    mNoResponsesView.setVisibility(View.VISIBLE);
                 }
             }
         });
