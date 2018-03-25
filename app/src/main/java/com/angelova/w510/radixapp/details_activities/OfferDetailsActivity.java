@@ -113,7 +113,11 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
-                mSendResponseBtn.setVisibility(View.VISIBLE);
+                if(offer.getOfferResponses() != null && offer.getOfferResponses().size() > 0) {
+                    mSendResponseBtn.setVisibility(View.VISIBLE);
+                } else {
+                    mSendResponseBtn.setVisibility(View.GONE);
+                }
             }
         });
 
