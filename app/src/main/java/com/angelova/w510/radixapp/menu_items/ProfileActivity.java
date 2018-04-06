@@ -256,13 +256,15 @@ public class ProfileActivity extends BaseActivity {
                 order.setPickUpMethod(data.getString("pickupMethod"));
                 order.setAnticipatedPrice(data.getString("anticipatedPrice"));
 
-                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-                try {
-                    Date expectedDeliveryDateInUTC = sdf.parse(data.getString("expectedDeliveryDate"));
-                    sdf.setTimeZone(Calendar.getInstance().getTimeZone());
-                    order.setExpectedDeliveryDate(sdf.format(expectedDeliveryDateInUTC));
-                } catch (ParseException pe) {
-                    pe.printStackTrace();
+                if(data.has("expectedDeliveryDate") && !data.getString("expectedDeliveryDate").isEmpty()) {
+                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    try {
+                        Date expectedDeliveryDateInUTC = sdf.parse(data.getString("expectedDeliveryDate"));
+                        sdf.setTimeZone(Calendar.getInstance().getTimeZone());
+                        order.setExpectedDeliveryDate(sdf.format(expectedDeliveryDateInUTC));
+                    } catch (ParseException pe) {
+                        pe.printStackTrace();
+                    }
                 }
 
                 String createdOn = data.getString("createdAt");
