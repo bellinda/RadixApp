@@ -1,10 +1,17 @@
 package com.angelova.w510.radixapp.models;
 
+import android.support.annotation.NonNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by W510 on 17.2.2018 г..
  */
 
-public class OfferResponse {
+public class OfferResponse implements Comparable<OfferResponse> {
 
     private String createdOn;
     private String comment;
@@ -86,5 +93,19 @@ public class OfferResponse {
 
     public void setFromAdmin(boolean fromAdmin) {
         this.fromAdmin = fromAdmin;
+    }
+
+    @Override
+    public int compareTo(@NonNull OfferResponse o) {
+        String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        SimpleDateFormat formatter = new SimpleDateFormat(serverDateFormat, Locale.UK);
+        try {
+            Date createdOn = formatter.parse(getCreatedOn());
+            Date oCreatedOn = formatter.parse(o.getCreatedOn());
+            return createdOn.compareTo(oCreatedOn);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+        return 0;
     }
 }

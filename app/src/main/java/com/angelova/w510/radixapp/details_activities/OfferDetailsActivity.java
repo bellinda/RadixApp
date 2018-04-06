@@ -31,6 +31,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -269,6 +271,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
                 responses.add(response);
             }
+
+            Collections.sort(responses);
 
             offer.setOfferResponses(responses);
 
