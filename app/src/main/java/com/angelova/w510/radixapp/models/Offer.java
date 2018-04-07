@@ -24,7 +24,7 @@ public class Offer implements Serializable {
     private List<Uri> documentUris;
     private List<String> fileNames;
     private String createdOn;
-    private List<OfferResponse> offerResponses;
+    private List<Response> responses;
     private boolean gotResponse;
 
     public String getId() {
@@ -131,12 +131,12 @@ public class Offer implements Serializable {
         this.createdOn = createdOn;
     }
 
-    public List<OfferResponse> getOfferResponses() {
-        return offerResponses;
+    public List<Response> getResponses() {
+        return responses;
     }
 
-    public void setOfferResponses(List<OfferResponse> offerResponses) {
-        this.offerResponses = offerResponses;
+    public void setResponses(List<Response> responses) {
+        this.responses = responses;
     }
 
     public boolean isGotResponse() {

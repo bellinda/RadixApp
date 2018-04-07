@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
-import com.angelova.w510.radixapp.models.OfferResponse;
+import com.angelova.w510.radixapp.models.Response;
 import com.angelova.w510.radixapp.models.Profile;
 import com.google.gson.Gson;
 
@@ -27,12 +27,12 @@ import java.util.TimeZone;
  * Created by W510 on 18.3.2018 г..
  */
 
-public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
+public class ResponsesAdapter extends ArrayAdapter<Response> {
 
     private Context context;
     public static final String SHARED_PROFILE_KEY = "profile";
 
-    public ResponsesAdapter(Context context, List<OfferResponse> responses) {
+    public ResponsesAdapter(Context context, List<Response> responses) {
         super(context, R.layout.respones_list_item, responses);
         this.context = context;
     }
@@ -40,7 +40,7 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
     @Override
     @NonNull
     public View getView(int position, View convertView, ViewGroup parent) {
-        final OfferResponse response = getItem(position);
+        final Response response = getItem(position);
         ResponsesAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -74,7 +74,7 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         return convertView;
     }
 
-    private String buildResponseFromAdminContent(OfferResponse response) {
+    private String buildResponseFromAdminContent(Response response) {
         StringBuilder content = new StringBuilder();
         String expectedDeliveryDate = convertServerDateToUserTimeZone(response.getExpectedDeliveryDate());
         if(response.getCountPer().equalsIgnoreCase("pages")) {
@@ -90,7 +90,7 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         return content.toString();
     }
 
-    private String buildAdminFooterText(OfferResponse response) {
+    private String buildAdminFooterText(Response response) {
         StringBuilder builder = new StringBuilder();
         builder.append("Radix Services, ");
 
@@ -109,7 +109,7 @@ public class ResponsesAdapter extends ArrayAdapter<OfferResponse> {
         return builder.toString();
     }
 
-    private String buildUserFooterText(OfferResponse response) {
+    private String buildUserFooterText(Response response) {
         StringBuilder builder = new StringBuilder();
         builder.append(getProfile().getName());
         builder.append(", ");

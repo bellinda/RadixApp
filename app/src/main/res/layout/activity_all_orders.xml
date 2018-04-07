@@ -154,10 +154,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:src="@mipmap/ic_add"
+            android:src="@drawable/fab_add"
             app:layout_anchor="@id/listView"
             app:layout_anchorGravity="bottom|right|end"
             app:fab_shadow="true"
+            app:fab_shadowColor="#66000000"
+            app:fab_shadowRadius="4dp"
+            app:fab_shadowXOffset="1dp"
+            app:fab_shadowYOffset="3dp"
             app:fab_colorNormal="@color/colorPrimary"/>
 
     </android.support.design.widget.CoordinatorLayout>

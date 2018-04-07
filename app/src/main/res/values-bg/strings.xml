@@ -79,6 +79,7 @@
     <string name="all_offers_pending">Изчакващи</string>
     <string name="all_offers_with_response">Получили отговор</string>
     <string name="no_responses_received_text">Няма получени отговори за тази оферта. Моля проверете отново по-късно.</string>
+    <string name="no_responses_for_order_received_text">Няма получени отговори за тази поръчка. Моля проверете отново по-късно.</string>
 
     <string name="all_orders_not_processed">Необработени</string>
     <string name="all_orders_in_progress">Обработват се</string>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.angelova.w510.radixapp.details_activities.OfferDetailsActivity">
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"
+        android:id="@+id/menu_top_guideline"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"
+        android:id="@+id/files_count_top_guideline"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45"
+        android:id="@+id/menu_bottom_guideline"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/header_bottom_guideline"
+        app:layout_constraintGuide_percent="0.07"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/main_info_bottom_guideline"
+        app:layout_constraintGuide_percent="0.98"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/button_top_guideline"
+        app:layout_constraintGuide_percent="0.9"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/button_left_guideline"
+        app:layout_constraintGuide_percent="0.5"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/button_right_guideline"
+        app:layout_constraintGuide_percent="0.97"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/header_bottom_guideline"
+        android:id="@+id/header_title"
+        android:background="@color/menu_icons_color"
+        tools:text="Order RO0005"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:textSize="@dimen/lists_header_text_size" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/header_title"
+        app:layout_constraintBottom_toTopOf="@id/files_count_top_guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            tools:text="EN"
+            android:textSize="60sp"
+            android:gravity="center"
+            android:id="@+id/from_lang"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/to_arrow"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            tools:text="BG"
+            android:textSize="60sp"
+            android:gravity="center"
+            android:id="@+id/to_lang"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/files_count_top_guideline"
+        app:layout_constraintBottom_toTopOf="@id/menu_top_guideline"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:text="Sent on: 04 Feb 2018"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:id="@+id/sent_on"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:text="2 files(s)"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:id="@+id/files_count"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu_top_guideline"
+        app:layout_constraintBottom_toTopOf="@id/menu_bottom_guideline"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:id="@+id/menu_header">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Main information"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@color/colorPrimary"
+            android:id="@+id/main_info_item"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Responses"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@color/offer_details_not_active_item_color"
+            android:id="@+id/responses_item"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/menu_header"
+        app:layout_constraintBottom_toTopOf="@id/main_info_bottom_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/main_info_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Full Name"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Gabriela Yonkova"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/full_name"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Order Type"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Normal"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/order_type"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Translation Type"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Non-specialized"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/translation_type"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Notes to your order"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Some long notes to check if a text in multiple lines will look good in this screen."
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/notes"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Email for response"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="gabito_ang@abv.bg"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/email"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phone number"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="0888777999"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/phone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Desired delivery date"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="11 Mar 2018, 09:00"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/des_del_date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="List of documents"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="something.pdf\nanything.docx\nnothing.txt"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:id="@+id/documents"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ListView
+        android:id="@+id/responses_listview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/menu_header"
+        app:layout_constraintBottom_toTopOf="@id/button_top_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:divider="@android:color/transparent"
+        android:visibility="gone"></ListView>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/button_right_guideline"
+        app:menu_fab_size="normal"
+        app:menu_showShadow="true"
+        app:menu_shadowColor="#66000000"
+        app:menu_shadowRadius="4dp"
+        app:menu_shadowXOffset="1dp"
+        app:menu_shadowYOffset="3dp"
+        app:menu_colorNormal="@color/colorPrimary"
+        app:menu_colorPressed="@color/colorPrimaryDark"
+        app:menu_colorRipple="#99FFFFFF"
+        app:menu_animationDelayPerItem="50"
+        app:menu_icon="@drawable/fab_add"
+        app:menu_buttonSpacing="0dp"
+        app:menu_labels_margin="0dp"
+        app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        app:menu_labels_paddingTop="4dp"
+        app:menu_labels_paddingRight="8dp"
+        app:menu_labels_paddingBottom="4dp"
+        app:menu_labels_paddingLeft="8dp"
+        app:menu_labels_padding="8dp"
+        app:menu_labels_textColor="#FFFFFF"
+        app:menu_labels_textSize="14sp"
+        app:menu_labels_cornerRadius="3dp"
+        app:menu_labels_colorNormal="#333333"
+        app:menu_labels_colorPressed="#444444"
+        app:menu_labels_colorRipple="#66FFFFFF"
+        app:menu_labels_showShadow="true"
+        app:menu_labels_singleLine="false"
+        app:menu_labels_ellipsize="none"
+        app:menu_labels_maxLines="-1"
+        app:menu_labels_position="left"
+        app:menu_openDirection="up"
+        app:menu_backgroundColor="@android:color/transparent"
+        android:visibility="gone">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_send"
+            app:fab_label="Send response"
+            app:fab_size="normal"
+            style="@style/MenuButtonsStyle"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_confirm"
+            app:fab_label="Confirm order"
+            app:fab_size="normal"
+            style="@style/MenuButtonsStyle"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_reject"
+            app:fab_label="Reject order"
+            app:fab_size="normal"
+            style="@style/MenuButtonsStyle"/>
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/menu_header"
+        app:layout_constraintBottom_toTopOf="@id/add_new_response_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/no_responses_for_order_received_text"
+        android:gravity="center"
+        android:id="@+id/no_responses_view"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/main_info_bottom_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/colorAccent"/>
+</android.support.constraint.ConstraintLayout>

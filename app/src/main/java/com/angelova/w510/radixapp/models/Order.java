@@ -2,14 +2,16 @@ package com.angelova.w510.radixapp.models;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by W510 on 4.2.2018 г..
  */
 
-public class Order {
+public class Order implements Serializable {
 
+    private String id;
     private String name;
     private String fromLanguage;
     private String toLanguage;
@@ -28,6 +30,16 @@ public class Order {
     private List<String> allFileNames;
     private boolean isReady;
     private String createdOn;
+    private List<Response> responses;
+    private boolean gotResponse;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -171,5 +183,21 @@ public class Order {
 
     public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public List<Response> getResponses() {
+        return responses;
+    }
+
+    public void setOrderResponses(List<Response> responses) {
+        this.responses = responses;
+    }
+
+    public boolean isGotResponse() {
+        return gotResponse;
+    }
+
+    public void setGotResponse(boolean gotResponse) {
+        this.gotResponse = gotResponse;
     }
 }

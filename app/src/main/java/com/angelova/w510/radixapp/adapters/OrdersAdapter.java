@@ -1,6 +1,7 @@
 package com.angelova.w510.radixapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
+import com.angelova.w510.radixapp.details_activities.OrderDetailsActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 
@@ -35,7 +37,7 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
     @Override
     @NonNull
     public View getView(int position, View convertView, ViewGroup parent) {
-        Order order = getItem(position);
+        final Order order = getItem(position);
         OrdersAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -61,7 +63,11 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
         viewHolder.filesCount.setText(String.format(Locale.US, "%d file(s)", order.getAllFileNames().size()));
         if(order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
             viewHolder.submittedOn.setText(String.format(Locale.US, "Sent On: %s", order.getCreatedOn()));
-            viewHolder.statusIcon.setBackgroundResource(R.drawable.ic_sand_clock);
+            if(order.isGotResponse()) {
+                viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_got_response);
+            } else {
+                viewHolder.statusIcon.setBackgroundResource(R.drawable.ic_sand_clock);
+            }
         } else if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate()) && !order.isReady()) {
             viewHolder.submittedOn.setText(String.format(Locale.US, "Expected delivery date:\n%s", order.getExpectedDeliveryDate()));
             viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_progress);
@@ -74,7 +80,9 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
         viewHolder.viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, OrderDetailsActivity.class);
+                intent.putExtra("order", order);
+                context.startActivity(intent);
             }
         });
 

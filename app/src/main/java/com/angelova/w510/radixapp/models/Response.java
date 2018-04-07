@@ -11,7 +11,7 @@ import java.util.Locale;
  * Created by W510 on 17.2.2018 г..
  */
 
-public class OfferResponse implements Comparable<OfferResponse> {
+public class Response implements Comparable<Response> {
 
     private String createdOn;
     private String comment;
@@ -96,7 +96,7 @@ public class OfferResponse implements Comparable<OfferResponse> {
     }
 
     @Override
-    public int compareTo(@NonNull OfferResponse o) {
+    public int compareTo(@NonNull Response o) {
         String serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         SimpleDateFormat formatter = new SimpleDateFormat(serverDateFormat, Locale.UK);
         try {

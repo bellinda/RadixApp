@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -16,11 +15,13 @@ import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.ResponsesAdapter;
 import com.angelova.w510.radixapp.dialogs.ResponseDialog;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
-import com.angelova.w510.radixapp.models.Offer;
-import com.angelova.w510.radixapp.models.Response;
+import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
-import com.angelova.w510.radixapp.tasks.GetOfferResponsesTask;
+import com.angelova.w510.radixapp.models.Response;
+import com.angelova.w510.radixapp.tasks.GetOrderResponsesTask;
 import com.angelova.w510.radixapp.tasks.SendResponseTask;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -37,9 +38,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class OfferDetailsActivity extends AppCompatActivity {
+public class OrderDetailsActivity extends AppCompatActivity {
 
-    private Offer offer;
+    private Order mOrder;
+
+    public static final String SHARED_PROFILE_KEY = "profile";
+    private Profile mProfile;
+    private ProgressDialog mLoadingDialog;
 
     private TextView mTitleWithId;
     private TextView mToLang;
@@ -49,8 +54,12 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     private TextView mInfoItem;
     private TextView mResponsesItem;
-    private Button mSendResponseBtn;
+    //private Button mSendResponseBtn;
     private TextView mNoResponsesView;
+    private FloatingActionMenu mFloatingMenu;
+    private FloatingActionButton mSendResponseBtn;
+    private FloatingActionButton mConfirmBtn;
+    private FloatingActionButton mRejectBtn;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -64,25 +73,19 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private ListView mResponsesLayout;
     private ResponsesAdapter mResponsesAdapter;
 
-    public static final String SHARED_PROFILE_KEY = "profile";
-
-    private Profile mProfile;
-
-    private ProgressDialog mLoadingDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer_details);
+        setContentView(R.layout.activity_order_details);
 
         initializeActivity();
     }
 
     private void initializeActivity() {
-        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
                 getString(R.string.loader_dialog_text), true);
 
-        offer = (Offer) getIntent().getSerializableExtra("offer");
+        mOrder = (Order) getIntent().getSerializableExtra("order");
 
         mProfile = getProfile();
 
@@ -92,25 +95,28 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mSentOn = (TextView) findViewById(R.id.sent_on);
         mFilesCount = (TextView) findViewById(R.id.files_count);
 
-        mTitleWithId.setText(String.format(Locale.US, "Offer %s", offer.getId()));
-        mFromLang.setText(getLanguageAbbreviation(offer.getFromLanguage()));
-        mToLang.setText(getLanguageAbbreviation(offer.getToLanguage()));
-        mFilesCount.setText(String.format(Locale.US, "%d file(s)", offer.getFileNames().size()));
-        mSentOn.setText(String.format(Locale.US, "Sent On: %s", offer.getCreatedOn()));
+        mTitleWithId.setText(String.format(Locale.US, "Order %s", mOrder.getId()));
+        mFromLang.setText(getLanguageAbbreviation(mOrder.getFromLanguage()));
+        mToLang.setText(getLanguageAbbreviation(mOrder.getToLanguage()));
+        mFilesCount.setText(String.format(Locale.US, "%d file(s)", mOrder.getAllFileNames().size()));
+        mSentOn.setText(String.format(Locale.US, "Sent On: %s", mOrder.getCreatedOn()));
 
         mInfoItem = (TextView) findViewById(R.id.main_info_item);
         mResponsesItem = (TextView) findViewById(R.id.responses_item);
-        mSendResponseBtn = (Button) findViewById(R.id.add_new_response_btn);
         mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
+        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
+        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
+        mConfirmBtn = (FloatingActionButton) findViewById(R.id.menu_item_confirm);
+        mRejectBtn = (FloatingActionButton) findViewById(R.id.menu_item_reject);
 
         mInfoItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
+                mInfoItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.colorPrimary));
+                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.offer_details_not_active_item_color));
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
-                mSendResponseBtn.setVisibility(View.GONE);
+                mFloatingMenu.setVisibility(View.GONE);
                 mNoResponsesView.setVisibility(View.GONE);
             }
         });
@@ -118,15 +124,15 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mResponsesItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
+                mInfoItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.offer_details_not_active_item_color));
+                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.colorPrimary));
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
-                if(offer.getResponses() != null && offer.getResponses().size() > 0) {
+                if(mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
                     mNoResponsesView.setVisibility(View.GONE);
-                    mSendResponseBtn.setVisibility(View.VISIBLE);
+                    mFloatingMenu.setVisibility(View.VISIBLE);
                 } else {
-                    mSendResponseBtn.setVisibility(View.GONE);
+                    mFloatingMenu.setVisibility(View.GONE);
                     mNoResponsesView.setVisibility(View.VISIBLE);
                 }
             }
@@ -135,13 +141,15 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mSendResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ResponseDialog responseDialog = new ResponseDialog(OfferDetailsActivity.this, new ResponseDialog.DialogClickListener() {
+                ResponseDialog responseDialog = new ResponseDialog(OrderDetailsActivity.this, new ResponseDialog.DialogClickListener() {
                     @Override
                     public void onSendButtonClicked(String comment) {
-                        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+                        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
                                 getString(R.string.send_response_loading_dialog_text), true);
 
-                        new SendResponseTask(OfferDetailsActivity.this, "inquiries/mobile/postResponses", offer.getId(), comment, mProfile.getToken()).execute();
+                        mFloatingMenu.close(true);
+
+                        new SendResponseTask(OrderDetailsActivity.this, "orders/mobile/postResponses", mOrder.getId(), comment, mProfile.getToken()).execute();
                     }
 
                     @Override
@@ -150,6 +158,20 @@ public class OfferDetailsActivity extends AppCompatActivity {
                     }
                 });
                 responseDialog.show();
+            }
+        });
+
+        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        mRejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -165,66 +187,32 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
 
-        mFullName.setText(offer.getName());
-        mOrderType.setText(offer.getOrderType());
-        mTranslationType.setText(offer.getTranslationType());
-        mNotes.setText(offer.getNotes());
-        mEmail.setText(offer.getEmail());
-        mPhone.setText(offer.getPhone());
+        mFullName.setText(mOrder.getName());
+        mOrderType.setText(mOrder.getOrderType());
+        mTranslationType.setText(mOrder.getTranslationType());
+        mNotes.setText(mOrder.getNotes());
+        mEmail.setText(mOrder.getEmail());
+        mPhone.setText(mOrder.getPhone());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy', 'HH:mm");
         try {
-            Date desiredDeliveryDate = inputFormat.parse(offer.getDesiredDeliveryDate());
+            Date desiredDeliveryDate = inputFormat.parse(mOrder.getDesiredDeliveryDate());
             String dateToBeShown = outputFormat.format(desiredDeliveryDate);
             mDesDelDate.setText(dateToBeShown);
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
         StringBuilder documentsListBuilder = new StringBuilder();
-        for(String fileName : offer.getFileNames()) {
+        for(String fileName : mOrder.getAllFileNames()) {
             documentsListBuilder.append(fileName + "\n");
         }
         documentsListBuilder.delete(documentsListBuilder.lastIndexOf("\n"), documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
 
-        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
+        new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();
     }
 
-    private String getLanguageAbbreviation(String language) {
-        switch (language) {
-            case "Bulgarian":
-                return "BG";
-            case "German":
-                return "DE";
-            case "French":
-                return "FR";
-            default:
-                return "EN";
-        }
-    }
-
-    private Profile getProfile() {
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Gson gson = new Gson();
-        Profile profile = new Profile();
-        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
-        if(!json.isEmpty()) {
-            profile = gson.fromJson(json, Profile.class);
-        }
-        return profile;
-    }
-
-    private void saveProfile(Profile profile) {
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefsEditor = appPreferences.edit();
-        Gson gson = new Gson();
-
-        String updatedJson = gson.toJson(profile);
-        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
-        prefsEditor.apply();
-    }
-
-    public void updateOfferDetails(JSONObject receivedResponses) {
+    public void updateOrderDetails(JSONObject receivedResponses) {
         List<Response> responses = new ArrayList<>();
         try {
             JSONArray adminResponses = receivedResponses.getJSONArray("fromAdmin");
@@ -273,9 +261,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
             Collections.sort(responses);
 
-            offer.setResponses(responses);
+            mOrder.setOrderResponses(responses);
 
-            mResponsesAdapter = new ResponsesAdapter(this, offer.getResponses());
+            mResponsesAdapter = new ResponsesAdapter(this, mOrder.getResponses());
             mResponsesLayout.setAdapter(mResponsesAdapter);
 
             mLoadingDialog.hide();
@@ -284,12 +272,36 @@ public class OfferDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private String getLanguageAbbreviation(String language) {
+        switch (language) {
+            case "Bulgarian":
+                return "BG";
+            case "German":
+                return "DE";
+            case "French":
+                return "FR";
+            default:
+                return "EN";
+        }
+    }
+
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
+    }
+
     public void handleSuccessfulResponseUpload() {
         hideLoadingDialog();
-        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
+        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
                 getString(R.string.loader_dialog_text), true);
 
-        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
+        new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();
     }
 
     public void hideLoadingDialog() {

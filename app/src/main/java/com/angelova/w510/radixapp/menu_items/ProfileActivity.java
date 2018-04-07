@@ -223,6 +223,7 @@ public class ProfileActivity extends BaseActivity {
             for(int i = 0; i < receivedData.length(); i++) {
                 JSONObject data = receivedData.getJSONObject(i);
                 Order order = new Order();
+                order.setId(data.getString("consecutiveID"));
                 order.setPhone(data.getString("phone"));
                 order.setEmail(data.getString("email"));
                 order.setOrderType(data.getString("orderType"));
@@ -243,6 +244,7 @@ public class ProfileActivity extends BaseActivity {
                     pe.printStackTrace();
                 }
 
+                order.setGotResponse(data.getBoolean("gotResponse"));
                 JSONArray files = data.getJSONArray("file");
                 List<String> fileNames = new ArrayList<>();
                 for(int j = 0; j < files.length(); j++) {
