@@ -24,6 +24,7 @@ public class Order implements Serializable {
     private String expectedDeliveryDate;
     private String pickUpMethod;
     private String anticipatedPrice;
+    private String anticipatedPriceByAdmin;
     private String inquiryToDelete;
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
@@ -131,6 +132,14 @@ public class Order implements Serializable {
 
     public String getAnticipatedPrice() {
         return anticipatedPrice;
+    }
+
+    public String getAnticipatedPriceByAdmin() {
+        return anticipatedPriceByAdmin;
+    }
+
+    public void setAnticipatedPriceByAdmin(String anticipatedPriceByAdmin) {
+        this.anticipatedPriceByAdmin = anticipatedPriceByAdmin;
     }
 
     public void setAnticipatedPrice(String anticipatedPrice) {

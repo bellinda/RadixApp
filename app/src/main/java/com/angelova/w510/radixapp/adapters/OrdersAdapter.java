@@ -18,8 +18,13 @@ import com.angelova.w510.radixapp.details_activities.OrderDetailsActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by W510 on 17.2.2018 г..
@@ -69,7 +74,19 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
                 viewHolder.statusIcon.setBackgroundResource(R.drawable.ic_sand_clock);
             }
         } else if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate()) && !order.isReady()) {
-            viewHolder.submittedOn.setText(String.format(Locale.US, "Expected delivery date:\n%s", order.getExpectedDeliveryDate()));
+            String expectedDeliveryDate = order.getExpectedDeliveryDate();
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"); //2018-02-04T12:42:35.042Z
+            originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+            targetFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+            String expectedDeliveryDateToBeShown = "";
+            try {
+                Date date = originalFormat.parse(expectedDeliveryDate);
+                expectedDeliveryDateToBeShown = targetFormat.format(date);
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+            viewHolder.submittedOn.setText(String.format(Locale.US, "Expected delivery date:\n%s", expectedDeliveryDateToBeShown));
             viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_progress);
         } else {
             //TODO: to get from backend date when got ready

@@ -6,7 +6,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -70,6 +72,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private TextView mPhone;
     private TextView mDesDelDate;
     private TextView mDocumentsList;
+    private LinearLayout mExpDelDateLayout;
+    private TextView mExpDelDate;
+    private TextView mReceiving;
+    private LinearLayout mAnticipatedPriceByAdminLayout;
+    private TextView mAnticipatedPriceByAdmin;
     private ListView mResponsesLayout;
     private ResponsesAdapter mResponsesAdapter;
 
@@ -184,6 +191,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
         mPhone = (TextView) findViewById(R.id.phone);
         mDesDelDate = (TextView) findViewById(R.id.des_del_date);
         mDocumentsList = (TextView) findViewById(R.id.documents);
+        mExpDelDateLayout = (LinearLayout) findViewById(R.id.exp_del_date_layout);
+        mExpDelDate = (TextView) findViewById(R.id.exp_del_date);
+        mReceiving = (TextView) findViewById(R.id.receiving);
+        mAnticipatedPriceByAdminLayout = (LinearLayout) findViewById(R.id.anticipated_price_layout);
+        mAnticipatedPriceByAdmin = (TextView) findViewById(R.id.anticipated_price);
 
         mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
 
@@ -208,6 +220,29 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
         documentsListBuilder.delete(documentsListBuilder.lastIndexOf("\n"), documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
+        if(mOrder.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(mOrder.getExpectedDeliveryDate())) {
+            try {
+                Date expDeliveryDate = inputFormat.parse(mOrder.getExpectedDeliveryDate());
+                String dateToBeShown = outputFormat.format(expDeliveryDate);
+                mExpDelDate.setText(dateToBeShown);
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+        } else {
+            mExpDelDateLayout.setVisibility(View.GONE);
+        }
+        if(mOrder.getPickUpMethod().equalsIgnoreCase("FO")) {
+            mReceiving.setText("From Office");
+        } else if (mOrder.getPickUpMethod().equalsIgnoreCase("E")) {
+            mReceiving.setText("On Email");
+        } else {
+            mReceiving.setText("By Post");
+        }
+        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin())) {
+            mAnticipatedPriceByAdmin.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
+        } else {
+            mAnticipatedPriceByAdminLayout.setVisibility(View.GONE);
+        }
 
         new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();
     }

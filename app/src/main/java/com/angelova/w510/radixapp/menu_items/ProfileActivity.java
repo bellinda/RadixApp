@@ -257,6 +257,7 @@ public class ProfileActivity extends BaseActivity {
                 order.setAllFileNames(fileNames);
                 order.setPickUpMethod(data.getString("pickupMethod"));
                 order.setAnticipatedPrice(data.getString("anticipatedPrice"));
+                order.setAnticipatedPriceByAdmin(data.getString("anticipatedPriceByAdmin"));
 
                 if(data.has("expectedDeliveryDate") && !data.getString("expectedDeliveryDate").isEmpty()) {
                     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
