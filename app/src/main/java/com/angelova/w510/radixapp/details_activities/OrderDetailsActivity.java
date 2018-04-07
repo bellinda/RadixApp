@@ -238,7 +238,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         } else {
             mReceiving.setText("By Post");
         }
-        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin())) {
+        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin().trim())) {
             mAnticipatedPriceByAdmin.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
         } else {
             mAnticipatedPriceByAdminLayout.setVisibility(View.GONE);
