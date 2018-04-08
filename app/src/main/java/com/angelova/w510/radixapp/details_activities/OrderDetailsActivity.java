@@ -232,11 +232,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
             mExpDelDateLayout.setVisibility(View.GONE);
         }
         if(mOrder.getPickUpMethod().equalsIgnoreCase("FO")) {
-            mReceiving.setText("From Office");
+            mReceiving.setText(getString(R.string.order_delivery_from_office));
         } else if (mOrder.getPickUpMethod().equalsIgnoreCase("E")) {
-            mReceiving.setText("On Email");
+            mReceiving.setText(getString(R.string.order_delivery_on_email));
         } else {
-            mReceiving.setText("By Post");
+            mReceiving.setText(getString(R.string.order_delivery_by_post));
         }
         if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin().trim())) {
             mAnticipatedPriceByAdmin.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
@@ -356,5 +356,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         });
         warning.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
     }
 }

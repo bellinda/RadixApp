@@ -310,4 +310,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
         });
         warning.show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+    }
 }
