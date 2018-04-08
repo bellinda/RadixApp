@@ -146,7 +146,15 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@android:color/transparent"></ListView>
+            android:divider="@android:color/transparent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/all_orders_no_orders_of_type"
+            android:gravity="center"
+            android:id="@+id/no_orders_view"
+            android:visibility="gone"/>
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/add_new_order_btn"

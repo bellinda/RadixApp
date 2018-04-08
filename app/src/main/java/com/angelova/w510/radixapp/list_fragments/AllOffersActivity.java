@@ -20,6 +20,9 @@ import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ScrollDirectionListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AllOffersActivity extends BaseActivity {
 
     public static final String SHARED_PROFILE_KEY = "profile";
@@ -30,6 +33,8 @@ public class AllOffersActivity extends BaseActivity {
     private TextView mPendingOffersCount;
     private TextView mOffersWithResponseCount;
     private CoordinatorLayout mMainContentLayout;
+    private TextView mNoOffersView;
+    private TextView mTitleView;
 
     private Profile mProfile;
 
@@ -47,6 +52,8 @@ public class AllOffersActivity extends BaseActivity {
         mAddNewOfferBtn = (FloatingActionButton) findViewById(R.id.add_new_offer_btn);
         mPendingOffersCount = (TextView) findViewById(R.id.pending_offers_count);
         mOffersWithResponseCount = (TextView) findViewById(R.id.answered_offers_count);
+        mTitleView = (TextView) findViewById(R.id.header_title);
+        mNoOffersView = (TextView) findViewById(R.id.no_offers_view);
         mProfile = getProfile();
 
         mOffersAdapter = new OffersAdapter(this, mProfile.getOffers());
@@ -88,6 +95,50 @@ public class AllOffersActivity extends BaseActivity {
 
         mPendingOffersCount.setText(getPendingOffersCount() + "");
         mOffersWithResponseCount.setText(getOffersWithResponseCount() + "");
+
+        mTitleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mNoOffersView.getVisibility() == View.VISIBLE) {
+                    mNoOffersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                }
+                mOffersAdapter = new OffersAdapter(AllOffersActivity.this, mProfile.getOffers());
+                mListView.setAdapter(mOffersAdapter);
+            }
+        });
+
+        mPendingOffersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Offer> pendingOffers = getPendingOffers();
+                if(pendingOffers.size() > 0) {
+                    mNoOffersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                    mOffersAdapter = new OffersAdapter(AllOffersActivity.this, pendingOffers);
+                    mListView.setAdapter(mOffersAdapter);
+                } else {
+                    mListView.setVisibility(View.GONE);
+                    mNoOffersView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mOffersWithResponseCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Offer> offersWithResponse = getOffersWithResponse();
+                if(offersWithResponse.size() > 0) {
+                    mNoOffersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                    mOffersAdapter = new OffersAdapter(AllOffersActivity.this, offersWithResponse);
+                    mListView.setAdapter(mOffersAdapter);
+                } else {
+                    mListView.setVisibility(View.GONE);
+                    mNoOffersView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private Profile getProfile() {
@@ -120,5 +171,25 @@ public class AllOffersActivity extends BaseActivity {
             }
         }
         return offersWithResponseCount;
+    }
+
+    private List<Offer> getPendingOffers() {
+        List<Offer> pendingOffers = new ArrayList<>();
+        for(Offer offer : mProfile.getOffers()) {
+            if(!offer.isGotResponse()) {
+                pendingOffers.add(offer);
+            }
+        }
+        return pendingOffers;
+    }
+
+    private List<Offer> getOffersWithResponse() {
+        List<Offer> offersWithResponse = new ArrayList<>();
+        for(Offer offer : mProfile.getOffers()) {
+            if(offer.isGotResponse()) {
+                offersWithResponse.add(offer);
+            }
+        }
+        return offersWithResponse;
     }
 }

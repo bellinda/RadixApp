@@ -20,14 +20,19 @@ import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ScrollDirectionListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AllOrdersActivity extends BaseActivity {
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
+    private TextView mTitleView;
     private TextView mNotProcessedOrdersCount;
     private TextView mInProgressOrdersCount;
     private TextView mReadyOrdersCount;
     private ListView mListView;
+    private TextView mNoOrdersView;
     private FloatingActionButton mAddNewOrderBtn;
     private OrdersAdapter mOrdersAdapter;
 
@@ -42,10 +47,12 @@ public class AllOrdersActivity extends BaseActivity {
     }
 
     private void initializeActivity() {
+        mTitleView = (TextView) findViewById(R.id.header_title);
         mNotProcessedOrdersCount = (TextView) findViewById(R.id.not_processed_orders_count);
         mInProgressOrdersCount = (TextView) findViewById(R.id.in_progress_orders_count);
         mReadyOrdersCount = (TextView) findViewById(R.id.ready_orders_count);
         mListView = (ListView) findViewById(R.id.listView);
+        mNoOrdersView = (TextView) findViewById(R.id.no_orders_view);
         mAddNewOrderBtn = (FloatingActionButton) findViewById(R.id.add_new_order_btn);
 
         mProfile = getProfile();
@@ -87,6 +94,66 @@ public class AllOrdersActivity extends BaseActivity {
         mNotProcessedOrdersCount.setText(getNotProcessedOrdersCount() + "");
         mInProgressOrdersCount.setText(getInProgressOrdersCount() + "");
         mReadyOrdersCount.setText(getReadyOrdersCount() + "");
+
+        mTitleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mNoOrdersView.getVisibility() == View.VISIBLE) {
+                    mNoOrdersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                }
+                mOrdersAdapter = new OrdersAdapter(AllOrdersActivity.this, mProfile.getOrders());
+                mListView.setAdapter(mOrdersAdapter);
+            }
+        });
+
+        mNotProcessedOrdersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Order> notProcessedOrders = getNotProcessedOrders();
+                if(notProcessedOrders.size() > 0) {
+                    mNoOrdersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                    mOrdersAdapter = new OrdersAdapter(AllOrdersActivity.this, notProcessedOrders);
+                    mListView.setAdapter(mOrdersAdapter);
+                } else {
+                    mListView.setVisibility(View.GONE);
+                    mNoOrdersView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mInProgressOrdersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Order> ordersInProgress = getInProgressOrders();
+                if(ordersInProgress.size() > 0) {
+                    mNoOrdersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                    mOrdersAdapter = new OrdersAdapter(AllOrdersActivity.this, ordersInProgress);
+                    mListView.setAdapter(mOrdersAdapter);
+                } else {
+                    mListView.setVisibility(View.GONE);
+                    mNoOrdersView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mReadyOrdersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Order> readyOrders = getReadyOrders();
+                if(readyOrders.size() > 0) {
+                    mNoOrdersView.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
+                    mOrdersAdapter = new OrdersAdapter(AllOrdersActivity.this, readyOrders);
+                    mListView.setAdapter(mOrdersAdapter);
+                } else {
+                    mListView.setVisibility(View.GONE);
+                    mNoOrdersView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private Profile getProfile() {
@@ -128,5 +195,35 @@ public class AllOrdersActivity extends BaseActivity {
             }
         }
         return readyOrdersCount;
+    }
+
+    private List<Order> getNotProcessedOrders() {
+        List<Order> notProcessedOrders = new ArrayList<>();
+        for(Order order : mProfile.getOrders()) {
+            if(order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                notProcessedOrders.add(order);
+            }
+        }
+        return notProcessedOrders;
+    }
+
+    private List<Order> getInProgressOrders() {
+        List<Order> ordersInProgress = new ArrayList<>();
+        for(Order order : mProfile.getOrders()) {
+            if(order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                ordersInProgress.add(order);
+            }
+        }
+        return ordersInProgress;
+    }
+
+    private List<Order> getReadyOrders() {
+        List<Order> readyOrders = new ArrayList<>();
+        for(Order order : mProfile.getOrders()) {
+            if(order.isReady()) {
+                readyOrders.add(order);
+            }
+        }
+        return readyOrders;
     }
 }
