@@ -565,7 +565,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/menu_header"
-        app:layout_constraintBottom_toTopOf="@id/add_new_response_btn"
+        app:layout_constraintBottom_toTopOf="@id/button_top_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/no_responses_for_order_received_text"

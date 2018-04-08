@@ -1,6 +1,7 @@
 package com.angelova.w510.radixapp.details_activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
@@ -16,11 +17,14 @@ import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.ResponsesAdapter;
 import com.angelova.w510.radixapp.dialogs.ResponseDialog;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.menu_items.OrderActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Response;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.GetOfferResponsesTask;
 import com.angelova.w510.radixapp.tasks.SendResponseTask;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -49,8 +53,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     private TextView mInfoItem;
     private TextView mResponsesItem;
-    private Button mSendResponseBtn;
     private TextView mNoResponsesView;
+    private FloatingActionMenu mFloatingMenu;
+    private FloatingActionButton mSendResponseBtn;
+    private FloatingActionButton mConvertBtn;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -100,8 +106,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         mInfoItem = (TextView) findViewById(R.id.main_info_item);
         mResponsesItem = (TextView) findViewById(R.id.responses_item);
-        mSendResponseBtn = (Button) findViewById(R.id.add_new_response_btn);
         mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
+        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
+        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
+        mConvertBtn = (FloatingActionButton) findViewById(R.id.menu_item_convert);
 
         mInfoItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +118,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
-                mSendResponseBtn.setVisibility(View.GONE);
+                mFloatingMenu.setVisibility(View.GONE);
                 mNoResponsesView.setVisibility(View.GONE);
             }
         });
@@ -124,9 +132,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 mResponsesLayout.setVisibility(View.VISIBLE);
                 if(offer.getResponses() != null && offer.getResponses().size() > 0) {
                     mNoResponsesView.setVisibility(View.GONE);
-                    mSendResponseBtn.setVisibility(View.VISIBLE);
+                    mFloatingMenu.setVisibility(View.VISIBLE);
                 } else {
-                    mSendResponseBtn.setVisibility(View.GONE);
+                    mFloatingMenu.setVisibility(View.GONE);
                     mNoResponsesView.setVisibility(View.VISIBLE);
                 }
             }
@@ -141,6 +149,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
                         mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
                                 getString(R.string.send_response_loading_dialog_text), true);
 
+                        mFloatingMenu.close(true);
+
                         new SendResponseTask(OfferDetailsActivity.this, "inquiries/mobile/postResponses", offer.getId(), comment, mProfile.getToken()).execute();
                     }
 
@@ -150,6 +160,16 @@ public class OfferDetailsActivity extends AppCompatActivity {
                     }
                 });
                 responseDialog.show();
+            }
+        });
+
+        mConvertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OfferDetailsActivity.this, OrderActivity.class);
+                intent.putExtra("offerDetails", offer);
+                startActivity(intent);
+                finish();
             }
         });
 

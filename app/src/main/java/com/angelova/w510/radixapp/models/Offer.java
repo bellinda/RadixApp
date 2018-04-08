@@ -21,6 +21,7 @@ public class Offer implements Serializable {
     private String email;
     private String phone;
     private String desiredDeliveryDate;
+    private String expectedDeliveryDate;
     private List<Uri> documentUris;
     private List<String> fileNames;
     private String createdOn;
@@ -105,6 +106,14 @@ public class Offer implements Serializable {
 
     public void setDesiredDeliveryDate(String desiredDeliveryDate) {
         this.desiredDeliveryDate = desiredDeliveryDate;
+    }
+
+    public String getExpectedDeliveryDate() {
+        return expectedDeliveryDate;
+    }
+
+    public void setExpectedDeliveryDate(String expectedDeliveryDate) {
+        this.expectedDeliveryDate = expectedDeliveryDate;
     }
 
     public List<Uri> getDocumentUris () {

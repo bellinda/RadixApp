@@ -41,6 +41,7 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.requests_utils.ServiceGenerator;
@@ -394,6 +395,11 @@ public class OrderActivity extends BaseActivity {
                 }
             }
         });
+
+        if(getIntent().hasExtra("offerDetails")) {
+            Offer offer = (Offer) getIntent().getSerializableExtra("offerDetails");
+            showOfferDetails(offer);
+        }
     }
 
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -489,6 +495,81 @@ public class OrderActivity extends BaseActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showOfferDetails(Offer offer) {
+        mHasOfferRb.setChecked(true);
+        mOfferIdInput.setText(offer.getId());
+
+        if(mCurNameRb.getText().toString().trim().equals(offer.getName().trim())) {
+            mCurNameRb.setChecked(true);
+        } else {
+            mOtherNameRb.setChecked(true);
+            mNameInput.setText(offer.getName());
+        }
+        mFromSpinner.setSelection(langAdapter.getPosition(offer.getFromLanguage()));
+        mToSpinner.setSelection(langAdapter.getPosition(offer.getToLanguage()));
+
+        if(offer.getOrderType().equalsIgnoreCase(getString(R.string.offer_normal_order))) {
+            mNormalOrderRb.setChecked(true);
+        } else {
+            mExpressOrderRb.setChecked(true);
+        }
+
+        if(offer.getTranslationType().equalsIgnoreCase(getString(R.string.offer_translation_special))) {
+            mSpecTransRb.setChecked(true);
+        } else {
+            mNonSpecTranRb.setChecked(true);
+        }
+
+        mNotesInput.setText(offer.getNotes());
+
+        if(mCurEmailRb.getText().toString().trim().equals(offer.getEmail().trim())) {
+            mCurEmailRb.setChecked(true);
+        } else {
+            mOtherEmailRb.setChecked(true);
+            mEmailInput.setText(offer.getEmail());
+        }
+
+        mPhoneInput.setText(offer.getPhone());
+
+        String myFormat = "yyyy-MM-dd'T'HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if(offer.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(offer.getExpectedDeliveryDate())) {
+            try {
+                Date desiredDeliveryDateAsDate = sdf.parse(offer.getExpectedDeliveryDate());
+                myCalendar.setTime(desiredDeliveryDateAsDate);
+                updateDeliveryDate();
+                updateDeliveryTime();
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+        } else if (offer.getDesiredDeliveryDate() != null && !TextUtils.isEmpty(offer.getDesiredDeliveryDate())) {
+            try {
+                Date desiredDeliveryDateAsDate = sdf.parse(offer.getDesiredDeliveryDate());
+                myCalendar.setTime(desiredDeliveryDateAsDate);
+                updateDeliveryDate();
+                updateDeliveryTime();
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+        }
+
+        List<String> fileNames = offer.getFileNames();
+        for (int i = 0; i < fileNames.size(); i++) {
+            String fullFileName = fileNames.get(i);
+            //get name after second _
+            String erasedFileName = fullFileName.substring(fullFileName.indexOf("_", fullFileName.indexOf("_") + 1) + 1);
+            selectedFilesNames.add(erasedFileName);
+            existingFileNames.add(fileNames.get(i));
+            mSelectedFilesGroup.setTags(selectedFilesNames);
+            if (mSelectedFilesLabel.getVisibility() == View.GONE) {
+                mSelectedFilesLabel.setVisibility(View.VISIBLE);
+            }
+        }
+
+        //TODO: to get anticipatedPriceByAdmin from backend
     }
 
     public void showOfferDetails(JSONObject receivedData) {

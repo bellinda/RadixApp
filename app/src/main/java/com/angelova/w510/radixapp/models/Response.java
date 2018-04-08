@@ -2,6 +2,7 @@ package com.angelova.w510.radixapp.models;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Locale;
  * Created by W510 on 17.2.2018 г..
  */
 
-public class Response implements Comparable<Response> {
+public class Response implements Comparable<Response>, Serializable {
 
     private String createdOn;
     private String comment;
