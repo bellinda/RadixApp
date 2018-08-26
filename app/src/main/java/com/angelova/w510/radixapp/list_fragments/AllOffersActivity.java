@@ -56,8 +56,12 @@ public class AllOffersActivity extends BaseActivity {
         mNoOffersView = (TextView) findViewById(R.id.no_offers_view);
         mProfile = getProfile();
 
-        mOffersAdapter = new OffersAdapter(this, mProfile.getOffers());
-        mListView.setAdapter(mOffersAdapter);
+        if (mProfile.getOffers() != null && mProfile.getOffers().size() > 0) {
+            mOffersAdapter = new OffersAdapter(this, mProfile.getOffers());
+            mListView.setAdapter(mOffersAdapter);
+        } else {
+            mNoOffersView.setVisibility(View.VISIBLE);
+        }
 
         mAddNewOfferBtn.attachToListView(mListView, new ScrollDirectionListener() {
             @Override
@@ -154,9 +158,11 @@ public class AllOffersActivity extends BaseActivity {
 
     private int getPendingOffersCount() {
         int pendingOffersCount = 0;
-        for(Offer offer : mProfile.getOffers()) {
-            if(!offer.isGotResponse()) {
-                pendingOffersCount++;
+        if (mProfile.getOffers() != null) {
+            for (Offer offer : mProfile.getOffers()) {
+                if (!offer.isGotResponse()) {
+                    pendingOffersCount++;
+                }
             }
         }
 
@@ -165,9 +171,11 @@ public class AllOffersActivity extends BaseActivity {
 
     private int getOffersWithResponseCount() {
         int offersWithResponseCount = 0;
-        for(Offer offer : mProfile.getOffers()) {
-            if(offer.isGotResponse()) {
-                offersWithResponseCount++;
+        if (mProfile.getOffers() != null) {
+            for (Offer offer : mProfile.getOffers()) {
+                if (offer.isGotResponse()) {
+                    offersWithResponseCount++;
+                }
             }
         }
         return offersWithResponseCount;
@@ -175,9 +183,11 @@ public class AllOffersActivity extends BaseActivity {
 
     private List<Offer> getPendingOffers() {
         List<Offer> pendingOffers = new ArrayList<>();
-        for(Offer offer : mProfile.getOffers()) {
-            if(!offer.isGotResponse()) {
-                pendingOffers.add(offer);
+        if(mProfile.getOffers() != null) {
+            for (Offer offer : mProfile.getOffers()) {
+                if (!offer.isGotResponse()) {
+                    pendingOffers.add(offer);
+                }
             }
         }
         return pendingOffers;
@@ -185,9 +195,11 @@ public class AllOffersActivity extends BaseActivity {
 
     private List<Offer> getOffersWithResponse() {
         List<Offer> offersWithResponse = new ArrayList<>();
-        for(Offer offer : mProfile.getOffers()) {
-            if(offer.isGotResponse()) {
-                offersWithResponse.add(offer);
+        if(mProfile.getOffers() != null) {
+            for (Offer offer : mProfile.getOffers()) {
+                if (offer.isGotResponse()) {
+                    offersWithResponse.add(offer);
+                }
             }
         }
         return offersWithResponse;

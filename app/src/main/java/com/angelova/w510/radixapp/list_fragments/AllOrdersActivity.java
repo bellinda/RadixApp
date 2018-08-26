@@ -57,8 +57,12 @@ public class AllOrdersActivity extends BaseActivity {
 
         mProfile = getProfile();
 
-        mOrdersAdapter = new OrdersAdapter(this, mProfile.getOrders());
-        mListView.setAdapter(mOrdersAdapter);
+        if (mProfile.getOrders() != null && mProfile.getOrders().size() > 0) {
+            mOrdersAdapter = new OrdersAdapter(this, mProfile.getOrders());
+            mListView.setAdapter(mOrdersAdapter);
+        } else {
+            mNoOrdersView.setVisibility(View.VISIBLE);
+        }
 
         mAddNewOrderBtn.attachToListView(mListView, new ScrollDirectionListener() {
             @Override
@@ -169,9 +173,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private int getNotProcessedOrdersCount() {
         int notProcessedOrdersCount = 0;
-        for(Order order : mProfile.getOrders()) {
-            if(order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                notProcessedOrdersCount++;
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                    notProcessedOrdersCount++;
+                }
             }
         }
         return notProcessedOrdersCount;
@@ -179,9 +185,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private int getInProgressOrdersCount() {
         int inProgressOrdersCount = 0;
-        for(Order order : mProfile.getOrders()) {
-            if(order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                inProgressOrdersCount++;
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                    inProgressOrdersCount++;
+                }
             }
         }
         return inProgressOrdersCount;
@@ -189,9 +197,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private int getReadyOrdersCount() {
         int readyOrdersCount = 0;
-        for(Order order : mProfile.getOrders()) {
-            if(order.isReady()) {
-                readyOrdersCount++;
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.isReady()) {
+                    readyOrdersCount++;
+                }
             }
         }
         return readyOrdersCount;
@@ -199,9 +209,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private List<Order> getNotProcessedOrders() {
         List<Order> notProcessedOrders = new ArrayList<>();
-        for(Order order : mProfile.getOrders()) {
-            if(order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                notProcessedOrders.add(order);
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                    notProcessedOrders.add(order);
+                }
             }
         }
         return notProcessedOrders;
@@ -209,9 +221,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private List<Order> getInProgressOrders() {
         List<Order> ordersInProgress = new ArrayList<>();
-        for(Order order : mProfile.getOrders()) {
-            if(order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                ordersInProgress.add(order);
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
+                    ordersInProgress.add(order);
+                }
             }
         }
         return ordersInProgress;
@@ -219,9 +233,11 @@ public class AllOrdersActivity extends BaseActivity {
 
     private List<Order> getReadyOrders() {
         List<Order> readyOrders = new ArrayList<>();
-        for(Order order : mProfile.getOrders()) {
-            if(order.isReady()) {
-                readyOrders.add(order);
+        if (mProfile.getOrders() != null) {
+            for (Order order : mProfile.getOrders()) {
+                if (order.isReady()) {
+                    readyOrders.add(order);
+                }
             }
         }
         return readyOrders;

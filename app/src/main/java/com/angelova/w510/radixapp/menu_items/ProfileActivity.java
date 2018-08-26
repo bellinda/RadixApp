@@ -297,8 +297,16 @@ public class ProfileActivity extends BaseActivity {
 
     public void handleSuccessWithoutOrdersYet() {
         //everything is downloaded => show data + hide the loading message
-        mOffersCount.setText(mProfile.getOffers().size() + "");
-        mOrdersCount.setText(mProfile.getOrders().size() + "");
+        if (mProfile.getOffers() != null) {
+            mOffersCount.setText(mProfile.getOffers().size() + "");
+        } else {
+            mOffersCount.setText("0");
+        }
+        if (mProfile.getOrders() != null) {
+            mOrdersCount.setText(mProfile.getOrders().size() + "");
+        } else {
+            mOrdersCount.setText("0");
+        }
         loadingDialog.hide();
     }
 

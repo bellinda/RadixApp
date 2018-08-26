@@ -36,7 +36,7 @@
         <activity android:name=".list_fragments.AllOffersActivity" />
         <activity android:name=".list_fragments.AllOrdersActivity" />
         <activity android:name=".details_activities.OfferDetailsActivity" />
-        <activity android:name=".details_activities.OrderDetailsActivity"></activity>
+        <activity android:name=".details_activities.OrderDetailsActivity"/>
     </application>
 
 </manifest>
