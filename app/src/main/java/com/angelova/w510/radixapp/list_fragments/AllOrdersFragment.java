@@ -31,20 +31,10 @@ public class AllOrdersFragment extends Fragment {
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
-    //private TextView mTitleView;
-    private LinearLayout mAllOrdersCount;
-    private LinearLayout mNotProcessedOrdersCount;
-    private LinearLayout mInProgressOrdersCount;
-    private LinearLayout mReadyOrdersCount;
     private ListView mListView;
     private TextView mNoOrdersView;
     private FloatingActionButton mAddNewOrderBtn;
     private OrdersAdapter mOrdersAdapter;
-
-//    private View mAllUnderscore;
-//    private View mNotProcessedUnderscore;
-//    private View mInProgressUnderscore;
-//    private View mReadyUnderscore;
 
     private TextView mAllTitle;
     private TextView mNotProcessedTitle;
@@ -62,17 +52,9 @@ public class AllOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_orders, container, false);
-        mAllOrdersCount = (LinearLayout) rootView.findViewById(R.id.all_orders_count);
-        mNotProcessedOrdersCount = (LinearLayout) rootView.findViewById(R.id.not_processed_orders_count);
-        mInProgressOrdersCount = (LinearLayout) rootView.findViewById(R.id.in_progress_orders_count);
-        mReadyOrdersCount = (LinearLayout) rootView.findViewById(R.id.ready_orders_count);
         mListView = (ListView) rootView.findViewById(R.id.listView);
         mNoOrdersView = (TextView) rootView.findViewById(R.id.no_orders_view);
         mAddNewOrderBtn = (FloatingActionButton) rootView.findViewById(R.id.add_new_order_btn);
-//        mAllUnderscore = rootView.findViewById(R.id.all_underscore);
-//        mNotProcessedUnderscore = rootView.findViewById(R.id.not_processed_underscore);
-//        mInProgressUnderscore = rootView.findViewById(R.id.in_progress_underscore);
-//        mReadyUnderscore = rootView.findViewById(R.id.ready_underscore);
 
         mAllTitle = (TextView) rootView.findViewById(R.id.all_title);
         mNotProcessedTitle = (TextView) rootView.findViewById(R.id.not_processed_title);
@@ -118,23 +100,7 @@ public class AllOrdersFragment extends Fragment {
             }
         });
 
-//        mTitleView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(mNoOrdersView.getVisibility() == View.VISIBLE) {
-//                    mNoOrdersView.setVisibility(View.GONE);
-//                    mListView.setVisibility(View.VISIBLE);
-//                }
-//                if (mProfile.getOrders() != null) {
-//                    mOrdersAdapter = new OrdersAdapter(AllOrdersFragment.this, mProfile.getOrders());
-//                } else {
-//                    mOrdersAdapter = new OrdersAdapter(AllOrdersFragment.this, new ArrayList<Order>());
-//                }
-//                mListView.setAdapter(mOrdersAdapter);
-//            }
-//        });
-
-        mAllOrdersCount.setOnClickListener(new View.OnClickListener() {
+        mAllTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(getProfile().getOrders() != null && getProfile().getOrders().size() > 0) {
@@ -147,12 +113,12 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.VISIBLE);
                 }
                 removeAllMarks();
-                mAllOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mAllTitle.setTextColor(getResources().getColor(R.color.white));
             }
         });
 
-        mNotProcessedOrdersCount.setOnClickListener(new View.OnClickListener() {
+        mNotProcessedTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Order> notProcessedOrders = getNotProcessedOrders();
@@ -166,12 +132,12 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.VISIBLE);
                 }
                 removeAllMarks();
-                mNotProcessedOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mNotProcessedTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNotProcessedTitle.setTextColor(getResources().getColor(R.color.white));
             }
         });
 
-        mInProgressOrdersCount.setOnClickListener(new View.OnClickListener() {
+        mInProgressTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Order> ordersInProgress = getInProgressOrders();
@@ -185,12 +151,12 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.VISIBLE);
                 }
                 removeAllMarks();
-                mInProgressOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mInProgressTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mInProgressTitle.setTextColor(getResources().getColor(R.color.white));
             }
         });
 
-        mReadyOrdersCount.setOnClickListener(new View.OnClickListener() {
+        mReadyTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Order> readyOrders = getReadyOrders();
@@ -204,7 +170,7 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.VISIBLE);
                 }
                 removeAllMarks();
-                mReadyOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mReadyTitle.setTextColor(getResources().getColor(R.color.white));
             }
         });
@@ -294,21 +260,14 @@ public class AllOrdersFragment extends Fragment {
         return readyOrders;
     }
 
-//    private void removeAllUnderscores() {
-//        mAllUnderscore.setVisibility(View.INVISIBLE);
-//        mNotProcessedUnderscore.setVisibility(View.INVISIBLE);
-//        mInProgressUnderscore.setVisibility(View.INVISIBLE);
-//        mReadyUnderscore.setVisibility(View.INVISIBLE);
-//    }
-
     private void removeAllMarks() {
-        mAllOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mAllTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mNotProcessedOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mNotProcessedTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mNotProcessedTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mInProgressOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mInProgressTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mInProgressTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mReadyOrdersCount.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mReadyTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
 }

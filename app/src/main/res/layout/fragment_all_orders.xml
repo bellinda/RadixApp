@@ -26,110 +26,46 @@
         app:layout_constraintBottom_toTopOf="@id/chart_bottom_guideline"
         android:weightSum="4">
 
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/all_orders"
             android:gravity="center"
-            android:orientation="vertical"
-            android:id="@+id/all_orders_count"
-            android:background="@color/colorPrimary">
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@color/colorPrimary"
+            android:id="@+id/all_title"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/all_orders"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:id="@+id/all_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/menu_icons_color"
-                android:id="@+id/all_underscore"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:text="@string/all_orders_not_processed"
             android:gravity="center"
-            android:id="@+id/not_processed_orders_count">
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:id="@+id/not_processed_title"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/all_orders_not_processed"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp"
-                android:id="@+id/not_processed_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@color/menu_icons_color"
-                android:layout_marginTop="10dp"
-                android:id="@+id/not_processed_underscore"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:text="@string/all_orders_in_progress"
             android:gravity="center"
-            android:id="@+id/in_progress_orders_count">
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/in_progress_title"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/all_orders_in_progress"
-                android:gravity="center"
-                android:textSize="15sp"
-                android:textColor="@color/colorPrimary"
-                android:id="@+id/in_progress_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/menu_icons_color"
-                android:id="@+id/in_progress_underscore"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:text="@string/all_orders_ready"
             android:gravity="center"
-            android:id="@+id/ready_orders_count">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/all_orders_ready"
-                android:gravity="center"
-                android:textSize="15sp"
-                android:textColor="@color/colorPrimary"
-                android:id="@+id/ready_title"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/menu_icons_color"
-                android:id="@+id/ready_underscore"
-                android:visibility="gone"/>
-        </LinearLayout>
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/ready_title"/>
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout
