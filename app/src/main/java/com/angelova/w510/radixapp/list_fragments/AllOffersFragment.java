@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.OffersAdapter;
 import com.angelova.w510.radixapp.menu_items.OfferActivity;
@@ -23,7 +27,7 @@ import com.melnykov.fab.ScrollDirectionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllOffersActivity extends BaseActivity {
+public class AllOffersFragment extends Fragment {
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
@@ -39,25 +43,24 @@ public class AllOffersActivity extends BaseActivity {
     private Profile mProfile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_offers);
-
-        initializeActivity();
-    }
-
-    private void initializeActivity() {
-        mMainContentLayout = (CoordinatorLayout) findViewById(R.id.main_content);
-        mListView = (ListView) findViewById(R.id.listView);
-        mAddNewOfferBtn = (FloatingActionButton) findViewById(R.id.add_new_offer_btn);
-        mPendingOffersCount = (TextView) findViewById(R.id.pending_offers_count);
-        mOffersWithResponseCount = (TextView) findViewById(R.id.answered_offers_count);
-        mTitleView = (TextView) findViewById(R.id.header_title);
-        mNoOffersView = (TextView) findViewById(R.id.no_offers_view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_all_offers, container, false);
+        mMainContentLayout = (CoordinatorLayout) rootView.findViewById(R.id.main_content);
+        mListView = (ListView) rootView.findViewById(R.id.listView);
+        mAddNewOfferBtn = (FloatingActionButton) rootView.findViewById(R.id.add_new_offer_btn);
+        mPendingOffersCount = (TextView) rootView.findViewById(R.id.pending_offers_count);
+        mOffersWithResponseCount = (TextView) rootView.findViewById(R.id.answered_offers_count);
+        mTitleView = (TextView) rootView.findViewById(R.id.header_title);
+        mNoOffersView = (TextView) rootView.findViewById(R.id.no_offers_view);
         mProfile = getProfile();
 
+//        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mAddNewOfferBtn.getLayoutParams();
+//        lp.anchorGravity = Gravity.BOTTOM | GravityCompat.END;
+//        mAddNewOfferBtn.setLayoutParams(lp);
+
         if (mProfile.getOffers() != null && mProfile.getOffers().size() > 0) {
-            mOffersAdapter = new OffersAdapter(this, mProfile.getOffers());
+            mOffersAdapter = new OffersAdapter(getActivity(), mProfile.getOffers());
             mListView.setAdapter(mOffersAdapter);
         } else {
             mNoOffersView.setVisibility(View.VISIBLE);
@@ -88,9 +91,8 @@ public class AllOffersActivity extends BaseActivity {
         mAddNewOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AllOffersActivity.this, OfferActivity.class);
+                Intent intent = new Intent(getActivity(), OfferActivity.class);
                 startActivity(intent);
-                finish();
 //                Snackbar snackbar = Snackbar
 //                        .make(mMainContentLayout, "Clicked on the floating button", Snackbar.LENGTH_LONG);
 //                snackbar.show();
@@ -107,7 +109,7 @@ public class AllOffersActivity extends BaseActivity {
                     mNoOffersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                 }
-                mOffersAdapter = new OffersAdapter(AllOffersActivity.this, mProfile.getOffers());
+                mOffersAdapter = new OffersAdapter(getActivity(), mProfile.getOffers());
                 mListView.setAdapter(mOffersAdapter);
             }
         });
@@ -119,7 +121,7 @@ public class AllOffersActivity extends BaseActivity {
                 if(pendingOffers.size() > 0) {
                     mNoOffersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
-                    mOffersAdapter = new OffersAdapter(AllOffersActivity.this, pendingOffers);
+                    mOffersAdapter = new OffersAdapter(getActivity(), pendingOffers);
                     mListView.setAdapter(mOffersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -135,7 +137,7 @@ public class AllOffersActivity extends BaseActivity {
                 if(offersWithResponse.size() > 0) {
                     mNoOffersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
-                    mOffersAdapter = new OffersAdapter(AllOffersActivity.this, offersWithResponse);
+                    mOffersAdapter = new OffersAdapter(getActivity(), offersWithResponse);
                     mListView.setAdapter(mOffersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -143,10 +145,11 @@ public class AllOffersActivity extends BaseActivity {
                 }
             }
         });
+        return rootView;
     }
 
     private Profile getProfile() {
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Gson gson = new Gson();
         Profile profile = new Profile();
         String json = appPreferences.getString(SHARED_PROFILE_KEY, "");

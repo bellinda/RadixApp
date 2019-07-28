@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.angelova.w510.radixapp.list_fragments.AllOffersFragment;
 import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.menu_items.ProfileActivity;
 import com.angelova.w510.radixapp.menu_items.OfferActivity;
@@ -65,15 +66,12 @@ public class MainActivity extends BaseActivity {
                     }
                     return true;
                 case R.id.navigation_offers:
-//                    transaction.replace(R.id.content, new WaitingDocumentsFragment()).commit();
-//                    if(getSupportActionBar() != null) {
-//                        //getSupportActionBar().setTitle(R.string.title_documents);
-//                        getSupportActionBar().setTitle(R.string.profile_my_offers);
-//                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                        //change items in toolbar
-//                        //WAITING_DOCUMENT_MENU_ITEM_STATE = 0;
-//                        //invalidateOptionsMenu();
-//                    }
+                    transaction.replace(R.id.content, new AllOffersFragment()).commit();
+                    if(getSupportActionBar() != null) {
+                        //getSupportActionBar().setTitle(R.string.title_documents);
+                        getSupportActionBar().setTitle(R.string.profile_my_offers);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    }
                     return true;
                 case R.id.navigation_prices:
 //                    transaction.replace(R.id.content, new ArchiveFragment()).commit();

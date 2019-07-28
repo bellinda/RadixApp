@@ -14,7 +14,7 @@ import com.angelova.w510.radixapp.LoginActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.dialogs.YesNoDialog;
-import com.angelova.w510.radixapp.list_fragments.AllOffersActivity;
+import com.angelova.w510.radixapp.list_fragments.AllOffersFragment;
 import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
@@ -80,7 +80,7 @@ public class ProfileActivity extends BaseActivity {
         mMyOffersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, AllOffersActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, AllOffersFragment.class);
                 startActivity(intent);
             }
         });
