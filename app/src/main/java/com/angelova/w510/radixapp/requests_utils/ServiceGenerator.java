@@ -2,6 +2,8 @@ package com.angelova.w510.radixapp.requests_utils;
 
 import android.text.TextUtils;
 
+import com.angelova.w510.radixapp.utils.Utils;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -12,11 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    private static final String BASE_URL = "http://192.168.0.13:3000";
-
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(Utils.URL)
                     .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = builder.build();
