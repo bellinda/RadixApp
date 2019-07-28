@@ -99,7 +99,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/fab_add"
-            app:layout_anchor="@id/listView"
             app:layout_anchorGravity="bottom|right|end"
             app:fab_shadow="true"
             app:fab_shadowColor="#66000000"

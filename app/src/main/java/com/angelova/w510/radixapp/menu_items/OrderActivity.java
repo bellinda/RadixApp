@@ -833,6 +833,10 @@ public class OrderActivity extends BaseActivity {
         WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
             @Override
             public void onClick() {
+                if (mSubmitLoader.getVisibility() == View.VISIBLE) {
+                    mSubmitLoader.setVisibility(View.GONE);
+                    mSubmitBtn.setVisibility(View.VISIBLE);
+                }
             }
         });
         warning.show();

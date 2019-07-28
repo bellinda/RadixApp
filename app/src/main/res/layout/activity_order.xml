@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angelova.w510.radixapp.menu_items.OrderActivity">
+    tools:context="com.angelova.w510.radixapp.menu_items.OrderActivity"
+    android:background="@color/colorAccent">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorRootLayout"
@@ -156,6 +157,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
                                 android:id="@+id/offer_id_input"
+                                android:theme="@style/DarkEditTextTheme"
                                 android:visibility="visible"/>
 
                             <Button
@@ -213,12 +215,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="Someone Else"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/default_name"/>
 
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Use another name for this order"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/other_name"/>
                         </RadioGroup>
 
@@ -229,6 +233,7 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             android:id="@+id/name_input"
+                            android:theme="@style/DarkEditTextTheme"
                             android:visibility="gone"/>
 
                     </android.support.constraint.ConstraintLayout>
@@ -529,7 +534,8 @@
                             android:padding="5dp"
                             android:inputType="textMultiLine"
                             android:scrollbars="vertical"
-                            android:maxLines="20"/>
+                            android:maxLines="20"
+                            android:theme="@style/DarkEditTextTheme"/>
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -575,12 +581,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="someone.else@gmail.com"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/default_email_rb"/>
 
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Use another email for this order"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/new_email_rb"/>
                         </RadioGroup>
 
@@ -592,6 +600,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             android:id="@+id/email_input"
                             android:inputType="textEmailAddress"
+                            android:theme="@style/DarkEditTextTheme"
                             android:visibility="gone"/>
 
                     </android.support.constraint.ConstraintLayout>
@@ -632,6 +641,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/phone_label"
                             android:layout_marginTop="10dp"
                             android:id="@+id/phone_input"
+                            android:theme="@style/DarkEditTextTheme"
                             android:inputType="phone"/>
 
                     </android.support.constraint.ConstraintLayout>
@@ -808,18 +818,21 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/order_delivery_from_office"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/from_office_rb"/>
 
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/order_delivery_on_email"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/on_email_rb"/>
 
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/order_delivery_by_post"
+                                app:buttonTint="@color/colorPrimary"
                                 android:id="@+id/by_courrier_rb"/>
                         </RadioGroup>
 
@@ -947,7 +960,8 @@
                                 android:id="@+id/price_input"
                                 android:inputType="numberDecimal"
                                 android:background="@drawable/rounded_edit_text"
-                                android:paddingLeft="10dp"/>
+                                android:paddingLeft="10dp"
+                                android:theme="@style/DarkEditTextTheme"/>
 
                             <TextView
                                 android:layout_width="0dp"
@@ -1000,7 +1014,7 @@
                             android:background="@drawable/button_with_click"
                             android:text="@string/offer_submit"
                             android:textAllCaps="false"
-                            android:textColor="@color/menu_icons_color"
+                            android:textColor="@color/colorAccent"
                             android:textSize="@dimen/labels_text_size"
                             android:id="@+id/submit_btn"/>
 
@@ -1009,7 +1023,8 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/submit_loader"
                             android:visibility="gone"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/colorPrimaryDark"/>
                     </LinearLayout>
 
 

@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +63,10 @@ public class AllOrdersFragment extends Fragment {
         mNotProcessedTitle = (TextView) rootView.findViewById(R.id.not_processed_title);
         mInProgressTitle = (TextView) rootView.findViewById(R.id.in_progress_title);
         mReadyTitle = (TextView) rootView.findViewById(R.id.ready_title);
+
+//        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mAddNewOrderBtn.getLayoutParams();
+//        lp.anchorGravity = Gravity.BOTTOM | GravityCompat.END;
+//        mAddNewOrderBtn.setLayoutParams(lp);
 
         mProfile = getProfile();
 
