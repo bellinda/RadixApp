@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#912213</color>
+    <color name="colorPrimary">#c62828</color>
     <color name="colorPrimaryDark">#57150b</color>
-    <color name="colorAccent">#8f110e</color>
+    <color name="colorAccent">#fffbf4</color>
 
     <color name="login_input_text_color">#d2d2d2</color>
     <color name="login_items_color">#FF858282</color>
@@ -19,6 +19,9 @@
     <color name="black">#000000</color>
     <color name="black_transparent">#91000000</color>
     <color name="inactive_text_color">#71858282</color>
+    <color name="login_primary_color">#c62828</color>
+    <color name="login_secondary_color">#fff3e0</color>
+    <color name="login_secondary_color_transparent">#adfff3e0</color>
 
     <color name="standard_order_color">#b43e3b</color>
     <color name="specialized_order_color">#B51F1B</color>
@@ -29,4 +32,7 @@
     <color name="offers_files_count_text_color">#6b0e0b</color>
     <color name="offers_view_button_text_color">#79000000</color>
     <color name="offer_details_not_active_item_color">#af912213</color>
+
+    <color name="active_color">#57150b</color>
+    <color name="inactive_color">#c62828</color>
 </resources>

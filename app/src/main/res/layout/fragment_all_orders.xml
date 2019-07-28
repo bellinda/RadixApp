@@ -4,38 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angelova.w510.radixapp.list_fragments.AllOrdersActivity"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <android.support.constraint.Guideline
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/header_bottom_guideline"
-        app:layout_constraintGuide_percent="0.07"
-        android:orientation="horizontal"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/header_bottom_guideline"
-        android:id="@+id/header_title"
-        android:background="@color/menu_icons_color"
-        android:text="@string/profile_my_orders"
-        android:textColor="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:textSize="@dimen/lists_header_text_size"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0" />
+    tools:context="com.angelova.w510.radixapp.list_fragments.AllOrdersFragment"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorAccent">
 
     <android.support.constraint.Guideline
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:id="@+id/chart_bottom_guideline"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.09"
         android:orientation="horizontal"/>
 
     <LinearLayout
@@ -45,90 +22,113 @@
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/chart_bottom_guideline"
-        android:background="@color/menu_icons_color"
-        android:weightSum="3">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:weightSum="6"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:id="@+id/all_orders_count"
+            android:background="@color/colorPrimary">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                tools:text="2"
-                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:text="@string/all_orders"
                 android:gravity="center"
-                android:textSize="36sp"
-                android:id="@+id/not_processed_orders_count"/>
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:id="@+id/all_title"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/menu_icons_color"
+                android:id="@+id/all_underscore"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/not_processed_orders_count">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
                 android:text="@string/all_orders_not_processed"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:id="@+id/not_processed_title"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/menu_icons_color"
+                android:layout_marginTop="10dp"
+                android:id="@+id/not_processed_underscore"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:weightSum="6"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/in_progress_orders_count">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                tools:text="4"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:textSize="36sp"
-                android:id="@+id/in_progress_orders_count"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
                 android:text="@string/all_orders_in_progress"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/in_progress_title"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/menu_icons_color"
+                android:id="@+id/in_progress_underscore"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:weightSum="6"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/ready_orders_count">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                tools:text="5"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:textSize="36sp"
-                android:id="@+id/ready_orders_count"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
                 android:text="@string/all_orders_ready"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/ready_title"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/menu_icons_color"
+                android:id="@+id/ready_underscore"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.angelova.w510.radixapp.clients;
 
 import android.content.Context;
 
+import com.angelova.w510.radixapp.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -13,8 +14,6 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 public class LoginRestClient {
 
-    private static final String BASE_URL = "http://192.168.0.101:3000/";
-
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void loginUser(Context context, String url, HttpEntity entity, String contentType, AsyncHttpResponseHandler responseHandler) {
@@ -23,6 +22,6 @@ public class LoginRestClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+        return Utils.URL + relativeUrl;
     }
 }

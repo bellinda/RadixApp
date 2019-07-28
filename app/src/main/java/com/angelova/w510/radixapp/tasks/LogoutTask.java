@@ -41,6 +41,7 @@ public class LogoutTask extends AsyncTask<Void, Void, Object> {
                 JSONObject jsonParams = new JSONObject();
                 try {
                     jsonParams.put("username", email);
+                    jsonParams.put("isMobile", true);
 
                     StringEntity entity = new StringEntity(jsonParams.toString());
                     System.out.println("JSON " + jsonParams.toString());

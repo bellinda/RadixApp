@@ -2,6 +2,7 @@ package com.angelova.w510.radixapp.clients;
 
 import android.content.Context;
 
+import com.angelova.w510.radixapp.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -13,8 +14,6 @@ import cz.msebera.android.httpclient.HttpEntity;
  */
 
 public class OffersRestClient {
-
-    private static final String BASE_URL = "http://192.168.0.101:3000/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -43,6 +42,6 @@ public class OffersRestClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+        return Utils.URL + relativeUrl;
     }
 }

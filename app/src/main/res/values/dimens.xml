@@ -13,4 +13,5 @@
     <dimen name="profile_initials_text_size">42sp</dimen>
     <dimen name="profile_menu_items_text_size">20sp</dimen>
     <dimen name="lists_header_text_size">24sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -16,13 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".menu_items.OfferActivity" />
         <activity android:name=".BaseActivity" />
         <activity android:name=".menu_items.OrderActivity" />
@@ -34,9 +28,18 @@
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".list_fragments.AllOffersActivity" />
-        <activity android:name=".list_fragments.AllOrdersActivity" />
+        <activity android:name=".list_fragments.AllOrdersFragment" />
         <activity android:name=".details_activities.OfferDetailsActivity" />
-        <activity android:name=".details_activities.OrderDetailsActivity"/>
+        <activity android:name=".details_activities.OrderDetailsActivity" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

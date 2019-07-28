@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.tasks.ResetPasswordTask;
@@ -18,6 +19,7 @@ public class ForgotPassActivity extends AppCompatActivity {
 
     private EditText mEmailInput;
     private Button mForgotPassBtn;
+    private ProgressBar mLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ForgotPassActivity extends AppCompatActivity {
     private void initializeActivity() {
         mEmailInput = (EditText) findViewById(R.id.email_input);
         mForgotPassBtn = (Button) findViewById(R.id.forgot_pass_btn);
+        mLoader = (ProgressBar) findViewById(R.id.forgot_pass_btn_loader);
 
         mForgotPassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +40,8 @@ public class ForgotPassActivity extends AppCompatActivity {
                 if(mEmailInput.getText() == null || mEmailInput.getText().toString().isEmpty()) {
                     showAlertDialogNow("Please enter your email", "Warning");
                 } else {
+                    mForgotPassBtn.setVisibility(View.GONE);
+                    mLoader.setVisibility(View.VISIBLE);
                     new ResetPasswordTask(ForgotPassActivity.this, "users/resetPassword", mEmailInput.getText().toString()).execute();
                 }
             }
@@ -65,6 +70,8 @@ public class ForgotPassActivity extends AppCompatActivity {
     }
 
     public void showErrorMessage(String errorMsg) {
+        mLoader.setVisibility(View.GONE);
+        mForgotPassBtn.setVisibility(View.VISIBLE);
         showAlertDialogNow(errorMsg, "Warning");
     }
 }

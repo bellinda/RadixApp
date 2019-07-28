@@ -5,21 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.angelova.w510.radixapp.LoginActivity"
-    android:background="@drawable/sun"
-    android:focusable="false">
+    android:background="@color/login_primary_color"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
+    android:fitsSystemWindows="true">
 
     <android.support.constraint.Guideline
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17"
+        app:layout_constraintGuide_percent="0.13"
         android:id="@+id/top_guideline"/>
 
     <android.support.constraint.Guideline
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.34"
+        app:layout_constraintGuide_percent="0.3"
         android:id="@+id/bottom_logo_guideline"/>
 
     <android.support.constraint.Guideline
@@ -46,152 +48,78 @@
         android:background="@drawable/logo_mobile"
         android:foregroundGravity="center"/>
 
-
     <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56"
-        android:id="@+id/email_guideline"/>
-
-    <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.47"
-        android:id="@+id/top_email_guideline"/>
-
-    <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.13"
-        android:id="@+id/left_guideline"/>
-
-    <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.87"
-        android:id="@+id/right_guideline"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/login_items_color_transperent"
-        app:layout_constraintLeft_toLeftOf="@id/left_guideline"
-        app:layout_constraintRight_toRightOf="@id/right_guideline"
-        app:layout_constraintTop_toBottomOf="@id/email_guideline"
-        android:id="@+id/email_underline"
-        />
-
-    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/left_guideline"
-        app:layout_constraintRight_toRightOf="@id/right_guideline"
-        app:layout_constraintBottom_toTopOf="@id/email_underline"
-        app:layout_constraintTop_toBottomOf="@+id/top_email_guideline"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
-        android:focusable="false">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_email"
-            android:layout_gravity="bottom"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="@color/login_items_color"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:hint="@string/login_email_hint"
-                android:textColor="@color/login_input_text_color"
-                android:textColorHint="@color/login_items_color"
-                android:background="@android:color/transparent"
-                android:id="@+id/email_input"
-                android:inputType="textEmailAddress"
-                android:focusableInTouchMode="true"/>
-
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+        app:layout_constraintGuide_percent="0.36"
+        android:id="@+id/top_username_guideline" />
 
     <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.57"
-        android:id="@+id/top_password_guideline"/>
-
-    <android.support.constraint.Guideline
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66"
-        android:id="@+id/password_guideline"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/login_items_color_transperent"
-        app:layout_constraintLeft_toLeftOf="@id/left_guideline"
-        app:layout_constraintRight_toRightOf="@id/right_guideline"
-        app:layout_constraintTop_toBottomOf="@id/password_guideline"
-        android:id="@+id/password_underline"
-        />
-
-    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/left_guideline"
-        app:layout_constraintRight_toRightOf="@id/right_guideline"
-        app:layout_constraintBottom_toTopOf="@id/password_underline"
-        app:layout_constraintTop_toBottomOf="@+id/top_password_guideline"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.12"
+        android:id="@+id/left_username_guideline" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_pass"
-            android:layout_gravity="bottom"/>
+    <android.support.constraint.Guideline
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88"
+        android:id="@+id/right_username_guideline" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_password"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top_username_guideline"
+        app:layout_constraintLeft_toRightOf="@id/left_username_guideline"
+        app:layout_constraintRight_toLeftOf="@id/right_username_guideline"
+        android:textColorHint="@color/login_secondary_color_transparent"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutWhiteBig"
+        android:paddingLeft="-4dp"
+        android:paddingRight="-4dp"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:hint="@string/login_email_hint">
+
+        <EditText
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="@color/login_items_color"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
+            android:layout_height="wrap_content"
+            android:textColor="@color/login_secondary_color"
+            android:theme="@style/EditTextTheme"
+            android:focusableInTouchMode="true"
+            android:inputType="textEmailAddress"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:hint="@string/login_password_hint"
-                android:textColor="@color/login_input_text_color"
-                android:textColorHint="@color/login_items_color"
-                android:background="@android:color/transparent"
-                android:id="@+id/password_input"
-                android:inputType="textPassword"/>
+    </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_email"
+        app:layout_constraintLeft_toRightOf="@id/left_username_guideline"
+        app:layout_constraintRight_toLeftOf="@id/right_username_guideline"
+        android:layout_marginTop="10dp"
+        app:passwordToggleEnabled="true"
+        android:textColorHint="@color/login_secondary_color_transparent"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutWhiteBig"
+        app:passwordToggleTint="@color/login_secondary_color_transparent"
+        android:paddingLeft="-4dp"
+        android:paddingRight="-4dp"
+        android:hint="@string/login_password_hint">
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@color/login_secondary_color"
+            android:theme="@style/EditTextTheme"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.constraint.Guideline
         android:layout_width="1dp"
@@ -211,47 +139,44 @@
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.19"
+        app:layout_constraintGuide_percent="0.12"
         android:id="@+id/left_btn_guideline"/>
 
     <android.support.constraint.Guideline
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.81"
+        app:layout_constraintGuide_percent="0.88"
         android:id="@+id/right_btn_guideline"/>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/left_btn_guideline"
-        app:layout_constraintRight_toRightOf="@id/right_btn_guideline"
-        app:layout_constraintTop_toTopOf="@id/top_btn_guideline"
-        app:layout_constraintBottom_toTopOf="@id/bottom_btn_guideline"
-        android:id="@+id/login_btn_layout"
+        android:layout_height="40dp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_btn_guideline"
+        app:layout_constraintRight_toRightOf="@+id/right_btn_guideline"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_password"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="25dp"
+        android:id="@+id/login_btn_layout">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/login_btn_background"
+            android:layout_gravity="center"
+            android:background="@drawable/light_button_selector"
             android:text="@string/login_btn_title"
-            android:textColor="@color/login_btn_text_color"
-            android:textAllCaps="false"
-            android:textSize="@dimen/login_btn_title_size"
-            android:id="@+id/login_btn"
-            android:gravity="center"
-            android:foregroundGravity="center"
-            android:visibility="visible"/>
+            android:textAllCaps="true"
+            android:textColor="@drawable/lite_button_text_color"
+            android:textSize="16sp"
+            android:id="@+id/login_btn"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
             android:id="@+id/login_btn_loader"
-            android:indeterminateTint="@color/login_input_text_color"/>
+            android:visibility="gone"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <TextView
@@ -260,10 +185,10 @@
         app:layout_constraintTop_toBottomOf="@id/login_btn_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textColor="@color/login_btn_text_color"
+        android:textColor="@color/login_secondary_color_transparent"
         android:text="@string/login_forgot_pass_text"
         android:gravity="center"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/forgot_pass"/>
 
     <android.support.constraint.Guideline
@@ -280,7 +205,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/sign_up_guideline"
         android:text="@string/login_no_account_text"
-        android:textColor="@color/login_btn_text_color"
+        android:textColor="@color/login_secondary_color_transparent"
         android:gravity="center"
         android:id="@+id/sign_up"/>
 </android.support.constraint.ConstraintLayout>

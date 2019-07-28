@@ -26,13 +26,15 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
     private String password;
     private String email;
     private String url;
+    private String iv;
     private Activity context;
 
-    public LoginTask(Activity activity, String url, String email, String password) {
+    public LoginTask(Activity activity, String url, String email, String password, String iv) {
         this.context = activity;
         this.password = password;
         this.email = email;
         this.url = url;
+        this.iv = iv;
     }
 
     @Override
@@ -45,6 +47,8 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
                 try {
                     jsonParams.put("username", email);
                     jsonParams.put("password", password);
+                    jsonParams.put("iv", iv);
+                    jsonParams.put("isMobile", true);
 
                     StringEntity entity = new StringEntity(jsonParams.toString());
                     System.out.println("JSON " + jsonParams.toString());
@@ -66,8 +70,16 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                                    ((LoginActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
-                                    System.out.println("ERROR " + throwable.getMessage());
+                                    try {
+                                        if (errorResponse.has("status")) {
+                                            ((LoginActivity) context).showErrorMessage(errorResponse.getString("status"));
+                                        } else {
+                                            ((LoginActivity) context).showErrorMessage("Something went wrong - " + throwable.getMessage());
+                                        }
+                                        System.out.println("ERROR " + throwable.getMessage());
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             });
                 } catch(Exception ex) {

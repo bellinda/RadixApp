@@ -1,30 +1,38 @@
 package com.angelova.w510.radixapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.LoginTask;
 import com.angelova.w510.radixapp.tasks.LogoutTask;
+import com.angelova.w510.radixapp.utils.Utils;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.spec.KeySpec;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -109,7 +117,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void handleSuccessfulLogout(JSONObject receivedData) {
-        new LoginTask(LoginActivity.this, "users/login", mEmailInput.getText().toString(), mPasswordInput.getText().toString()).execute();
+        try {
+            byte[] salt = Utils.ENCRYPTION_SALT.getBytes("Utf8");
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            KeySpec spec = new PBEKeySpec(Utils.ENCRYPTION_PASSWORD.toCharArray(), salt, Utils.ENCRYPTION_ITERATION_COUNT, Utils.ENCRYPTION_KEY_STRENGTH);
+            SecretKey tmp = factory.generateSecret(spec);
+
+            Log.d("encryptString Key: ", new String(Base64.encode(tmp.getEncoded(), Base64.DEFAULT)));
+
+            Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            c.init(Cipher.ENCRYPT_MODE, tmp);
+            byte[] encryptedEmail = c.doFinal(mEmailInput.getText().toString().getBytes());
+            byte[] encryptedPass = c.doFinal(mPasswordInput.getText().toString().getBytes());
+            encryptedEmail = Base64.encode(encryptedEmail,Base64.DEFAULT);
+            encryptedPass = Base64.encode(encryptedPass, Base64.DEFAULT);
+            byte[] iv = c.getIV();
+
+            String encEmail = new String(encryptedEmail);
+            String encPass = new String(encryptedPass);
+            String encIv = new String(Base64.encode(iv, Base64.DEFAULT));
+            Log.d("encryptString: ", encEmail);
+            Log.d("encryptString iv:", encIv);
+
+            new LoginTask(LoginActivity.this, "users/login", encEmail, encPass, encIv).execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void handleSuccessfulLogin(JSONObject receivedData) {

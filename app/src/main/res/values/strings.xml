@@ -82,7 +82,8 @@
     <string name="no_responses_for_order_received_text">No responses are received for this order. Please check later again.</string>
     <string name="all_offers_no_offers_of_type">No offers found of the selected type</string>
 
-    <string name="all_orders_not_processed">Not processed</string>
+    <string name="all_orders">All</string>
+    <string name="all_orders_not_processed">Pending</string>
     <string name="all_orders_in_progress">In progress</string>
     <string name="all_orders_ready">Ready</string>
     <string name="all_orders_no_orders_of_type">No orders found of the selected type</string>
@@ -97,4 +98,5 @@
     <string name="dialog_response_cancel_btn">Cancel</string>
 
     <string name="send_response_loading_dialog_text">Sending response&#8230;</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

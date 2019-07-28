@@ -27,14 +27,16 @@ public class RegisterTask extends AsyncTask<Void, Void, Object> {
     private String fullName;
     private String email;
     private String url;
+    private String iv;
     private Activity context;
 
-    public RegisterTask(Activity activity, String url, String fullName, String password, String email) {
+    public RegisterTask(Activity activity, String url, String fullName, String password, String email, String iv) {
         this.fullName = fullName;
         this.context = activity;
         this.password = password;
         this.email = email;
         this.url = url;
+        this.iv = iv;
     }
 
     @Override
@@ -49,6 +51,8 @@ public class RegisterTask extends AsyncTask<Void, Void, Object> {
                     jsonParams.put("password", password);
                     jsonParams.put("email", email);
                     jsonParams.put("firstname", fullName);
+                    jsonParams.put("isMobile", true);
+                    jsonParams.put("iv", iv);
 
                     StringEntity entity = new StringEntity(jsonParams.toString());
                     System.out.println("JSON " + jsonParams.toString());
@@ -69,8 +73,16 @@ public class RegisterTask extends AsyncTask<Void, Void, Object> {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                                    ((RegisterActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
-                                    System.out.println("ERROR " + throwable.getMessage());
+                                    try {
+                                        if (errorResponse.has("errors") && errorResponse.getJSONArray("errors").length() > 0) {
+                                            ((RegisterActivity) context).showErrorMessage(errorResponse.getJSONArray("errors").get(0).toString());
+                                        } else {
+                                            ((RegisterActivity) context).showErrorMessage("Something went wrong - " + throwable.getMessage());
+                                            System.out.println("ERROR " + throwable.getMessage());
+                                        }
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             });
                 } catch(Exception ex) {

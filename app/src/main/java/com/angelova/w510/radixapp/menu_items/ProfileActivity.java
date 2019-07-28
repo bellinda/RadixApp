@@ -1,8 +1,6 @@
 package com.angelova.w510.radixapp.menu_items;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,7 +15,7 @@ import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.dialogs.YesNoDialog;
 import com.angelova.w510.radixapp.list_fragments.AllOffersActivity;
-import com.angelova.w510.radixapp.list_fragments.AllOrdersActivity;
+import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
@@ -90,7 +88,7 @@ public class ProfileActivity extends BaseActivity {
         mMyOrdersItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, AllOrdersActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, AllOrdersFragment.class);
                 startActivity(intent);
             }
         });
@@ -290,8 +288,16 @@ public class ProfileActivity extends BaseActivity {
             jse.printStackTrace();
         }
         //everything is downloaded => show data + hide the loading message
-        mOffersCount.setText(mProfile.getOffers().size() + "");
-        mOrdersCount.setText(mProfile.getOrders().size() + "");
+        if (mProfile.getOffers() != null) {
+            mOffersCount.setText(mProfile.getOffers().size() + "");
+        } else {
+            mOffersCount.setText("0");
+        }
+        if (mProfile.getOrders() != null) {
+            mOrdersCount.setText(mProfile.getOrders().size() + "");
+        } else {
+            mOrdersCount.setText("0");
+        }
         loadingDialog.hide();
     }
 
