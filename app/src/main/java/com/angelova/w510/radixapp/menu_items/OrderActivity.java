@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -123,6 +124,11 @@ public class OrderActivity extends BaseActivity {
     private TagGroup mSelectedFilesGroup;
     private TextView mSelectedFilesLabel;
     private EditText mAnticipatedPrice;
+    private RadioButton mPaymentBankRb;
+    private RadioButton mPaymentCashRb;
+    private RadioButton mPaymentDeliveryRb;
+    private CheckBox mInvoiceCheckBtn;
+    private CheckBox mProformaInvoiceCheckBtn;
     private Button mSubmitBtn;
     private ProgressBar mSubmitLoader;
 
@@ -185,6 +191,11 @@ public class OrderActivity extends BaseActivity {
         mSelectedFilesGroup = (TagGroup) findViewById(R.id.tag_group);
         mSelectedFilesLabel = (TextView) findViewById(R.id.selected_files);
         mAnticipatedPrice = (EditText) findViewById(R.id.price_input);
+        mPaymentBankRb = (RadioButton) findViewById(R.id.bank_rb);
+        mPaymentCashRb = (RadioButton) findViewById(R.id.cash_rb);
+        mPaymentDeliveryRb = (RadioButton) findViewById(R.id.cash_delivery_rb);
+        mInvoiceCheckBtn = (CheckBox) findViewById(R.id.invoice_check);
+        mProformaInvoiceCheckBtn = (CheckBox) findViewById(R.id.proforma_invoice_check);
         mSubmitBtn = (Button) findViewById(R.id.submit_btn);
         mSubmitLoader = (ProgressBar) findViewById(R.id.submit_loader);
 
@@ -288,7 +299,7 @@ public class OrderActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(OrderActivity.this, dateSetListener, myCalendar
+                new DatePickerDialog(OrderActivity.this, R.style.DialogTheme, dateSetListener, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -302,7 +313,7 @@ public class OrderActivity extends BaseActivity {
         mDeliveryTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(OrderActivity.this, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY),
+                new TimePickerDialog(OrderActivity.this, R.style.DialogTheme, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY),
                         myCalendar.get(Calendar.MINUTE), true).show();
             }
         });
@@ -328,6 +339,12 @@ public class OrderActivity extends BaseActivity {
                 for(String fileName : existingFileNames) {
                     if(fileName.endsWith(tag)) {
                         existingFileNames.remove(fileName);
+                        break;
+                    }
+                }
+                for (Uri uri : selectedUris) {
+                    if (getFileName(uri).equals(tag)) {
+                        selectedUris.remove(uri);
                         break;
                     }
                 }
@@ -388,6 +405,15 @@ public class OrderActivity extends BaseActivity {
                     if(mOfferIdInput.getText() != null && !mOfferIdInput.getText().toString().isEmpty()) {
                         order.setInquiryToDelete(mOfferIdInput.getText().toString());
                     }
+                    if (mPaymentBankRb.isChecked()) {
+                        order.setPaymentMethod(mPaymentBankRb.getText().toString());
+                    } else if (mPaymentCashRb.isChecked()) {
+                        order.setPaymentMethod(mPaymentCashRb.getText().toString());
+                    } else {
+                        order.setPaymentMethod(mPaymentDeliveryRb.getText().toString());
+                    }
+                    order.setRequestsProformaInvoice(mProformaInvoiceCheckBtn.isChecked());
+                    order.setRequestsInvoice(mInvoiceCheckBtn.isChecked());
                     order.setDocumentsFromOffer(existingFileNames);
                     order.setDocumentUris(selectedUris);
 
@@ -743,7 +769,19 @@ public class OrderActivity extends BaseActivity {
                 RequestBody.create(
                         okhttp3.MultipartBody.FORM, order.getPickUpMethod());
 
-        if(order.getAnticipatedPrice() != null) {
+        RequestBody paymentMethod =
+                RequestBody.create(
+                        MultipartBody.FORM, order.getPaymentMethod());
+
+        RequestBody requestsInvoice =
+                RequestBody.create(
+                        MultipartBody.FORM, order.isRequestsInvoice() + "");
+
+        RequestBody requestsProformaInvoice =
+                RequestBody.create(
+                        MultipartBody.FORM, order.isRequestsProformaInvoice() + "");
+
+        if (order.getAnticipatedPrice() != null) {
             RequestBody anticipatedPrice =
                     RequestBody.create(
                             okhttp3.MultipartBody.FORM, order.getAnticipatedPrice());
@@ -751,7 +789,7 @@ public class OrderActivity extends BaseActivity {
             params.put("anticipatedPrice", anticipatedPrice);
         }
 
-        if(order.getInquiryToDelete() != null) {
+        if (order.getInquiryToDelete() != null) {
             RequestBody inquiryToDelete =
                     RequestBody.create(
                             okhttp3.MultipartBody.FORM, order.getInquiryToDelete());
@@ -776,6 +814,9 @@ public class OrderActivity extends BaseActivity {
         params.put("notes", notes);
         params.put("desiredDeliveryDate", desiredDeliveryDate);
         params.put("pickupMethod", pickUpMethod);
+        params.put("selectPaymentType", paymentMethod);
+        params.put("requestsInvoice", requestsInvoice);
+        params.put("requestsProFormaInvoice", requestsProformaInvoice);
 
         //execute the request
         Call<ResponseBody> call = service.upload(params, order.getDocumentsFromOffer(), files);
@@ -848,5 +889,27 @@ public class OrderActivity extends BaseActivity {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 }

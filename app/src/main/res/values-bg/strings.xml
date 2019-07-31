@@ -64,6 +64,13 @@
     <string name="order_price_label">Прогнозна цена</string>
     <string name="order_price_text">Това поле не е задължително. Моля попълнете го само ако имате ориентировъчна представа колко ще струва поръчката Ви. В имейла за потвърждение ще получите крайната цена и детайли за плащането й.</string>
     <string name="order_price_currency">€</string>
+    <string name="order_payment_method">Начин на плащане</string>
+    <string name="order_payment_bank">Банков трансфер</string>
+    <string name="order_payment_cash">В брой</string>
+    <string name="order_payment_cash_delivery">Наложен платеж</string>
+    <string name="order_invoices">Необходими фактури</string>
+    <string name="order_proforma_invoices">Проформа фактура</string>
+    <string name="order_invoice">Фактура</string>
 
     <string name="loader_dialog_text">Зареждане&#8230;</string>
 

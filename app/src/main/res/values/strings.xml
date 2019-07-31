@@ -64,6 +64,13 @@
     <string name="order_price_label">Anticipated price</string>
     <string name="order_price_text">This field is not a mandatory one. Please input it if you have any idea how much it will cost. In the confirmation email you will get the final price for your order from our officers.</string>
     <string name="order_price_currency">€</string>
+    <string name="order_payment_method">Payment method</string>
+    <string name="order_payment_bank">Bank transfer</string>
+    <string name="order_payment_cash">Cash</string>
+    <string name="order_payment_cash_delivery">Cash on delivery</string>
+    <string name="order_invoices">Invoices you would like to get</string>
+    <string name="order_proforma_invoices">Proforma invoice</string>
+    <string name="order_invoice">Invoice</string>
 
     <string name="loader_dialog_text">Loading&#8230;</string>
 

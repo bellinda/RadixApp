@@ -40,7 +40,8 @@
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:elevation="10dp">
 
                 </android.support.v7.widget.Toolbar>
 
@@ -973,6 +974,118 @@
                                 android:layout_marginLeft="10dp"
                                 android:textSize="20sp"/>
                         </LinearLayout>
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="3dp"
+                    card_view:contentPadding="20dp"
+                    card_view:cardElevation="7dp"
+                    card_view:cardMaxElevation="10dp"
+                    android:layout_margin="10dp">
+
+                    <android.support.constraint.ConstraintLayout
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/payment_type_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            android:text="@string/order_payment_method"
+                            android:textSize="@dimen/labels_text_size" />
+
+                        <RadioGroup
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/payment_type_label"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:id="@+id/radio_group_payment_method"
+                            android:layout_marginTop="10dp"
+                            android:checkedButton="@+id/bank_rb">
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/order_payment_bank"
+                                app:buttonTint="@color/colorPrimary"
+                                android:id="@+id/bank_rb"/>
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/order_payment_cash"
+                                app:buttonTint="@color/colorPrimary"
+                                android:id="@+id/cash_rb"/>
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/order_payment_cash_delivery"
+                                app:buttonTint="@color/colorPrimary"
+                                android:id="@+id/cash_delivery_rb"/>
+                        </RadioGroup>
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="3dp"
+                    card_view:contentPadding="20dp"
+                    card_view:cardElevation="7dp"
+                    card_view:cardMaxElevation="10dp"
+                    android:layout_margin="10dp">
+
+                    <android.support.constraint.ConstraintLayout
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/invoices_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            android:text="@string/order_invoices"
+                            android:textSize="@dimen/labels_text_size" />
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/invoices_label"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:text="@string/order_proforma_invoices"
+                            android:buttonTint="@color/colorPrimary"
+                            android:id="@+id/proforma_invoice_check"/>
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/proforma_invoice_check"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:text="@string/order_invoice"
+                            android:buttonTint="@color/colorPrimary"
+                            android:id="@+id/invoice_check"/>
 
                     </android.support.constraint.ConstraintLayout>
 

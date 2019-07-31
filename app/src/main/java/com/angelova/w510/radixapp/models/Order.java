@@ -26,6 +26,9 @@ public class Order implements Serializable {
     private String anticipatedPrice;
     private String anticipatedPriceByAdmin;
     private String inquiryToDelete;
+    private String paymentMethod;
+    private boolean requestsInvoice;
+    private boolean requestsProformaInvoice;
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
     private List<String> allFileNames;
@@ -152,6 +155,30 @@ public class Order implements Serializable {
 
     public void setInquiryToDelete(String inquiryToDelete) {
         this.inquiryToDelete = inquiryToDelete;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public boolean isRequestsInvoice() {
+        return requestsInvoice;
+    }
+
+    public void setRequestsInvoice(boolean requestsInvoice) {
+        this.requestsInvoice = requestsInvoice;
+    }
+
+    public boolean isRequestsProformaInvoice() {
+        return requestsProformaInvoice;
+    }
+
+    public void setRequestsProformaInvoice(boolean requestsProformaInvoice) {
+        this.requestsProformaInvoice = requestsProformaInvoice;
     }
 
     public List<Uri> getDocumentUris() {
