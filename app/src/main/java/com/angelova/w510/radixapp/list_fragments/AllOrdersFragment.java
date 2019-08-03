@@ -21,8 +21,10 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.OrdersAdapter;
 import com.angelova.w510.radixapp.menu_items.OrderActivity;
+import com.angelova.w510.radixapp.menu_items.ProfileActivity;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.tasks.GetAllOrdersTask;
 import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ScrollDirectionListener;
@@ -181,6 +183,9 @@ public class AllOrdersFragment extends Fragment {
                 mReadyTitle.setTextColor(getResources().getColor(R.color.white));
             }
         });
+
+        new GetAllOrdersTask(getActivity(), "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
+
         return rootView;
     }
 
@@ -276,5 +281,27 @@ public class AllOrdersFragment extends Fragment {
         mInProgressTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
         mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mReadyTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+    public void handleOrdersLoaded(List<Order> orders) {
+        mProfile.setOrders(orders);
+        saveProfile(mProfile);
+        if (mProfile.getOrders() != null && mProfile.getOrders().size() > 0) {
+            mOrdersAdapter = new OrdersAdapter(getActivity(), mProfile.getOrders());
+            mListView.setAdapter(mOrdersAdapter);
+            mNoOrdersView.setVisibility(View.GONE);
+        } else {
+            mNoOrdersView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void saveProfile(Profile profile) {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor prefsEditor = appPreferences.edit();
+        Gson gson = new Gson();
+
+        String updatedJson = gson.toJson(profile);
+        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
+        prefsEditor.apply();
     }
 }
