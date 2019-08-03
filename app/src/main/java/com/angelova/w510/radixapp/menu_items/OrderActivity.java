@@ -56,6 +56,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -142,6 +147,8 @@ public class OrderActivity extends BaseActivity {
     private List<String> selectedFilesNames = new ArrayList<>();
     private List<String> existingFileNames = new ArrayList<>();
     private List<Uri> selectedUris = new ArrayList<>();
+
+    private List<File> tempFiles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -702,7 +709,7 @@ public class OrderActivity extends BaseActivity {
         }
     }
 
-    private void uploadOrder(Order order) {
+    private void uploadOrder(final Order order) {
         // create upload service client
         OrderUploadService service =
                 ServiceGenerator.createService(OrderUploadService.class, mProfile.getToken());
@@ -712,17 +719,25 @@ public class OrderActivity extends BaseActivity {
         for(Uri uri : selectedUris) {
             // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
             // use the FileUtils to get the actual file by uri
-            File file = FileUtils.getFile(this, uri);
+            try {
+                File file = FileUtils.getFile(this, uri);
+                String extension = file.getPath().substring(file.getPath().lastIndexOf("."));
+                File tempFile = File.createTempFile(file.getName(), extension);
+                copy(file, tempFile);
+                tempFiles.add(tempFile);
 
-            // create RequestBody instance from file
-            RequestBody requestFile =
-                    RequestBody.create(
-                            MediaType.parse(getContentResolver().getType(uri)),
-                            file
-                    );
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("elements", file.getName(), requestFile);
-            files.add(body);
+                // create RequestBody instance from file
+                RequestBody requestFile =
+                        RequestBody.create(
+                                MediaType.parse(getContentResolver().getType(uri)),
+                                tempFile
+                        );
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("elements", tempFile.getName(), requestFile);
+                files.add(body);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
 
 
@@ -795,6 +810,11 @@ public class OrderActivity extends BaseActivity {
                             okhttp3.MultipartBody.FORM, order.getInquiryToDelete());
 
             params.put("inquiryToDelete", inquiryToDelete);
+        } else {
+            RequestBody inquiryToDelete =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, "");
+            params.put("inquiryToDelete", inquiryToDelete);
         }
 
 //        for(int i = 0; i < order.getDocumentsFromOffer().size(); i++) {
@@ -828,6 +848,16 @@ public class OrderActivity extends BaseActivity {
                 Log.v("Upload", "success");
                 mSubmitLoader.setVisibility(View.GONE);
                 mSubmitBtn.setVisibility(View.VISIBLE);
+
+                try {
+                    for (File file : tempFiles) {
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
                 WarnDialog warning = new WarnDialog(OrderActivity.this, "Submit an order",
                         "Your order is uploaded successfully! Please wait for more information about its status and price on email and in your profile", new WarnDialog.DialogClickListener() {
@@ -911,5 +941,18 @@ public class OrderActivity extends BaseActivity {
             }
         }
         return result;
+    }
+
+    public static void copy(File src, File dst) throws IOException {
+        try (InputStream in = new FileInputStream(src)) {
+            try (OutputStream out = new FileOutputStream(dst)) {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            }
+        }
     }
 }
