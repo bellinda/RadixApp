@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,24 +56,25 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
             viewHolder.toLanguage = (TextView) convertView.findViewById(R.id.to_language);
             viewHolder.filesCount = (TextView) convertView.findViewById(R.id.files_count);
             viewHolder.submittedOn = (TextView) convertView.findViewById(R.id.submitted_on);
-            viewHolder.statusIcon = (ImageView) convertView.findViewById(R.id.status_icon);
-            viewHolder.viewButton = (Button) convertView.findViewById(R.id.view_btn);
+            viewHolder.statusBar = convertView.findViewById(R.id.status_color_bar);
+            viewHolder.mainContainer = (ConstraintLayout) convertView.findViewById(R.id.main_container);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (OrdersAdapter.ViewHolder) convertView.getTag();
         }
 
-        viewHolder.fromLanguage.setText(getLanguageAbbreviation(order.getFromLanguage()));
-        viewHolder.toLanguage.setText(getLanguageAbbreviation(order.getToLanguage()));
+        viewHolder.fromLanguage.setText(order.getFromLanguage());
+        viewHolder.toLanguage.setText(order.getToLanguage());
         viewHolder.filesCount.setText(String.format(Locale.US, "%d file(s)", order.getAllFileNames().size()));
         if(order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
             viewHolder.submittedOn.setText(String.format(Locale.US, "Sent On: %s", order.getCreatedOn()));
-            if(order.isGotResponse()) {
-                viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_got_response);
-            } else {
-                viewHolder.statusIcon.setBackgroundResource(R.drawable.ic_sand_clock);
-            }
+            viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorPending));
+//            if(order.isGotResponse()) {
+//                viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_got_response);
+//            } else {
+//                viewHolder.statusIcon.setBackgroundResource(R.drawable.ic_sand_clock);
+//            }
         } else if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate()) && !order.isReady()) {
             String expectedDeliveryDate = order.getExpectedDeliveryDate();
             SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"); //2018-02-04T12:42:35.042Z
@@ -87,14 +89,14 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
                 pe.printStackTrace();
             }
             viewHolder.submittedOn.setText(String.format(Locale.US, "Expected delivery date:\n%s", expectedDeliveryDateToBeShown));
-            viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_progress);
+            viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorInProgress)); //.setBackgroundResource(R.mipmap.ic_progress);
         } else {
             //TODO: to get from backend date when got ready
             viewHolder.submittedOn.setText(String.format(Locale.US, "Got ready on: %s", order.getExpectedDeliveryDate()));
-            viewHolder.statusIcon.setBackgroundResource(R.mipmap.ic_ready);
+            viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorReady));
         }
 
-        viewHolder.viewButton.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
@@ -111,8 +113,10 @@ public class OrdersAdapter extends ArrayAdapter<Order> {
         TextView toLanguage;
         TextView filesCount;
         TextView submittedOn;
-        ImageView statusIcon;
-        Button viewButton;
+//        ImageView statusIcon;
+//        Button viewButton;
+        ConstraintLayout mainContainer;
+        View statusBar;
     }
 
     private String getLanguageAbbreviation(String language) {

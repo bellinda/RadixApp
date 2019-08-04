@@ -35,4 +35,10 @@
 
     <color name="active_color">#57150b</color>
     <color name="inactive_color">#c62828</color>
+
+    <color name="colorDivider">#1F000000</color>
+
+    <color name="colorPending">#c62828</color>
+    <color name="colorInProgress">#ffc107</color>
+    <color name="colorReady">#558b2f</color>
 </resources>
