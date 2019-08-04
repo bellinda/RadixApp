@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,11 +35,12 @@ import com.melnykov.fab.ScrollDirectionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllOrdersFragment extends Fragment {
+public class AllOrdersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
-    private ListView mListView;
+    private RecyclerView mListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView mNoOrdersView;
     private FloatingActionButton mAddNewOrderBtn;
     private OrdersAdapter mOrdersAdapter;
@@ -48,6 +52,13 @@ public class AllOrdersFragment extends Fragment {
 
     private Profile mProfile;
 
+    private boolean isLoading = true;
+
+    private boolean isAllSelected = true;
+    private boolean isPendingSelected = false;
+    private boolean isInProgressSelected = false;
+    private boolean isReadySelected = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +68,8 @@ public class AllOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_orders, container, false);
-        mListView = (ListView) rootView.findViewById(R.id.listView);
+        mListView = (RecyclerView) rootView.findViewById(R.id.listView);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mNoOrdersView = (TextView) rootView.findViewById(R.id.no_orders_view);
         mAddNewOrderBtn = (FloatingActionButton) rootView.findViewById(R.id.add_new_order_btn);
 
@@ -66,40 +78,19 @@ public class AllOrdersFragment extends Fragment {
         mInProgressTitle = (TextView) rootView.findViewById(R.id.in_progress_title);
         mReadyTitle = (TextView) rootView.findViewById(R.id.ready_title);
 
-//        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mAddNewOrderBtn.getLayoutParams();
-//        lp.anchorGravity = Gravity.BOTTOM | GravityCompat.END;
-//        mAddNewOrderBtn.setLayoutParams(lp);
-
         mProfile = getProfile();
 
         if (mProfile.getOrders() != null && mProfile.getOrders().size() > 0) {
             mOrdersAdapter = new OrdersAdapter(getActivity(), mProfile.getOrders());
+            mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mListView.setHasFixedSize(true);
             mListView.setAdapter(mOrdersAdapter);
         } else {
             mNoOrdersView.setVisibility(View.VISIBLE);
         }
 
-        mAddNewOrderBtn.attachToListView(mListView, new ScrollDirectionListener() {
-            @Override
-            public void onScrollDown() {
-                //Log.d("ListViewFragment", "onScrollDown()");
-            }
-
-            @Override
-            public void onScrollUp() {
-                //Log.d("ListViewFragment", "onScrollUp()");
-            }
-        }, new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                //Log.d("ListViewFragment", "onScrollStateChanged()");
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                //Log.d("ListViewFragment", "onScroll()");
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         mAddNewOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +107,8 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mOrdersAdapter = new OrdersAdapter(getActivity(), getProfile().getOrders());
+                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    mListView.setHasFixedSize(true);
                     mListView.setAdapter(mOrdersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -124,6 +117,8 @@ public class AllOrdersFragment extends Fragment {
                 removeAllMarks();
                 mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mAllTitle.setTextColor(getResources().getColor(R.color.white));
+                resetAllFlags();
+                isAllSelected = true;
             }
         });
 
@@ -135,6 +130,8 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mOrdersAdapter = new OrdersAdapter(getActivity(), notProcessedOrders);
+                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    mListView.setHasFixedSize(true);
                     mListView.setAdapter(mOrdersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -143,6 +140,8 @@ public class AllOrdersFragment extends Fragment {
                 removeAllMarks();
                 mNotProcessedTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNotProcessedTitle.setTextColor(getResources().getColor(R.color.white));
+                resetAllFlags();
+                isPendingSelected = true;
             }
         });
 
@@ -154,6 +153,8 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mOrdersAdapter = new OrdersAdapter(getActivity(), ordersInProgress);
+                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    mListView.setHasFixedSize(true);
                     mListView.setAdapter(mOrdersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -162,6 +163,8 @@ public class AllOrdersFragment extends Fragment {
                 removeAllMarks();
                 mInProgressTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mInProgressTitle.setTextColor(getResources().getColor(R.color.white));
+                resetAllFlags();
+                isInProgressSelected = true;
             }
         });
 
@@ -173,6 +176,8 @@ public class AllOrdersFragment extends Fragment {
                     mNoOrdersView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mOrdersAdapter = new OrdersAdapter(getActivity(), readyOrders);
+                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    mListView.setHasFixedSize(true);
                     mListView.setAdapter(mOrdersAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
@@ -181,6 +186,8 @@ public class AllOrdersFragment extends Fragment {
                 removeAllMarks();
                 mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mReadyTitle.setTextColor(getResources().getColor(R.color.white));
+                resetAllFlags();
+                isReadySelected = true;
             }
         });
 
@@ -198,42 +205,6 @@ public class AllOrdersFragment extends Fragment {
             profile = gson.fromJson(json, Profile.class);
         }
         return profile;
-    }
-
-    private int getNotProcessedOrdersCount() {
-        int notProcessedOrdersCount = 0;
-        if (mProfile.getOrders() != null) {
-            for (Order order : mProfile.getOrders()) {
-                if (order.getExpectedDeliveryDate() == null || TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                    notProcessedOrdersCount++;
-                }
-            }
-        }
-        return notProcessedOrdersCount;
-    }
-
-    private int getInProgressOrdersCount() {
-        int inProgressOrdersCount = 0;
-        if (mProfile.getOrders() != null) {
-            for (Order order : mProfile.getOrders()) {
-                if (order.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(order.getExpectedDeliveryDate())) {
-                    inProgressOrdersCount++;
-                }
-            }
-        }
-        return inProgressOrdersCount;
-    }
-
-    private int getReadyOrdersCount() {
-        int readyOrdersCount = 0;
-        if (mProfile.getOrders() != null) {
-            for (Order order : mProfile.getOrders()) {
-                if (order.isReady()) {
-                    readyOrdersCount++;
-                }
-            }
-        }
-        return readyOrdersCount;
     }
 
     private List<Order> getNotProcessedOrders() {
@@ -283,15 +254,29 @@ public class AllOrdersFragment extends Fragment {
         mReadyTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
 
+    private void resetAllFlags() {
+        isAllSelected = false;
+        isPendingSelected = false;
+        isInProgressSelected = false;
+        isReadySelected = false;
+    }
+
     public void handleOrdersLoaded(List<Order> orders) {
         mProfile.setOrders(orders);
         saveProfile(mProfile);
-        if (mProfile.getOrders() != null && mProfile.getOrders().size() > 0) {
-            mOrdersAdapter = new OrdersAdapter(getActivity(), mProfile.getOrders());
+        List<Order> ordersByType = getOrdersBasedOnSelectedType();
+        if (ordersByType != null && ordersByType.size() > 0) {
+            mOrdersAdapter = new OrdersAdapter(getActivity(), ordersByType);
+            mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mListView.setHasFixedSize(true);
             mListView.setAdapter(mOrdersAdapter);
             mNoOrdersView.setVisibility(View.GONE);
         } else {
             mNoOrdersView.setVisibility(View.VISIBLE);
+        }
+        isLoading = false;
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -303,5 +288,25 @@ public class AllOrdersFragment extends Fragment {
         String updatedJson = gson.toJson(profile);
         prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
         prefsEditor.apply();
+    }
+
+    private List<Order> getOrdersBasedOnSelectedType() {
+        if (isAllSelected) {
+            return getProfile().getOrders();
+        } else if (isPendingSelected) {
+            return getNotProcessedOrders();
+        } else if (isInProgressSelected) {
+            return getInProgressOrders();
+        } else {
+            return getReadyOrders();
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (!isLoading) {
+            isLoading = true;
+            new GetAllOrdersTask(getActivity(), "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
+        }
     }
 }
