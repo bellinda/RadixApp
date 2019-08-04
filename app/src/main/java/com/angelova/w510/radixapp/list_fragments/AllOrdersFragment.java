@@ -191,6 +191,7 @@ public class AllOrdersFragment extends Fragment implements SwipeRefreshLayout.On
             }
         });
 
+        mSwipeRefreshLayout.setRefreshing(true);
         new GetAllOrdersTask(getActivity(), "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
 
         return rootView;
