@@ -80,7 +80,7 @@ public class OrdersAdapter extends Adapter<OrdersAdapter.ViewHolder> {
             viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorReady));
         }
 
-        viewHolder.responsesCount.setText(String.format("%d", order.getResponses() != null ? order.getResponses().size() : 0));
+        viewHolder.responsesCount.setText(order.getResponsesCount());
 
         viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -36,6 +36,7 @@ public class Order implements Serializable {
     private String createdOn;
     private List<Response> responses;
     private boolean gotResponse;
+    private String responsesCount;
 
     public String getId() {
         return id;
@@ -235,5 +236,13 @@ public class Order implements Serializable {
 
     public void setGotResponse(boolean gotResponse) {
         this.gotResponse = gotResponse;
+    }
+
+    public String getResponsesCount() {
+        return responsesCount;
+    }
+
+    public void setResponsesCount(String responsesCount) {
+        this.responsesCount = responsesCount;
     }
 }

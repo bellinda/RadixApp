@@ -303,6 +303,11 @@ public class AllOrdersFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
+    public void stopLoader() {
+        isLoading = false;
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
     @Override
     public void onRefresh() {
         if (!isLoading) {
