@@ -59,13 +59,8 @@ public class GetAllOrdersTask extends AsyncTask<Void, Void, Object> {
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                                    if(response.length() > 0) {
-                                        if (context instanceof MainActivity) {
-                                            ((MainActivity)context).handleSuccessfulOrdersDownload(response);
-                                        }
-                                    } else {
-                                        //((ProfileActivity) context).handleSuccessWithoutOrdersYet();
-                                        //((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
+                                    if (context instanceof MainActivity) {
+                                        ((MainActivity)context).handleSuccessfulOrdersDownload(response);
                                     }
                                 }
 
@@ -73,12 +68,14 @@ public class GetAllOrdersTask extends AsyncTask<Void, Void, Object> {
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                     //((ProfileActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
                                     System.out.println("ERROR " + throwable.getMessage());
+                                    ((MainActivity)context).handleErrorOnOrdersGet("Something went wrong - " + throwable.getMessage());
                                 }
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                                     //((ProfileActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
                                     System.out.println("ERROR " + throwable.getMessage());
+                                    ((MainActivity)context).handleErrorOnOrdersGet("Something went wrong - " + throwable.getMessage());
                                 }
                             });
                 } catch(Exception ex) {

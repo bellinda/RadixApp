@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.list_fragments.AllOffersFragment;
 import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.menu_items.ProfileActivity;
@@ -109,69 +110,72 @@ public class MainActivity extends BaseActivity {
     public void handleSuccessfulOrdersDownload(JSONArray receivedData) {
         List<Order> orders = new ArrayList<>();
         try {
-            for(int i = 0; i < receivedData.length(); i++) {
-                JSONObject data = receivedData.getJSONObject(i);
-                Order order = new Order();
-                order.setId(data.getString("consecutiveID"));
-                order.setPhone(data.getString("phone"));
-                order.setEmail(data.getString("email"));
-                order.setOrderType(data.getString("orderType"));
-                order.setTranslationType(data.getString("translationType"));
-                order.setNotes(data.getString("notes"));
-                order.setFromLanguage(data.getString("fromLanguage"));
-                order.setToLanguage(data.getString("toLanguage"));
-                order.setName(data.getString("fullName"));
+            if (receivedData.length() > 0) {
+                for (int i = 0; i < receivedData.length(); i++) {
+                    JSONObject data = receivedData.getJSONObject(i);
+                    Order order = new Order();
+                    order.setId(data.getString("consecutiveID"));
+                    order.setPhone(data.getString("phone"));
+                    order.setEmail(data.getString("email"));
+                    order.setOrderType(data.getString("orderType"));
+                    order.setTranslationType(data.getString("translationType"));
+                    order.setNotes(data.getString("notes"));
+                    order.setFromLanguage(data.getString("fromLanguage"));
+                    order.setToLanguage(data.getString("toLanguage"));
+                    order.setName(data.getString("fullName"));
 
-                String myFormat = "yyyy-MM-dd'T'HH:mm";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-                try {
-                    Date desiredDeliveryDateInUTC = sdf.parse(data.getString("desiredDeliveryDate"));
-                    sdf.setTimeZone(Calendar.getInstance().getTimeZone());
-                    order.setDesiredDeliveryDate(sdf.format(desiredDeliveryDateInUTC));
-                } catch (ParseException pe) {
-                    pe.printStackTrace();
-                }
-
-                order.setGotResponse(data.getBoolean("gotResponse"));
-                JSONArray files = data.getJSONArray("file");
-                List<String> fileNames = new ArrayList<>();
-                for(int j = 0; j < files.length(); j++) {
-                    fileNames.add(files.getString(j));
-                }
-                JSONArray existingFiles = data.getJSONArray("existingFiles");
-                for(int j = 0; j < existingFiles.length(); j++) {
-                    fileNames.add(existingFiles.getString(j));
-                }
-                order.setAllFileNames(fileNames);
-                order.setPickUpMethod(data.getString("pickupMethod"));
-                order.setAnticipatedPrice(data.getString("anticipatedPrice"));
-                order.setAnticipatedPriceByAdmin(data.getString("anticipatedPriceByAdmin"));
-
-                if(data.has("expectedDeliveryDate") && !data.getString("expectedDeliveryDate").isEmpty()) {
+                    String myFormat = "yyyy-MM-dd'T'HH:mm";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                     try {
-                        Date expectedDeliveryDateInUTC = sdf.parse(data.getString("expectedDeliveryDate"));
+                        Date desiredDeliveryDateInUTC = sdf.parse(data.getString("desiredDeliveryDate"));
                         sdf.setTimeZone(Calendar.getInstance().getTimeZone());
-                        order.setExpectedDeliveryDate(sdf.format(expectedDeliveryDateInUTC));
+                        order.setDesiredDeliveryDate(sdf.format(desiredDeliveryDateInUTC));
                     } catch (ParseException pe) {
                         pe.printStackTrace();
                     }
-                }
 
-                String createdOn = data.getString("createdAt");
-                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
-                originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
-                targetFormat.setTimeZone(Calendar.getInstance().getTimeZone());
-                try {
-                    Date date = originalFormat.parse(createdOn);
-                    String formattedDate = targetFormat.format(date);
-                    order.setCreatedOn(formattedDate);
-                } catch (ParseException pe) {
-                    pe.printStackTrace();
+                    order.setGotResponse(data.getBoolean("gotResponse"));
+                    JSONArray files = data.getJSONArray("file");
+                    List<String> fileNames = new ArrayList<>();
+                    for (int j = 0; j < files.length(); j++) {
+                        fileNames.add(files.getString(j));
+                    }
+                    JSONArray existingFiles = data.getJSONArray("existingFiles");
+                    for (int j = 0; j < existingFiles.length(); j++) {
+                        fileNames.add(existingFiles.getString(j));
+                    }
+                    order.setAllFileNames(fileNames);
+                    order.setPickUpMethod(data.getString("pickupMethod"));
+                    order.setAnticipatedPrice(data.getString("anticipatedPrice"));
+                    order.setAnticipatedPriceByAdmin(data.getString("anticipatedPriceByAdmin"));
+
+                    if (data.has("expectedDeliveryDate") && !data.getString("expectedDeliveryDate").isEmpty()) {
+                        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                        try {
+                            Date expectedDeliveryDateInUTC = sdf.parse(data.getString("expectedDeliveryDate"));
+                            sdf.setTimeZone(Calendar.getInstance().getTimeZone());
+                            order.setExpectedDeliveryDate(sdf.format(expectedDeliveryDateInUTC));
+                        } catch (ParseException pe) {
+                            pe.printStackTrace();
+                        }
+                    }
+
+                    String createdOn = data.getString("createdAt");
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                    originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+                    targetFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+                    try {
+                        Date date = originalFormat.parse(createdOn);
+                        String formattedDate = targetFormat.format(date);
+                        order.setCreatedOn(formattedDate);
+                    } catch (ParseException pe) {
+                        pe.printStackTrace();
+                    }
+                    order.setResponsesCount(data.getString("responsesCount"));
+                    orders.add(order);
                 }
-                orders.add(order);
             }
 
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
@@ -181,5 +185,22 @@ public class MainActivity extends BaseActivity {
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
+    }
+
+    public void handleErrorOnOrdersGet(String errorMessage) {
+        showAlertDialogNow(errorMessage, "Warning");
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (currentFragment instanceof AllOrdersFragment) {
+            ((AllOrdersFragment) currentFragment).stopLoader();
+        }
+    }
+
+    private void showAlertDialogNow(String message, String title) {
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
+            }
+        });
+        warning.show();
     }
 }
