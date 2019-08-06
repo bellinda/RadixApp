@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,7 +49,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private Profile mProfile;
     private ProgressDialog mLoadingDialog;
 
-    private TextView mTitleWithId;
+    private Toolbar mToolbar;
     private TextView mToLang;
     private TextView mFromLang;
     private TextView mSentOn;
@@ -96,13 +97,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         mProfile = getProfile();
 
-        mTitleWithId = (TextView) findViewById(R.id.header_title);
+        //mTitleWithId = (TextView) findViewById(R.id.header_title);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToLang = (TextView) findViewById(R.id.to_lang);
         mFromLang = (TextView) findViewById(R.id.from_lang);
         mSentOn = (TextView) findViewById(R.id.sent_on);
         mFilesCount = (TextView) findViewById(R.id.files_count);
 
-        mTitleWithId.setText(String.format(Locale.US, "Order %s", mOrder.getId()));
+        //mTitleWithId.setText(String.format(Locale.US, "Order %s", mOrder.getId()));
         mFromLang.setText(getLanguageAbbreviation(mOrder.getFromLanguage()));
         mToLang.setText(getLanguageAbbreviation(mOrder.getToLanguage()));
         mFilesCount.setText(String.format(Locale.US, "%d file(s)", mOrder.getAllFileNames().size()));
@@ -115,6 +117,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
         mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
         mConfirmBtn = (FloatingActionButton) findViewById(R.id.menu_item_confirm);
         mRejectBtn = (FloatingActionButton) findViewById(R.id.menu_item_reject);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         mInfoItem.setOnClickListener(new View.OnClickListener() {
             @Override
