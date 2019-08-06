@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#c62828</color>
-    <color name="colorPrimaryDark">#57150b</color>
+    <color name="colorPrimaryDark">#970b0b</color>
     <color name="colorAccent">#fffbf4</color>
 
     <color name="login_input_text_color">#d2d2d2</color>
