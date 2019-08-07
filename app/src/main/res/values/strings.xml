@@ -106,4 +106,12 @@
 
     <string name="send_response_loading_dialog_text">Sending response&#8230;</string>
     <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="order_details_title">Order Details</string>
+    <string name="order_details_date">Ordered on</string>
+    <string name="order_details_id">Order number</string>
+    <string name="order_details_amount">Total Amount</string>
+    <string name="order_details_no_data_for_price">No data yet</string>
+    <string name="order_details_info">Order Info</string>
+    <string name="order_details_discussion">Discussion</string>
 </resources>

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:title="Order Details"
+        app:title="@string/order_details_title"
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/colorAccent"
         app:navigationIcon="@drawable/ic_back_white"
@@ -26,15 +26,15 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35"
-        android:id="@+id/menu_top_guideline"/>
+        app:layout_constraintGuide_percent="0.34"
+        android:id="@+id/submenu_bottom_guideline"/>
 
     <android.support.constraint.Guideline
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.25"
-        android:id="@+id/files_count_top_guideline"/>
+        android:id="@+id/submenu_top_guideline"/>
 
     <android.support.constraint.Guideline
         android:layout_width="0dp"
@@ -97,111 +97,156 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/files_count_top_guideline"
+        app:layout_constraintBottom_toTopOf="@id/submenu_top_guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="horizontal"
-        android:weightSum="5">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            tools:text="EN"
-            android:textSize="60sp"
-            android:gravity="center"
-            android:id="@+id/from_lang"/>
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/to_arrow"
-                android:layout_gravity="center"/>
+                android:text="@string/order_details_date"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="14 May 2019"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:id="@+id/sent_on"/>
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            tools:text="BG"
-            android:textSize="60sp"
+            android:layout_weight="1"
+            android:orientation="vertical"
             android:gravity="center"
-            android:id="@+id/to_lang"/>
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/order_details_id"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="#RO0000014"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:id="@+id/order_id"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/order_details_amount"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="150 €"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/total_amount"/>
+        </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/submenu_top_guideline"
+        android:background="@color/colorPrimary"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/submenu_bottom_guideline"
+        android:background="@color/colorPrimary"/>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/files_count_top_guideline"
-        app:layout_constraintBottom_toTopOf="@id/menu_top_guideline"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@id/submenu_top_guideline"
+        app:layout_constraintBottom_toTopOf="@id/submenu_bottom_guideline"
+        android:weightSum="2">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:text="Sent on: 04 Feb 2018"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:id="@+id/sent_on"/>
+            android:layout_weight="1">
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/order_details_info"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/order_info_menu"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:id="@+id/info_underline"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:text="2 files(s)"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:id="@+id/files_count"/>
-    </LinearLayout>
+            android:layout_weight="1">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menu_top_guideline"
-        app:layout_constraintBottom_toTopOf="@id/menu_bottom_guideline"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:id="@+id/menu_header">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/order_details_discussion"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:id="@+id/discussions_menu"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Main information"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:background="@color/colorPrimary"
-            android:id="@+id/main_info_item"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Responses"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:background="@color/offer_details_not_active_item_color"
-            android:id="@+id/responses_item"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:id="@+id/discussions_underline"
+                android:visibility="gone"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/menu_header"
+        app:layout_constraintTop_toBottomOf="@id/submenu_bottom_guideline"
         app:layout_constraintBottom_toTopOf="@id/main_info_bottom_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

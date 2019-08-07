@@ -50,13 +50,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private ProgressDialog mLoadingDialog;
 
     private Toolbar mToolbar;
-    private TextView mToLang;
-    private TextView mFromLang;
     private TextView mSentOn;
-    private TextView mFilesCount;
+    private TextView mOrderNumber;
+    private TextView mTotalAmount;
 
-    private TextView mInfoItem;
-    private TextView mResponsesItem;
+    private TextView mInfoMenu;
+    private TextView mDiscussionMenu;
+    private View mInfoUnderline;
+    private View mDiscussionUnderline;
+
     //private Button mSendResponseBtn;
     private TextView mNoResponsesView;
     private FloatingActionMenu mFloatingMenu;
@@ -97,21 +99,60 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
         mProfile = getProfile();
 
-        //mTitleWithId = (TextView) findViewById(R.id.header_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToLang = (TextView) findViewById(R.id.to_lang);
-        mFromLang = (TextView) findViewById(R.id.from_lang);
         mSentOn = (TextView) findViewById(R.id.sent_on);
-        mFilesCount = (TextView) findViewById(R.id.files_count);
+        mOrderNumber = (TextView) findViewById(R.id.order_id);
+        mTotalAmount = (TextView) findViewById(R.id.total_amount);
 
-        //mTitleWithId.setText(String.format(Locale.US, "Order %s", mOrder.getId()));
-        mFromLang.setText(getLanguageAbbreviation(mOrder.getFromLanguage()));
-        mToLang.setText(getLanguageAbbreviation(mOrder.getToLanguage()));
-        mFilesCount.setText(String.format(Locale.US, "%d file(s)", mOrder.getAllFileNames().size()));
-        mSentOn.setText(String.format(Locale.US, "Sent On: %s", mOrder.getCreatedOn()));
+        mSentOn.setText(mOrder.getCreatedOn());
+        mOrderNumber.setText(String.format(Locale.US, "#%s", mOrder.getId()));
+        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin().trim())) {
+            mTotalAmount.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
+        } else {
+            mTotalAmount.setText(getString(R.string.order_details_no_data_for_price));
+        }
 
-        mInfoItem = (TextView) findViewById(R.id.main_info_item);
-        mResponsesItem = (TextView) findViewById(R.id.responses_item);
+        mInfoMenu = (TextView) findViewById(R.id.order_info_menu);
+        mDiscussionMenu = (TextView) findViewById(R.id.discussions_menu);
+        mInfoUnderline = findViewById(R.id.info_underline);
+        mDiscussionUnderline = findViewById(R.id.discussions_underline);
+
+        mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.order_details_discussion), mOrder.getResponsesCount()));
+        mInfoMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDiscussionMenu.setTextColor(getResources().getColor(R.color.black));
+                mDiscussionUnderline.setVisibility(View.GONE);
+                mInfoMenu.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mInfoUnderline.setVisibility(View.VISIBLE);
+
+                mMainInfoLayout.setVisibility(View.VISIBLE);
+                mResponsesLayout.setVisibility(View.GONE);
+                mFloatingMenu.setVisibility(View.GONE);
+                mNoResponsesView.setVisibility(View.GONE);
+            }
+        });
+
+        mDiscussionMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mInfoMenu.setTextColor(getResources().getColor(R.color.black));
+                mInfoUnderline.setVisibility(View.GONE);
+                mDiscussionMenu.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mDiscussionUnderline.setVisibility(View.VISIBLE);
+
+                mMainInfoLayout.setVisibility(View.GONE);
+                mResponsesLayout.setVisibility(View.VISIBLE);
+                if(mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
+                    mNoResponsesView.setVisibility(View.GONE);
+                    mFloatingMenu.setVisibility(View.VISIBLE);
+                } else {
+                    mFloatingMenu.setVisibility(View.GONE);
+                    mNoResponsesView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
         mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
         mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
@@ -122,35 +163,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-
-        mInfoItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.colorPrimary));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.offer_details_not_active_item_color));
-                mMainInfoLayout.setVisibility(View.VISIBLE);
-                mResponsesLayout.setVisibility(View.GONE);
-                mFloatingMenu.setVisibility(View.GONE);
-                mNoResponsesView.setVisibility(View.GONE);
-            }
-        });
-
-        mResponsesItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.offer_details_not_active_item_color));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OrderDetailsActivity.this, R.color.colorPrimary));
-                mMainInfoLayout.setVisibility(View.GONE);
-                mResponsesLayout.setVisibility(View.VISIBLE);
-                if(mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
-                    mNoResponsesView.setVisibility(View.GONE);
-                    mFloatingMenu.setVisibility(View.VISIBLE);
-                } else {
-                    mFloatingMenu.setVisibility(View.GONE);
-                    mNoResponsesView.setVisibility(View.VISIBLE);
-                }
             }
         });
 

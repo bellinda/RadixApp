@@ -105,4 +105,12 @@
     <string name="dialog_response_cancel_btn">Отказ</string>
 
     <string name="send_response_loading_dialog_text">Изпращане на отговор&#8230;</string>
+
+    <string name="order_details_title">Детайли на поръчката</string>
+    <string name="order_details_date">Дата</string>
+    <string name="order_details_id">Номер</string>
+    <string name="order_details_amount">Крайна цена</string>
+    <string name="order_details_no_data_for_price">Няма данни</string>
+    <string name="order_details_info">Данни</string>
+    <string name="order_details_discussion">Комуникация</string>
 </resources>
