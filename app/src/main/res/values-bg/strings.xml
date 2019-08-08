@@ -113,4 +113,15 @@
     <string name="order_details_no_data_for_price">Няма данни</string>
     <string name="order_details_info">Данни</string>
     <string name="order_details_discussion">Комуникация</string>
+    <string name="order_details_from_language">От език</string>
+    <string name="order_details_to_language">На език</string>
+    <string name="order_details_documents">Поръчани документи</string>
+    <string name="order_details_order_type">Тип поръчка</string>
+    <string name="order_details_translation_type">Тип превод</string>
+    <string name="order_details_ed_date">Очаквана финална дата</string>
+    <string name="order_details_receiving">Получаване</string>
+    <string name="order_details_full_name">Имена</string>
+    <string name="order_details_notes">Бележки към поръчката</string>
+    <string name="order_details_email">Имейл за кореспонденция</string>
+    <string name="order_details_phone">Телефонен номер</string>
 </resources>

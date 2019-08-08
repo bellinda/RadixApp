@@ -59,7 +59,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private View mInfoUnderline;
     private View mDiscussionUnderline;
 
-    //private Button mSendResponseBtn;
     private TextView mNoResponsesView;
     private FloatingActionMenu mFloatingMenu;
     private FloatingActionButton mSendResponseBtn;
@@ -73,13 +72,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private TextView mNotes;
     private TextView mEmail;
     private TextView mPhone;
-    private TextView mDesDelDate;
     private TextView mDocumentsList;
     private LinearLayout mExpDelDateLayout;
     private TextView mExpDelDate;
     private TextView mReceiving;
-    private LinearLayout mAnticipatedPriceByAdminLayout;
-    private TextView mAnticipatedPriceByAdmin;
+    private TextView mFromLanguage;
+    private TextView mToLanguage;
     private ListView mResponsesLayout;
     private ResponsesAdapter mResponsesAdapter;
 
@@ -210,13 +208,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
         mNotes = (TextView) findViewById(R.id.notes);
         mEmail = (TextView) findViewById(R.id.email);
         mPhone = (TextView) findViewById(R.id.phone);
-        mDesDelDate = (TextView) findViewById(R.id.des_del_date);
         mDocumentsList = (TextView) findViewById(R.id.documents);
         mExpDelDateLayout = (LinearLayout) findViewById(R.id.exp_del_date_layout);
         mExpDelDate = (TextView) findViewById(R.id.exp_del_date);
         mReceiving = (TextView) findViewById(R.id.receiving);
-        mAnticipatedPriceByAdminLayout = (LinearLayout) findViewById(R.id.anticipated_price_layout);
-        mAnticipatedPriceByAdmin = (TextView) findViewById(R.id.anticipated_price);
+        mFromLanguage = (TextView) findViewById(R.id.from_language);
+        mToLanguage = (TextView) findViewById(R.id.to_language);
 
         mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
 
@@ -226,22 +223,17 @@ public class OrderDetailsActivity extends AppCompatActivity {
         mNotes.setText(mOrder.getNotes());
         mEmail.setText(mOrder.getEmail());
         mPhone.setText(mOrder.getPhone());
+        mFromLanguage.setText(mOrder.getFromLanguage());
+        mToLanguage.setText(mOrder.getToLanguage());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy', 'HH:mm");
-        try {
-            Date desiredDeliveryDate = inputFormat.parse(mOrder.getDesiredDeliveryDate());
-            String dateToBeShown = outputFormat.format(desiredDeliveryDate);
-            mDesDelDate.setText(dateToBeShown);
-        } catch (ParseException pe) {
-            pe.printStackTrace();
-        }
         StringBuilder documentsListBuilder = new StringBuilder();
         for(String fileName : mOrder.getAllFileNames()) {
             documentsListBuilder.append(fileName + "\n");
         }
-        documentsListBuilder.delete(documentsListBuilder.lastIndexOf("\n"), documentsListBuilder.length() - 1);
+        documentsListBuilder.setLength(documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
-        if(mOrder.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(mOrder.getExpectedDeliveryDate())) {
+        if (mOrder.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(mOrder.getExpectedDeliveryDate())) {
             try {
                 Date expDeliveryDate = inputFormat.parse(mOrder.getExpectedDeliveryDate());
                 String dateToBeShown = outputFormat.format(expDeliveryDate);
@@ -258,11 +250,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
             mReceiving.setText(getString(R.string.order_delivery_on_email));
         } else {
             mReceiving.setText(getString(R.string.order_delivery_by_post));
-        }
-        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin().trim())) {
-            mAnticipatedPriceByAdmin.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
-        } else {
-            mAnticipatedPriceByAdminLayout.setVisibility(View.GONE);
         }
 
         new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();

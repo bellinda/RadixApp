@@ -114,4 +114,15 @@
     <string name="order_details_no_data_for_price">No data yet</string>
     <string name="order_details_info">Order Info</string>
     <string name="order_details_discussion">Discussion</string>
+    <string name="order_details_from_language">From Language</string>
+    <string name="order_details_to_language">To Language</string>
+    <string name="order_details_documents">Ordered Documents</string>
+    <string name="order_details_order_type">Order Type</string>
+    <string name="order_details_translation_type">Translation Type</string>
+    <string name="order_details_ed_date">Expected delivery date</string>
+    <string name="order_details_receiving">Receiving the order</string>
+    <string name="order_details_full_name">Full Name</string>
+    <string name="order_details_notes">Notes to your order</string>
+    <string name="order_details_email">Email for response</string>
+    <string name="order_details_phone">Phone Number</string>
 </resources>
