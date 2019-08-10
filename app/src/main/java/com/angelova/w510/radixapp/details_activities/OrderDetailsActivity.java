@@ -309,7 +309,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
             mResponsesAdapter = new ResponsesAdapter(this, mOrder.getResponses());
             mResponsesLayout.setAdapter(mResponsesAdapter);
 
-            mLoadingDialog.hide();
+            if (mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
+                mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.order_details_discussion), mOrder.getResponses().size()));
+            }
+
+            mLoadingDialog.dismiss();
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
@@ -348,7 +352,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     public void hideLoadingDialog() {
-        mLoadingDialog.hide();
+        mLoadingDialog.dismiss();
     }
 
     public void showErrorMessage(String message) {
