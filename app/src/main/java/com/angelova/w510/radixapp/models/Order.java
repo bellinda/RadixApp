@@ -29,6 +29,7 @@ public class Order implements Serializable {
     private String paymentMethod;
     private boolean requestsInvoice;
     private boolean requestsProformaInvoice;
+    private InvoiceData invoiceData;
     private List<Uri> documentUris;
     private List<String> documentsFromOffer;
     private List<String> allFileNames;
@@ -180,6 +181,14 @@ public class Order implements Serializable {
 
     public void setRequestsProformaInvoice(boolean requestsProformaInvoice) {
         this.requestsProformaInvoice = requestsProformaInvoice;
+    }
+
+    public InvoiceData getInvoiceData() {
+        return invoiceData;
+    }
+
+    public void setInvoiceData(InvoiceData invoiceData) {
+        this.invoiceData = invoiceData;
     }
 
     public List<Uri> getDocumentUris() {

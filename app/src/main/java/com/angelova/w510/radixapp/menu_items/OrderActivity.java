@@ -17,6 +17,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
@@ -42,6 +43,7 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.models.InvoiceData;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
@@ -134,6 +136,16 @@ public class OrderActivity extends BaseActivity {
     private RadioButton mPaymentDeliveryRb;
     private CheckBox mInvoiceCheckBtn;
     private CheckBox mProformaInvoiceCheckBtn;
+    private CardView mInvoiceDataCard;
+    private EditText mInvoiceNameInput;
+    private EditText mInvoiceUidInput;
+    private EditText mInvoiceVatInput;
+    private EditText mInvoiceAddressInput;
+    private EditText mInvoiceContactPersonInput;
+    private EditText mInvoicePhoneInput;
+    private Spinner mDownPaymentSpinner;
+    private Spinner mInvoiceLanguageSpinner;
+    private Spinner mCurrencySpinner;
     private Button mSubmitBtn;
     private ProgressBar mSubmitLoader;
 
@@ -143,12 +155,18 @@ public class OrderActivity extends BaseActivity {
 
     private final Calendar myCalendar = Calendar.getInstance();
     private ArrayAdapter<CharSequence> langAdapter;
+    private ArrayAdapter<CharSequence> downPaymentsAdapter;
+    private ArrayAdapter<CharSequence> currenciesAdapter;
+    private ArrayAdapter<CharSequence> invoiceLangsAdapter;
 
     private List<String> selectedFilesNames = new ArrayList<>();
     private List<String> existingFileNames = new ArrayList<>();
     private List<Uri> selectedUris = new ArrayList<>();
 
     private List<File> tempFiles = new ArrayList<>();
+
+    private boolean isProformaInvoiceSelected = false;
+    private boolean isInvoiceSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +221,16 @@ public class OrderActivity extends BaseActivity {
         mPaymentDeliveryRb = (RadioButton) findViewById(R.id.cash_delivery_rb);
         mInvoiceCheckBtn = (CheckBox) findViewById(R.id.invoice_check);
         mProformaInvoiceCheckBtn = (CheckBox) findViewById(R.id.proforma_invoice_check);
+        mInvoiceDataCard = (CardView) findViewById(R.id.invoice_data_card);
+        mInvoiceNameInput = (EditText) findViewById(R.id.invoice_name_input);
+        mInvoiceUidInput = (EditText) findViewById(R.id.invoice_uid_input);
+        mInvoiceVatInput = (EditText) findViewById(R.id.invoice_vat_input);
+        mInvoiceAddressInput = (EditText) findViewById(R.id.invoice_address_input);
+        mInvoiceContactPersonInput = (EditText) findViewById(R.id.invoice_person_input);
+        mInvoicePhoneInput = (EditText) findViewById(R.id.invoice_phone_input);
+        mDownPaymentSpinner = (Spinner) findViewById(R.id.down_payment_spinner);
+        mInvoiceLanguageSpinner = (Spinner) findViewById(R.id.invoice_language_spinner);
+        mCurrencySpinner = (Spinner) findViewById(R.id.invoice_currency_spinner);
         mSubmitBtn = (Button) findViewById(R.id.submit_btn);
         mSubmitLoader = (ProgressBar) findViewById(R.id.submit_loader);
 
@@ -362,6 +390,42 @@ public class OrderActivity extends BaseActivity {
             }
         });
 
+        mProformaInvoiceCheckBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mInvoiceDataCard.setVisibility(View.VISIBLE);
+                } else if (!isInvoiceSelected) {
+                    mInvoiceDataCard.setVisibility(View.GONE);
+                }
+                isProformaInvoiceSelected = isChecked;
+            }
+        });
+
+        mInvoiceCheckBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mInvoiceDataCard.setVisibility(View.VISIBLE);
+                } else if (!isProformaInvoiceSelected) {
+                    mInvoiceDataCard.setVisibility(View.GONE);
+                }
+                isInvoiceSelected = isChecked;
+            }
+        });
+
+        downPaymentsAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, getResources().getStringArray(R.array.down_payments) );
+        downPaymentsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        mDownPaymentSpinner.setAdapter(downPaymentsAdapter);
+
+        invoiceLangsAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, getResources().getStringArray(R.array.invoice_languages) );
+        invoiceLangsAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        mInvoiceLanguageSpinner.setAdapter(invoiceLangsAdapter);
+
+        currenciesAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_text, getResources().getStringArray(R.array.currencies) );
+        currenciesAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        mCurrencySpinner.setAdapter(currenciesAdapter);
+
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,6 +447,8 @@ public class OrderActivity extends BaseActivity {
                     showAlertDialogNow("Please enter your phone", "Warning");
                 } else if (selectedFilesNames.size() == 0) {
                     showAlertDialogNow("Please select the files, for which translation you are requesting an offer", "Warning");
+                } else if ((isInvoiceSelected || isProformaInvoiceSelected) && !isAllDataForInvoiceEntered()) {
+                    showAlertDialogNow("Please enter the data for the invoice", "Warning");
                 } else {
                     Order order = new Order();
                     order.setName(mOtherNameRb.isChecked() ? mNameInput.getText().toString() : mProfile.getName());
@@ -419,8 +485,10 @@ public class OrderActivity extends BaseActivity {
                     } else {
                         order.setPaymentMethod(mPaymentDeliveryRb.getText().toString());
                     }
-                    order.setRequestsProformaInvoice(mProformaInvoiceCheckBtn.isChecked());
-                    order.setRequestsInvoice(mInvoiceCheckBtn.isChecked());
+                    order.setRequestsProformaInvoice(isProformaInvoiceSelected);
+                    order.setRequestsInvoice(isInvoiceSelected);
+                    InvoiceData invoiceData = getInvoiceDataFromInput();
+                    order.setInvoiceData(invoiceData);
                     order.setDocumentsFromOffer(existingFileNames);
                     order.setDocumentUris(selectedUris);
 
@@ -796,6 +864,15 @@ public class OrderActivity extends BaseActivity {
                 RequestBody.create(
                         MultipartBody.FORM, order.isRequestsProformaInvoice() + "");
 
+        if (order.isRequestsInvoice() || order.isRequestsProformaInvoice()) {
+            Gson gson = new Gson();
+            String invoiceDataJson = gson.toJson(order.getInvoiceData());
+            RequestBody invoiceData =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, invoiceDataJson);
+            params.put("invoiceData", invoiceData);
+        }
+
         if (order.getAnticipatedPrice() != null) {
             RequestBody anticipatedPrice =
                     RequestBody.create(
@@ -954,5 +1031,28 @@ public class OrderActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    private boolean isAllDataForInvoiceEntered() {
+        return mInvoiceNameInput.getText() != null && !mInvoiceNameInput.getText().toString().isEmpty() &&
+                mInvoiceUidInput.getText() != null && !mInvoiceUidInput.getText().toString().isEmpty() &&
+                mInvoiceVatInput.getText() != null && !mInvoiceVatInput.getText().toString().isEmpty() &&
+                mInvoiceAddressInput.getText() != null && !mInvoiceAddressInput.getText().toString().isEmpty() &&
+                mInvoiceContactPersonInput.getText() != null && !mInvoiceContactPersonInput.getText().toString().isEmpty() &&
+                mInvoicePhoneInput.getText() != null && !mInvoicePhoneInput.getText().toString().isEmpty();
+    }
+
+    private InvoiceData getInvoiceDataFromInput() {
+        InvoiceData data = new InvoiceData();
+        data.setInvoicedEntity(mInvoiceNameInput.getText().toString());
+        data.setUniqueIdCode(mInvoiceUidInput.getText().toString());
+        data.setVatNumber(mInvoiceVatInput.getText().toString());
+        data.setAddress(mInvoiceAddressInput.getText().toString());
+        data.setContactPerson(mInvoiceContactPersonInput.getText().toString());
+        data.setPhone(mInvoicePhoneInput.getText().toString());
+        data.setDownPayment(Integer.parseInt(mDownPaymentSpinner.getSelectedItem().toString().replace("%", "")));
+        data.setInvoiceCurrency(mCurrencySpinner.getSelectedItem().toString());
+        data.setInvoiceLanguage(mInvoiceLanguageSpinner.getSelectedItem().toString());
+        return data;
     }
 }

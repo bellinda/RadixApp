@@ -6,4 +6,19 @@
         <item>Френски</item>
         <item>Български</item>
     </string-array>
+
+    <string-array name="down_payments">
+        <item>50%</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="invoice_languages">
+        <item>Английски</item>
+        <item>Български</item>
+    </string-array>
+
+    <string-array name="currencies">
+        <item>BGN</item>
+        <item>EUR</item>
+    </string-array>
 </resources>

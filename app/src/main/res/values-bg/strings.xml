@@ -71,6 +71,16 @@
     <string name="order_invoices">Необходими фактури</string>
     <string name="order_proforma_invoices">Проформа фактура</string>
     <string name="order_invoice">Фактура</string>
+    <string name="order_invoice_data_tile">Данни за фактура</string>
+    <string name="order_invoice_down_payment">Предплащане</string>
+    <string name="order_invoice_currency">Валута</string>
+    <string name="order_invoice_language">Език</string>
+    <string name="order_invoice_name">Име на фирмата/лицето</string>
+    <string name="order_invoice_uid">ЕИК/ЕГН</string>
+    <string name="order_invoice_vat">ДДС номер</string>
+    <string name="order_invoice_address">Адрес</string>
+    <string name="order_invoice_phone">Телефон</string>
+    <string name="order_invoice_contact_person">Лице за контакт</string>
 
     <string name="loader_dialog_text">Зареждане&#8230;</string>
 

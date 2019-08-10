@@ -1055,26 +1055,27 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/price_text"
                             android:weightSum="5"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="10dp">
 
                             <EditText
                                 android:layout_width="0dp"
-                                android:layout_height="30dp"
-                                android:layout_weight="3"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
                                 android:id="@+id/price_input"
                                 android:inputType="numberDecimal"
-                                android:background="@drawable/rounded_edit_text"
                                 android:paddingLeft="10dp"
+                                android:gravity="right"
                                 android:theme="@style/DarkEditTextTheme"/>
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="2"
+                                android:layout_weight="3"
                                 android:text="@string/order_price_currency"
                                 android:layout_gravity="bottom|left"
                                 android:gravity="bottom|left"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="5dp"
                                 android:textSize="20sp"/>
                         </LinearLayout>
 
@@ -1192,6 +1193,301 @@
 
                     </android.support.constraint.ConstraintLayout>
 
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="3dp"
+                    app:contentPadding="20dp"
+                    app:cardElevation="7dp"
+                    app:cardMaxElevation="10dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/invoice_data_card"
+                    android:visibility="gone">
+
+                    <android.support.constraint.ConstraintLayout
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/invoices_data_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            android:text="@string/order_invoice_data_tile"
+                            android:textSize="@dimen/labels_text_size" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoices_data_label"
+                            android:text="@string/order_invoice_name"
+                            android:id="@+id/invoice_name_label"
+                            android:layout_marginTop="20dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_name_label"
+                            android:id="@+id/invoice_name_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoice_name_input"
+                            android:text="@string/order_invoice_uid"
+                            android:id="@+id/invoice_uid_label"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_uid_label"
+                            android:id="@+id/invoice_uid_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoice_uid_input"
+                            android:text="@string/order_invoice_vat"
+                            android:id="@+id/invoice_vat_label"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_vat_label"
+                            android:id="@+id/invoice_vat_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoice_vat_input"
+                            android:text="@string/order_invoice_address"
+                            android:id="@+id/invoice_address_label"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_address_label"
+                            android:id="@+id/invoice_address_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoice_address_input"
+                            android:text="@string/order_invoice_contact_person"
+                            android:id="@+id/invoice_person_label"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_person_label"
+                            android:id="@+id/invoice_person_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/invoice_person_input"
+                            android:text="@string/order_invoice_phone"
+                            android:id="@+id/invoice_phone_label"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"/>
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_phone_label"
+                            android:id="@+id/invoice_phone_input"
+                            android:theme="@style/DarkEditTextTheme"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_phone_input"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="20dp"
+                            android:weightSum="8"
+                            android:paddingStart="5dp"
+                            android:id="@+id/invoice_down_payment_layout">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:text="@string/order_invoice_down_payment"
+                                android:textSize="14sp"
+                                android:id="@+id/down_payment_label"
+                                android:layout_weight="4"
+                                android:gravity="center|left"/>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/spinner_bgr"
+                                android:orientation="horizontal"
+                                android:layout_weight="4">
+
+                                <Spinner
+                                    android:id="@+id/down_payment_spinner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/arrow" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_down_payment_layout"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="20dp"
+                            android:weightSum="8"
+                            android:paddingStart="5dp"
+                            android:id="@+id/invoice_currency_layout">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:text="@string/order_invoice_currency"
+                                android:textSize="14sp"
+                                android:id="@+id/invoice_currency_label"
+                                android:layout_weight="4"
+                                android:gravity="center|left"/>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/spinner_bgr"
+                                android:orientation="horizontal"
+                                android:layout_weight="4">
+
+                                <Spinner
+                                    android:id="@+id/invoice_currency_spinner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/arrow" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/invoice_currency_layout"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="20dp"
+                            android:weightSum="8"
+                            android:paddingStart="5dp"
+                            android:id="@+id/invoice_language_layout">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:text="@string/order_invoice_language"
+                                android:textSize="14sp"
+                                android:id="@+id/invoice_language_label"
+                                android:layout_weight="4"
+                                android:gravity="center|left"/>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/spinner_bgr"
+                                android:orientation="horizontal"
+                                android:layout_weight="4">
+
+                                <Spinner
+                                    android:id="@+id/invoice_language_spinner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:spinnerMode="dropdown" />
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/arrow" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </android.support.constraint.ConstraintLayout>
                 </android.support.v7.widget.CardView>
 
                 <android.support.constraint.ConstraintLayout

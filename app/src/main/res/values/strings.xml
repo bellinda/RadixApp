@@ -71,6 +71,16 @@
     <string name="order_invoices">Invoices you would like to get</string>
     <string name="order_proforma_invoices">Proforma invoice</string>
     <string name="order_invoice">Invoice</string>
+    <string name="order_invoice_data_tile">Invoice data</string>
+    <string name="order_invoice_down_payment">Down Payment</string>
+    <string name="order_invoice_currency">Currency</string>
+    <string name="order_invoice_language">Language</string>
+    <string name="order_invoice_name">Company/Person\'s Name</string>
+    <string name="order_invoice_uid">Unique ID code</string>
+    <string name="order_invoice_vat">VAT Number</string>
+    <string name="order_invoice_address">Address</string>
+    <string name="order_invoice_phone">Phone</string>
+    <string name="order_invoice_contact_person">Contact Person</string>
 
     <string name="loader_dialog_text">Loading&#8230;</string>
 
