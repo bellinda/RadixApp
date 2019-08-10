@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:paddingBottom="7dp"
+    android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp">
@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contentPadding="10dp"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="3dp">
+        app:cardElevation="1dp"
+        app:cardCornerRadius="3dp"
+        app:cardBackgroundColor="@android:color/transparent">
 
         <android.support.constraint.ConstraintLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
