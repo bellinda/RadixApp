@@ -8,4 +8,4 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:paddingLeft="2dp"
-    android:textColor="@color/menu_icons_color"/>
+    android:textColor="@color/colorPrimary"/>

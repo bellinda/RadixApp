@@ -212,12 +212,12 @@ public class OrderActivity extends BaseActivity {
         existingFileNames = new ArrayList<>();
         selectedUris = new ArrayList<>();
 
-        final Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        final CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
-        ctl.setTitle("Make an order");
-        ctl.setExpandedTitleColor(ContextCompat.getColor(OrderActivity.this, R.color.black_transparent));
+//        final CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
+//        ctl.setTitle("Make an order");
+//        ctl.setExpandedTitleColor(ContextCompat.getColor(OrderActivity.this, R.color.black_transparent));
 
         mCurNameRb.setText(mProfile.getName());
 
@@ -234,7 +234,7 @@ public class OrderActivity extends BaseActivity {
                     mCurNameRb.setEnabled(true);
                     mOtherNameRb.setEnabled(true);
 
-                    mOrderTypeGroup.setTintColor(ContextCompat.getColor(OrderActivity.this, R.color.menu_icons_color), Color.WHITE);
+                    mOrderTypeGroup.setTintColor(ContextCompat.getColor(OrderActivity.this, R.color.colorPrimary), Color.WHITE);
                     mExpressOrderRb.setEnabled(true);
                     mNormalOrderRb.setEnabled(true);
                 }
