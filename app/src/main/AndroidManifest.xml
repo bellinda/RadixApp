@@ -17,9 +17,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".menu_items.OfferActivity" />
+        <activity android:name=".menu_items.OfferActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".menu_items.OrderActivity" />
+        <activity android:name=".menu_items.OrderActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".menu_items.PromotionsActivity" />
         <activity android:name=".menu_items.PricesActivity" />
         <activity android:name=".menu_items.LanguagesActivity" />
@@ -27,8 +29,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".list_fragments.AllOffersFragment" />
-        <activity android:name=".list_fragments.AllOrdersFragment" />
         <activity android:name=".details_activities.OfferDetailsActivity" />
         <activity android:name=".details_activities.OrderDetailsActivity" />
         <activity
