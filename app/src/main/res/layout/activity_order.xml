@@ -83,48 +83,6 @@
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
 
-    <!--<android.support.design.widget.CoordinatorLayout-->
-        <!--android:id="@+id/coordinatorRootLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<android.support.design.widget.AppBarLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:id="@+id/android_appbar_layout"-->
-            <!--android:layout_height="220dp"-->
-            <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
-
-            <!--<android.support.design.widget.CollapsingToolbarLayout-->
-                <!--android:id="@+id/collapsingToolbarLayoutAndroidExample"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--app:contentScrim="?attr/colorPrimary"-->
-                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/parallax_header_imageview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:background="@drawable/writing_machine"-->
-                    <!--app:layout_collapseMode="parallax"-->
-                    <!--app:layout_collapseParallaxMultiplier="0.8" />-->
-
-                <!--<android.support.v7.widget.Toolbar-->
-                    <!--android:id="@+id/toolbar_android"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="?attr/actionBarSize"-->
-                    <!--app:layout_collapseMode="pin"-->
-                    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-                    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-                    <!--android:elevation="10dp">-->
-
-                <!--</android.support.v7.widget.Toolbar>-->
-
-            <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-
-        <!--</android.support.design.widget.AppBarLayout>-->
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="0dp"
             android:id="@+id/nested_scroll_view"
