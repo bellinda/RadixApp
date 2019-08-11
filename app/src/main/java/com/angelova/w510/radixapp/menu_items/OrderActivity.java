@@ -93,6 +93,7 @@ public class OrderActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
 
+    private ImageView mBackBtn;
     private RadioButton mHasOfferRb;
     private RadioButton mNotHaveOffer;
     private TextView mOfferIdLabel;
@@ -178,6 +179,7 @@ public class OrderActivity extends BaseActivity {
 
     private void initializeActivity() {
 
+        mBackBtn = (ImageView) findViewById(R.id.back_button);
         mHasOfferRb =(RadioButton) findViewById(R.id.have_offer);
         mNotHaveOffer = (RadioButton) findViewById(R.id.not_have_offer);
         mOfferIdLabel = (TextView) findViewById(R.id.offer_id_label);
@@ -242,6 +244,13 @@ public class OrderActivity extends BaseActivity {
 
         final Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 //        final CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
 //        ctl.setTitle("Make an order");
