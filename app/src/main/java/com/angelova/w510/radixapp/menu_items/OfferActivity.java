@@ -72,6 +72,7 @@ public class OfferActivity extends BaseActivity {
 
     public static final String SHARED_PROFILE_KEY = "profile";
 
+    private ImageView mBackBtn;
     private RadioGroup mNameRadioGroup;
     private RadioButton mCurrentNameRb;
     private RadioButton mOtherNameRb;
@@ -114,6 +115,7 @@ public class OfferActivity extends BaseActivity {
     }
 
     private void initializeActivity() {
+        mBackBtn = (ImageView) findViewById(R.id.back_button);
         mNameRadioGroup = (RadioGroup) findViewById(R.id.radio_group_name);
         mCurrentNameRb = (RadioButton) findViewById(R.id.default_name);
         mOtherNameRb = (RadioButton) findViewById(R.id.other_name);
@@ -145,11 +147,12 @@ public class OfferActivity extends BaseActivity {
         selectedFilesNames = new ArrayList<>();
         selectedUris = new ArrayList<>();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_android);
-        setSupportActionBar(myToolbar);
-
-        CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
-        ctl.setTitle("Request an offer");
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         mCurrentNameRb.setText(mProfile.getName());
 
@@ -283,7 +286,7 @@ public class OfferActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(OfferActivity.this, dateSetListener, myCalendar
+                new DatePickerDialog(OfferActivity.this, R.style.DialogTheme, dateSetListener, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -296,7 +299,7 @@ public class OfferActivity extends BaseActivity {
         mDeliveryTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(OfferActivity.this, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY),
+                new TimePickerDialog(OfferActivity.this, R.style.DialogTheme, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY),
                         myCalendar.get(Calendar.MINUTE), true).show();
             }
         });

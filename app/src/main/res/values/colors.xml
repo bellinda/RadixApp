@@ -41,4 +41,7 @@
     <color name="colorPending">#c62828</color>
     <color name="colorInProgress">#ffc107</color>
     <color name="colorReady">#558b2f</color>
+
+    <color name="colorOfferPending">#ffc107</color>
+    <color name="colorOfferGotResponse">#558b2f</color>
 </resources>

@@ -84,76 +84,84 @@ public class AllOffersFragment extends Fragment implements SwipeRefreshLayout.On
         mAddNewOfferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OfferActivity.class);
-                startActivity(intent);
+                if (!isLoading) {
+                    Intent intent = new Intent(getActivity(), OfferActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         mAllTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getProfile().getOrders() != null && getProfile().getOrders().size() > 0) {
-                    mNoOffersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOffersAdapter = new OffersAdapter(getActivity(), getProfile().getOffers());
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOffersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOffersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    if (getProfile().getOrders() != null && getProfile().getOrders().size() > 0) {
+                        mNoOffersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOffersAdapter = new OffersAdapter(getActivity(), getProfile().getOffers());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOffersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOffersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mAllTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isAllSelected = true;
                 }
-                removeAllMarks();
-                mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mAllTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isAllSelected = true;
             }
         });
 
         mPendingTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Offer> pendingOffers = getPendingOffers();
-                if(pendingOffers.size() > 0) {
-                    mNoOffersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOffersAdapter = new OffersAdapter(getActivity(), pendingOffers);
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOffersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOffersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    List<Offer> pendingOffers = getPendingOffers();
+                    if (pendingOffers.size() > 0) {
+                        mNoOffersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOffersAdapter = new OffersAdapter(getActivity(), pendingOffers);
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOffersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOffersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mPendingTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mPendingTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isPendingSelected = true;
                 }
-                removeAllMarks();
-                mPendingTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mPendingTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isPendingSelected = true;
             }
         });
 
         mWithResponseTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Offer> offersWithResponse = getOffersWithResponse();
-                if(offersWithResponse.size() > 0) {
-                    mNoOffersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOffersAdapter = new OffersAdapter(getActivity(), offersWithResponse);
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOffersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOffersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    List<Offer> offersWithResponse = getOffersWithResponse();
+                    if (offersWithResponse.size() > 0) {
+                        mNoOffersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOffersAdapter = new OffersAdapter(getActivity(), offersWithResponse);
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOffersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOffersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mWithResponseTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mWithResponseTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isWithResponsesSelected = true;
                 }
-                removeAllMarks();
-                mWithResponseTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mWithResponseTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isWithResponsesSelected = true;
             }
         });
 

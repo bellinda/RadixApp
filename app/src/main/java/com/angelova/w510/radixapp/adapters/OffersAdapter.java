@@ -2,14 +2,11 @@ package com.angelova.w510.radixapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
@@ -43,15 +40,17 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         final Offer offer = mOffers.get(position);
-        viewHolder.fromLanguage.setText(getLanguageAbbreviation(offer.getFromLanguage()));
-        viewHolder.toLanguage.setText(getLanguageAbbreviation(offer.getToLanguage()));
+        viewHolder.fromLanguage.setText(offer.getFromLanguage());
+        viewHolder.toLanguage.setText(offer.getToLanguage());
         viewHolder.filesCount.setText(String.format(Locale.US, "%d file(s)", offer.getFileNames().size()));
         viewHolder.submittedOn.setText(String.format(Locale.US, "Sent On: %s", offer.getCreatedOn()));
         if(offer.isGotResponse()) {
-            viewHolder.progressIcon.setBackgroundResource(R.mipmap.ic_got_response);
+            viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorOfferGotResponse));
+        } else {
+            viewHolder.statusBar.setBackgroundColor(context.getResources().getColor(R.color.colorOfferPending));
         }
 
-        viewHolder.viewButton.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OfferDetailsActivity.class);
@@ -71,8 +70,8 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
         TextView toLanguage;
         TextView filesCount;
         TextView submittedOn;
-        Button viewButton;
-        ImageView progressIcon;
+        ConstraintLayout mainContainer;
+        View statusBar;
 
         public ViewHolder(View view) {
             super(view);
@@ -80,21 +79,8 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
             toLanguage = (TextView) view.findViewById(R.id.to_language);
             filesCount = (TextView) view.findViewById(R.id.files_count);
             submittedOn = (TextView) view.findViewById(R.id.submitted_on);
-            viewButton = (Button) view.findViewById(R.id.view_btn);
-            progressIcon = (ImageView) view.findViewById(R.id.progress_icon);
-        }
-    }
-
-    private String getLanguageAbbreviation(String language) {
-        switch (language) {
-            case "Bulgarian":
-                return "BG";
-            case "German":
-                return "DE";
-            case "French":
-                return "FR";
-            default:
-                return "EN";
+            statusBar = view.findViewById(R.id.status_color_bar);
+            mainContainer = (ConstraintLayout) view.findViewById(R.id.main_container);
         }
     }
 }
