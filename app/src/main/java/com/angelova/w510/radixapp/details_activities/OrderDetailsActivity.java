@@ -60,10 +60,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private View mDiscussionUnderline;
 
     private TextView mNoResponsesView;
-    private FloatingActionMenu mFloatingMenu;
     private FloatingActionButton mSendResponseBtn;
-    private FloatingActionButton mConfirmBtn;
-    private FloatingActionButton mRejectBtn;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -126,7 +123,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
-                mFloatingMenu.setVisibility(View.GONE);
+                mSendResponseBtn.setVisibility(View.GONE);
                 mNoResponsesView.setVisibility(View.GONE);
             }
         });
@@ -143,19 +140,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 mResponsesLayout.setVisibility(View.VISIBLE);
                 if(mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
                     mNoResponsesView.setVisibility(View.GONE);
-                    mFloatingMenu.setVisibility(View.VISIBLE);
+                    mSendResponseBtn.setVisibility(View.VISIBLE);
                 } else {
-                    mFloatingMenu.setVisibility(View.GONE);
+                    mSendResponseBtn.setVisibility(View.GONE);
                     mNoResponsesView.setVisibility(View.VISIBLE);
                 }
             }
         });
 
         mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
-        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
         mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
-        mConfirmBtn = (FloatingActionButton) findViewById(R.id.menu_item_confirm);
-        mRejectBtn = (FloatingActionButton) findViewById(R.id.menu_item_reject);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,8 +167,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
                                 getString(R.string.send_response_loading_dialog_text), true);
 
-                        mFloatingMenu.close(true);
-
                         new SendResponseTask(OrderDetailsActivity.this, "orders/mobile/postResponses", mOrder.getId(), comment, mProfile.getToken()).execute();
                     }
 
@@ -184,20 +176,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     }
                 });
                 responseDialog.show();
-            }
-        });
-
-        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mRejectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
