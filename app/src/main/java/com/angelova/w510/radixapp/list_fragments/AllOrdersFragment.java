@@ -95,99 +95,109 @@ public class AllOrdersFragment extends Fragment implements SwipeRefreshLayout.On
         mAddNewOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OrderActivity.class);
-                startActivity(intent);
+                if (!isLoading) {
+                    Intent intent = new Intent(getActivity(), OrderActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         mAllTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getProfile().getOrders() != null && getProfile().getOrders().size() > 0) {
-                    mNoOrdersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOrdersAdapter = new OrdersAdapter(getActivity(), getProfile().getOrders());
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOrdersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOrdersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    if (getProfile().getOrders() != null && getProfile().getOrders().size() > 0) {
+                        mNoOrdersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOrdersAdapter = new OrdersAdapter(getActivity(), getProfile().getOrders());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOrdersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOrdersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mAllTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isAllSelected = true;
                 }
-                removeAllMarks();
-                mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mAllTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isAllSelected = true;
             }
         });
 
         mNotProcessedTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Order> notProcessedOrders = getNotProcessedOrders();
-                if(notProcessedOrders.size() > 0) {
-                    mNoOrdersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOrdersAdapter = new OrdersAdapter(getActivity(), notProcessedOrders);
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOrdersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOrdersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    List<Order> notProcessedOrders = getNotProcessedOrders();
+                    if (notProcessedOrders.size() > 0) {
+                        mNoOrdersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOrdersAdapter = new OrdersAdapter(getActivity(), notProcessedOrders);
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOrdersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOrdersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mNotProcessedTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mNotProcessedTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isPendingSelected = true;
                 }
-                removeAllMarks();
-                mNotProcessedTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mNotProcessedTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isPendingSelected = true;
             }
         });
 
         mInProgressTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Order> ordersInProgress = getInProgressOrders();
-                if(ordersInProgress.size() > 0) {
-                    mNoOrdersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOrdersAdapter = new OrdersAdapter(getActivity(), ordersInProgress);
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOrdersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOrdersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    List<Order> ordersInProgress = getInProgressOrders();
+                    if (ordersInProgress.size() > 0) {
+                        mNoOrdersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOrdersAdapter = new OrdersAdapter(getActivity(), ordersInProgress);
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOrdersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOrdersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mInProgressTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mInProgressTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isInProgressSelected = true;
                 }
-                removeAllMarks();
-                mInProgressTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mInProgressTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isInProgressSelected = true;
             }
         });
 
         mReadyTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Order> readyOrders = getReadyOrders();
-                if(readyOrders.size() > 0) {
-                    mNoOrdersView.setVisibility(View.GONE);
-                    mListView.setVisibility(View.VISIBLE);
-                    mOrdersAdapter = new OrdersAdapter(getActivity(), readyOrders);
-                    mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    mListView.setHasFixedSize(true);
-                    mListView.setAdapter(mOrdersAdapter);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mNoOrdersView.setVisibility(View.VISIBLE);
+                if (!isLoading) {
+                    List<Order> readyOrders = getReadyOrders();
+                    if (readyOrders.size() > 0) {
+                        mNoOrdersView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mOrdersAdapter = new OrdersAdapter(getActivity(), readyOrders);
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mOrdersAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoOrdersView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mReadyTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isReadySelected = true;
                 }
-                removeAllMarks();
-                mReadyTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mReadyTitle.setTextColor(getResources().getColor(R.color.white));
-                resetAllFlags();
-                isReadySelected = true;
             }
         });
 
