@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.clients.OffersRestClient;
 import com.angelova.w510.radixapp.menu_items.OrderActivity;
 import com.angelova.w510.radixapp.menu_items.ProfileActivity;
@@ -57,24 +58,21 @@ public class GetAllOffersTask extends AsyncTask<Void, Void, Object> {
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                                    if(response.length() > 0) {
-                                        ((ProfileActivity) context).handleSuccessfulOffersDownload(response);
-                                    } else {
-                                        ((ProfileActivity) context).handleNoOffersForTheUser();
-                                        //((ProfileActivity) context).showErrorMessage("You don't have any offers yet.");
+                                    if (context instanceof MainActivity) {
+                                        ((MainActivity) context).handleSuccessfulOffersDownload(response);
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                                    ((ProfileActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
                                     System.out.println("ERROR " + throwable.getMessage());
+                                    ((MainActivity)context).handleErrorOnOffersGet("Something went wrong - " + throwable.getMessage());
                                 }
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                    ((ProfileActivity)context).showErrorMessage("Something went wrong - " + throwable.getMessage());
                                     System.out.println("ERROR " + throwable.getMessage());
+                                    ((MainActivity)context).handleErrorOnOffersGet("Something went wrong - " + throwable.getMessage());
                                 }
                             });
                 } catch(Exception ex) {

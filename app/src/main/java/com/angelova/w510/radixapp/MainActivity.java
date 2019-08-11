@@ -19,6 +19,7 @@ import com.angelova.w510.radixapp.menu_items.ProfileActivity;
 import com.angelova.w510.radixapp.menu_items.OfferActivity;
 import com.angelova.w510.radixapp.menu_items.OrderActivity;
 import com.angelova.w510.radixapp.menu_items.PricesActivity;
+import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
 
@@ -192,6 +193,73 @@ public class MainActivity extends BaseActivity {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
         if (currentFragment instanceof AllOrdersFragment) {
             ((AllOrdersFragment) currentFragment).stopLoader();
+        }
+    }
+
+    public void handleErrorOnOffersGet(String errorMessage) {
+        showAlertDialogNow(errorMessage, "Warning");
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (currentFragment instanceof AllOffersFragment) {
+            ((AllOffersFragment) currentFragment).stopLoader();
+        }
+    }
+
+    public void handleSuccessfulOffersDownload(JSONArray receivedData) {
+        List<Offer> offers = new ArrayList<>();
+        try {
+            for(int i = 0; i < receivedData.length(); i++) {
+                JSONObject data = receivedData.getJSONObject(i);
+                Offer offer = new Offer();
+                offer.setId(data.getString("consecutiveID"));
+                offer.setPhone(data.getString("phone"));
+                offer.setEmail(data.getString("email"));
+                offer.setOrderType(data.getString("orderType"));
+                offer.setTranslationType(data.getString("translationType"));
+                offer.setNotes(data.getString("notes"));
+                offer.setFromLanguage(data.getString("fromLanguage"));
+                offer.setToLanguage(data.getString("toLanguage"));
+                offer.setName(data.getString("fullName"));
+
+                String myFormat = "yyyy-MM-dd'T'HH:mm";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                try {
+                    Date desiredDeliveryDateInUTC = sdf.parse(data.getString("desiredDeliveryDate"));
+                    sdf.setTimeZone(Calendar.getInstance().getTimeZone());
+                    offer.setDesiredDeliveryDate(sdf.format(desiredDeliveryDateInUTC));
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
+
+                offer.setGotResponse(data.getBoolean("gotResponse"));
+                JSONArray files = data.getJSONArray("file");
+                List<String> fileNames = new ArrayList<>();
+                for(int j = 0; j < files.length(); j++) {
+                    fileNames.add(files.getString(j));
+                }
+                offer.setFileNames(fileNames);
+                String createdOn = data.getString("createdAt");
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"); //2018-02-04T12:42:35.042Z
+                originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy");
+                targetFormat.setTimeZone(Calendar.getInstance().getTimeZone());
+                try {
+                    Date date = originalFormat.parse(createdOn);
+                    String formattedDate = targetFormat.format(date);
+
+                    offer.setCreatedOn(formattedDate);
+                } catch (ParseException pe) {
+                    pe.printStackTrace();
+                }
+                offers.add(offer);
+            }
+
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+            if (currentFragment instanceof AllOffersFragment) {
+                ((AllOffersFragment) currentFragment).handleOffersLoaded(offers);
+            }
+        } catch (JSONException jse) {
+            jse.printStackTrace();
         }
     }
 

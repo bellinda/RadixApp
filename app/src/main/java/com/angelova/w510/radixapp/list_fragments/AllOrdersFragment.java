@@ -319,8 +319,10 @@ public class AllOrdersFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        mSwipeRefreshLayout.setRefreshing(true);
-        isLoading = true;
-        new GetAllOrdersTask(getActivity(), "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
+        if (!isLoading) {
+            mSwipeRefreshLayout.setRefreshing(true);
+            isLoading = true;
+            new GetAllOrdersTask(getActivity(), "orders/mobile", mProfile.getUserId(), mProfile.getToken()).execute();
+        }
     }
 }
