@@ -22,9 +22,7 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".OrderActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".PromotionsActivity" />
         <activity android:name=".PricesActivity" />
-        <activity android:name=".LanguagesActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPassActivity" />
