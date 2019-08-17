@@ -1199,7 +1199,8 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/invoice_name_label"
                             android:id="@+id/invoice_name_input"
-                            android:theme="@style/DarkEditTextTheme"/>
+                            android:theme="@style/DarkEditTextTheme"
+                            android:inputType="text"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -1219,7 +1220,8 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/invoice_uid_label"
                             android:id="@+id/invoice_uid_input"
-                            android:theme="@style/DarkEditTextTheme"/>
+                            android:theme="@style/DarkEditTextTheme"
+                            android:inputType="text"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -1239,7 +1241,8 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/invoice_vat_label"
                             android:id="@+id/invoice_vat_input"
-                            android:theme="@style/DarkEditTextTheme"/>
+                            android:theme="@style/DarkEditTextTheme"
+                            android:inputType="text"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -1259,7 +1262,8 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/invoice_address_label"
                             android:id="@+id/invoice_address_input"
-                            android:theme="@style/DarkEditTextTheme"/>
+                            android:theme="@style/DarkEditTextTheme"
+                            android:inputType="text"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -1279,7 +1283,8 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/invoice_person_label"
                             android:id="@+id/invoice_person_input"
-                            android:theme="@style/DarkEditTextTheme"/>
+                            android:theme="@style/DarkEditTextTheme"
+                            android:inputType="text"/>
 
                         <TextView
                             android:layout_width="0dp"

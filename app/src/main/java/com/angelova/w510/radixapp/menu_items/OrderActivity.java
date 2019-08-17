@@ -43,6 +43,7 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.dialogs.YesNoDialog;
 import com.angelova.w510.radixapp.models.InvoiceData;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
@@ -921,7 +922,7 @@ public class OrderActivity extends BaseActivity {
         params.put("desiredDeliveryDate", desiredDeliveryDate);
         params.put("pickupMethod", pickUpMethod);
         params.put("selectPaymentType", paymentMethod);
-        params.put("requestsInvoice", requestsInvoice);
+        params.put("requestsInvoiceFlag", requestsInvoice);
         params.put("requestsProFormaInvoice", requestsProformaInvoice);
 
         //execute the request
@@ -1063,5 +1064,21 @@ public class OrderActivity extends BaseActivity {
         data.setInvoiceCurrency(mCurrencySpinner.getSelectedItem().toString());
         data.setInvoiceLanguage(mInvoiceLanguageSpinner.getSelectedItem().toString());
         return data;
+    }
+
+    @Override
+    public void onBackPressed() {
+        YesNoDialog dialog = new YesNoDialog(this, "Are you sure you want to exit the process? All changes will be lost.", new YesNoDialog.DialogClickListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+
+            }
+        });
+        dialog.show();
     }
 }
