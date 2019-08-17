@@ -251,6 +251,7 @@ public class MainActivity extends BaseActivity {
                 } catch (ParseException pe) {
                     pe.printStackTrace();
                 }
+                offer.setResponsesCount(data.getString("responsesCount"));
                 offers.add(offer);
             }
 

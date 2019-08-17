@@ -27,6 +27,7 @@ public class Offer implements Serializable {
     private String createdOn;
     private List<Response> responses;
     private boolean gotResponse;
+    private String responsesCount;
 
     public String getId() {
         return id;
@@ -154,5 +155,13 @@ public class Offer implements Serializable {
 
     public void setGotResponse(boolean gotResponse) {
         this.gotResponse = gotResponse;
+    }
+
+    public String getResponsesCount() {
+        return responsesCount;
+    }
+
+    public void setResponsesCount(String responsesCount) {
+        this.responsesCount = responsesCount;
     }
 }

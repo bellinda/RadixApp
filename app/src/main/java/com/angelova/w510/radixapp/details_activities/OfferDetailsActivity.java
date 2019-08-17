@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -45,14 +46,19 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     private Offer offer;
 
-    private TextView mTitleWithId;
+    private Toolbar mToolbar;
+    private TextView mSentOn;
+    private TextView mInquiryNumber;
+    private TextView mFilesAmount;
+
+    private TextView mInfoMenu;
+    private TextView mDiscussionMenu;
+    private View mInfoUnderline;
+    private View mDiscussionUnderline;
+
     private TextView mToLang;
     private TextView mFromLang;
-    private TextView mSentOn;
-    private TextView mFilesCount;
 
-    private TextView mInfoItem;
-    private TextView mResponsesItem;
     private TextView mNoResponsesView;
     private FloatingActionMenu mFloatingMenu;
     private FloatingActionButton mSendResponseBtn;
@@ -92,30 +98,29 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         mProfile = getProfile();
 
-        mTitleWithId = (TextView) findViewById(R.id.header_title);
-        mToLang = (TextView) findViewById(R.id.to_lang);
-        mFromLang = (TextView) findViewById(R.id.from_lang);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSentOn = (TextView) findViewById(R.id.sent_on);
-        mFilesCount = (TextView) findViewById(R.id.files_count);
+        mInquiryNumber = (TextView) findViewById(R.id.inquiry_id);
+        mFilesAmount = (TextView) findViewById(R.id.files_amount);
 
-        mTitleWithId.setText(String.format(Locale.US, "Offer %s", offer.getId()));
-        mFromLang.setText(getLanguageAbbreviation(offer.getFromLanguage()));
-        mToLang.setText(getLanguageAbbreviation(offer.getToLanguage()));
-        mFilesCount.setText(String.format(Locale.US, "%d file(s)", offer.getFileNames().size()));
-        mSentOn.setText(String.format(Locale.US, "Sent On: %s", offer.getCreatedOn()));
+        mSentOn.setText(offer.getCreatedOn());
+        mInquiryNumber.setText(offer.getId());
+        mFilesAmount.setText(String.format("%d", offer.getFileNames().size()));
 
-        mInfoItem = (TextView) findViewById(R.id.main_info_item);
-        mResponsesItem = (TextView) findViewById(R.id.responses_item);
-        mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
-        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
-        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
-        mConvertBtn = (FloatingActionButton) findViewById(R.id.menu_item_convert);
+        mInfoMenu = (TextView) findViewById(R.id.offer_info_menu);
+        mDiscussionMenu = (TextView) findViewById(R.id.discussions_menu);
+        mInfoUnderline = findViewById(R.id.info_underline);
+        mDiscussionUnderline = findViewById(R.id.discussions_underline);
 
-        mInfoItem.setOnClickListener(new View.OnClickListener() {
+        mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.offer_details_discussion), offer.getResponsesCount()));
+        mInfoMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
+            public void onClick(View view) {
+                mDiscussionMenu.setTextColor(getResources().getColor(R.color.black));
+                mDiscussionUnderline.setVisibility(View.GONE);
+                mInfoMenu.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mInfoUnderline.setVisibility(View.VISIBLE);
+
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
                 mFloatingMenu.setVisibility(View.GONE);
@@ -123,22 +128,54 @@ public class OfferDetailsActivity extends AppCompatActivity {
             }
         });
 
-        mResponsesItem.setOnClickListener(new View.OnClickListener() {
+        mDiscussionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mInfoItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.offer_details_not_active_item_color));
-                mResponsesItem.setBackgroundColor(ContextCompat.getColor(OfferDetailsActivity.this, R.color.colorPrimary));
+            public void onClick(View view) {
+                mInfoMenu.setTextColor(getResources().getColor(R.color.black));
+                mInfoUnderline.setVisibility(View.GONE);
+                mDiscussionMenu.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mDiscussionUnderline.setVisibility(View.VISIBLE);
+
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
                 if(offer.getResponses() != null && offer.getResponses().size() > 0) {
                     mNoResponsesView.setVisibility(View.GONE);
                     mFloatingMenu.setVisibility(View.VISIBLE);
                 } else {
-                    mFloatingMenu.setVisibility(View.GONE);
                     mNoResponsesView.setVisibility(View.VISIBLE);
+                    mFloatingMenu.setVisibility(View.GONE);
                 }
             }
         });
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        mToLang = (TextView) findViewById(R.id.to_language);
+        mFromLang = (TextView) findViewById(R.id.from_language);
+        mMainInfoLayout = (ScrollView) findViewById(R.id.main_info_layout);
+        mFullName = (TextView) findViewById(R.id.full_name);
+        mOrderType = (TextView) findViewById(R.id.order_type);
+        mTranslationType = (TextView) findViewById(R.id.translation_type);
+        mNotes = (TextView) findViewById(R.id.notes);
+        mEmail = (TextView) findViewById(R.id.email);
+        mPhone = (TextView) findViewById(R.id.phone);
+        mDesDelDate = (TextView) findViewById(R.id.des_del_date);
+        mDocumentsList = (TextView) findViewById(R.id.documents);
+
+        mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
+
+        mFromLang.setText(offer.getFromLanguage());
+        mToLang.setText(offer.getToLanguage());
+
+        mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
+        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
+        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
+        mConvertBtn = (FloatingActionButton) findViewById(R.id.menu_item_convert);
 
         mSendResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,18 +210,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
             }
         });
 
-        mMainInfoLayout = (ScrollView) findViewById(R.id.main_info_layout);
-        mFullName = (TextView) findViewById(R.id.full_name);
-        mOrderType = (TextView) findViewById(R.id.order_type);
-        mTranslationType = (TextView) findViewById(R.id.translation_type);
-        mNotes = (TextView) findViewById(R.id.notes);
-        mEmail = (TextView) findViewById(R.id.email);
-        mPhone = (TextView) findViewById(R.id.phone);
-        mDesDelDate = (TextView) findViewById(R.id.des_del_date);
-        mDocumentsList = (TextView) findViewById(R.id.documents);
-
-        mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
-
         mFullName.setText(offer.getName());
         mOrderType.setText(offer.getOrderType());
         mTranslationType.setText(offer.getTranslationType());
@@ -202,9 +227,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
         }
         StringBuilder documentsListBuilder = new StringBuilder();
         for(String fileName : offer.getFileNames()) {
-            documentsListBuilder.append(fileName + "\n");
+            documentsListBuilder.append(fileName);
+            documentsListBuilder.append("\n");
         }
-        documentsListBuilder.delete(documentsListBuilder.lastIndexOf("\n"), documentsListBuilder.length() - 1);
+        documentsListBuilder.setLength(documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
 
         new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();

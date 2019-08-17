@@ -121,7 +121,7 @@
     <string name="order_details_title">Order Details</string>
     <string name="order_details_date">Ordered on</string>
     <string name="order_details_id">Order number</string>
-    <string name="order_details_amount">Total Amount</string>
+    <string name="order_details_amount">Total amount</string>
     <string name="order_details_no_data_for_price">No data yet</string>
     <string name="order_details_info">Order Info</string>
     <string name="order_details_discussion">Discussion</string>
@@ -136,4 +136,20 @@
     <string name="order_details_notes">Notes to your order</string>
     <string name="order_details_email">Email for response</string>
     <string name="order_details_phone">Phone Number</string>
+
+    <string name="offer_details_title">Offer Details</string>
+    <string name="offer_details_date">Sent on</string>
+    <string name="offer_details_id">Inquiry ID</string>
+    <string name="offer_details_files_count">Files amount</string>
+    <string name="offer_details_info">Inquiry Info</string>
+    <string name="offer_details_discussion">Discussion</string>
+    <string name="offer_details_from_language">From Language</string>
+    <string name="offer_details_to_language">To Language</string>
+    <string name="offer_details_documents">Documents</string>
+    <string name="offer_details_order_type">Order Type</string>
+    <string name="offer_details_translation_type">Translation Type</string>
+    <string name="offer_details_des_date">Desired delivery date</string>
+    <string name="offer_details_notes">Notes to your inquiry</string>
+    <string name="offer_details_email">Email for response</string>
+    <string name="offer_details_phone">Phone Number</string>
 </resources>
