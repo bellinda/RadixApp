@@ -1,27 +1,24 @@
-package com.angelova.w510.radixapp.details_activities;
+package com.angelova.w510.radixapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.ResponsesAdapter;
 import com.angelova.w510.radixapp.dialogs.ResponseDialog;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
-import com.angelova.w510.radixapp.models.Order;
-import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Response;
-import com.angelova.w510.radixapp.tasks.GetOrderResponsesTask;
+import com.angelova.w510.radixapp.models.Profile;
+import com.angelova.w510.radixapp.tasks.GetOfferResponsesTask;
 import com.angelova.w510.radixapp.tasks.SendResponseTask;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -41,26 +38,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class OrderDetailsActivity extends AppCompatActivity {
+public class OfferDetailsActivity extends AppCompatActivity {
 
-    private Order mOrder;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
-    private Profile mProfile;
-    private ProgressDialog mLoadingDialog;
+    private Offer offer;
 
     private Toolbar mToolbar;
     private TextView mSentOn;
-    private TextView mOrderNumber;
-    private TextView mTotalAmount;
+    private TextView mInquiryNumber;
+    private TextView mFilesAmount;
 
     private TextView mInfoMenu;
     private TextView mDiscussionMenu;
     private View mInfoUnderline;
     private View mDiscussionUnderline;
 
+    private TextView mToLang;
+    private TextView mFromLang;
+
     private TextView mNoResponsesView;
+    private FloatingActionMenu mFloatingMenu;
     private FloatingActionButton mSendResponseBtn;
+    private FloatingActionButton mConvertBtn;
 
     private ScrollView mMainInfoLayout;
     private TextView mFullName;
@@ -69,50 +67,48 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private TextView mNotes;
     private TextView mEmail;
     private TextView mPhone;
+    private TextView mDesDelDate;
     private TextView mDocumentsList;
-    private LinearLayout mExpDelDateLayout;
-    private TextView mExpDelDate;
-    private TextView mReceiving;
-    private TextView mFromLanguage;
-    private TextView mToLanguage;
     private ListView mResponsesLayout;
     private ResponsesAdapter mResponsesAdapter;
+
+    public static final String SHARED_PROFILE_KEY = "profile";
+
+    private Profile mProfile;
+
+    private ProgressDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_details);
+        setContentView(R.layout.activity_offer_details);
 
         initializeActivity();
     }
 
     private void initializeActivity() {
-        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
+        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
                 getString(R.string.loader_dialog_text), true);
 
-        mOrder = (Order) getIntent().getSerializableExtra("order");
+        offer = (Offer) getIntent().getSerializableExtra("offer");
 
         mProfile = getProfile();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSentOn = (TextView) findViewById(R.id.sent_on);
-        mOrderNumber = (TextView) findViewById(R.id.order_id);
-        mTotalAmount = (TextView) findViewById(R.id.total_amount);
+        mInquiryNumber = (TextView) findViewById(R.id.inquiry_id);
+        mFilesAmount = (TextView) findViewById(R.id.files_amount);
 
-        mSentOn.setText(mOrder.getCreatedOn());
-        mOrderNumber.setText(String.format(Locale.US, "#%s", mOrder.getId()));
-        if(mOrder.getAnticipatedPriceByAdmin() != null && !TextUtils.isEmpty(mOrder.getAnticipatedPriceByAdmin().trim())) {
-            mTotalAmount.setText(String.format(Locale.US, "%s €", mOrder.getAnticipatedPriceByAdmin()));
-        } else {
-            mTotalAmount.setText(getString(R.string.order_details_no_data_for_price));
-        }
+        mSentOn.setText(offer.getCreatedOn());
+        mInquiryNumber.setText(offer.getId());
+        mFilesAmount.setText(String.format("%d", offer.getFileNames().size()));
 
-        mInfoMenu = (TextView) findViewById(R.id.order_info_menu);
+        mInfoMenu = (TextView) findViewById(R.id.offer_info_menu);
         mDiscussionMenu = (TextView) findViewById(R.id.discussions_menu);
         mInfoUnderline = findViewById(R.id.info_underline);
         mDiscussionUnderline = findViewById(R.id.discussions_underline);
 
-        mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.order_details_discussion), mOrder.getResponsesCount()));
+        mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.offer_details_discussion), offer.getResponsesCount()));
         mInfoMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +119,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                 mMainInfoLayout.setVisibility(View.VISIBLE);
                 mResponsesLayout.setVisibility(View.GONE);
-                mSendResponseBtn.setVisibility(View.GONE);
+                mFloatingMenu.setVisibility(View.GONE);
                 mNoResponsesView.setVisibility(View.GONE);
             }
         });
@@ -138,18 +134,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                 mMainInfoLayout.setVisibility(View.GONE);
                 mResponsesLayout.setVisibility(View.VISIBLE);
-                if(mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
+                if(offer.getResponses() != null && offer.getResponses().size() > 0) {
                     mNoResponsesView.setVisibility(View.GONE);
-                    mSendResponseBtn.setVisibility(View.VISIBLE);
+                    mFloatingMenu.setVisibility(View.VISIBLE);
                 } else {
-                    mSendResponseBtn.setVisibility(View.GONE);
                     mNoResponsesView.setVisibility(View.VISIBLE);
+                    mFloatingMenu.setVisibility(View.GONE);
                 }
             }
         });
-
-        mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
-        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,16 +151,40 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         });
 
+        mToLang = (TextView) findViewById(R.id.to_language);
+        mFromLang = (TextView) findViewById(R.id.from_language);
+        mMainInfoLayout = (ScrollView) findViewById(R.id.main_info_layout);
+        mFullName = (TextView) findViewById(R.id.full_name);
+        mOrderType = (TextView) findViewById(R.id.order_type);
+        mTranslationType = (TextView) findViewById(R.id.translation_type);
+        mNotes = (TextView) findViewById(R.id.notes);
+        mEmail = (TextView) findViewById(R.id.email);
+        mPhone = (TextView) findViewById(R.id.phone);
+        mDesDelDate = (TextView) findViewById(R.id.des_del_date);
+        mDocumentsList = (TextView) findViewById(R.id.documents);
+
+        mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
+
+        mFromLang.setText(offer.getFromLanguage());
+        mToLang.setText(offer.getToLanguage());
+
+        mNoResponsesView = (TextView) findViewById(R.id.no_responses_view);
+        mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu);
+        mSendResponseBtn = (FloatingActionButton) findViewById(R.id.menu_item_send);
+        mConvertBtn = (FloatingActionButton) findViewById(R.id.menu_item_convert);
+
         mSendResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ResponseDialog responseDialog = new ResponseDialog(OrderDetailsActivity.this, new ResponseDialog.DialogClickListener() {
+                ResponseDialog responseDialog = new ResponseDialog(OfferDetailsActivity.this, new ResponseDialog.DialogClickListener() {
                     @Override
                     public void onSendButtonClicked(String comment) {
-                        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
+                        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
                                 getString(R.string.send_response_loading_dialog_text), true);
 
-                        new SendResponseTask(OrderDetailsActivity.this, "orders/mobile/postResponses", mOrder.getId(), comment, mProfile.getToken()).execute();
+                        mFloatingMenu.close(true);
+
+                        new SendResponseTask(OfferDetailsActivity.this, "inquiries/mobile/postResponses", offer.getId(), comment, mProfile.getToken()).execute();
                     }
 
                     @Override
@@ -179,61 +196,77 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         });
 
-        mMainInfoLayout = (ScrollView) findViewById(R.id.main_info_layout);
-        mFullName = (TextView) findViewById(R.id.full_name);
-        mOrderType = (TextView) findViewById(R.id.order_type);
-        mTranslationType = (TextView) findViewById(R.id.translation_type);
-        mNotes = (TextView) findViewById(R.id.notes);
-        mEmail = (TextView) findViewById(R.id.email);
-        mPhone = (TextView) findViewById(R.id.phone);
-        mDocumentsList = (TextView) findViewById(R.id.documents);
-        mExpDelDateLayout = (LinearLayout) findViewById(R.id.exp_del_date_layout);
-        mExpDelDate = (TextView) findViewById(R.id.exp_del_date);
-        mReceiving = (TextView) findViewById(R.id.receiving);
-        mFromLanguage = (TextView) findViewById(R.id.from_language);
-        mToLanguage = (TextView) findViewById(R.id.to_language);
+        mConvertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OfferDetailsActivity.this, OrderActivity.class);
+                intent.putExtra("offerDetails", offer);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        mResponsesLayout = (ListView) findViewById(R.id.responses_listview);
-
-        mFullName.setText(mOrder.getName());
-        mOrderType.setText(mOrder.getOrderType());
-        mTranslationType.setText(mOrder.getTranslationType());
-        mNotes.setText(mOrder.getNotes());
-        mEmail.setText(mOrder.getEmail());
-        mPhone.setText(mOrder.getPhone());
-        mFromLanguage.setText(mOrder.getFromLanguage());
-        mToLanguage.setText(mOrder.getToLanguage());
+        mFullName.setText(offer.getName());
+        mOrderType.setText(offer.getOrderType());
+        mTranslationType.setText(offer.getTranslationType());
+        mNotes.setText(offer.getNotes());
+        mEmail.setText(offer.getEmail());
+        mPhone.setText(offer.getPhone());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy', 'HH:mm");
+        try {
+            Date desiredDeliveryDate = inputFormat.parse(offer.getDesiredDeliveryDate());
+            String dateToBeShown = outputFormat.format(desiredDeliveryDate);
+            mDesDelDate.setText(dateToBeShown);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         StringBuilder documentsListBuilder = new StringBuilder();
-        for(String fileName : mOrder.getAllFileNames()) {
-            documentsListBuilder.append(fileName + "\n");
+        for(String fileName : offer.getFileNames()) {
+            documentsListBuilder.append(fileName);
+            documentsListBuilder.append("\n");
         }
         documentsListBuilder.setLength(documentsListBuilder.length() - 1);
         mDocumentsList.setText(documentsListBuilder.toString());
-        if (mOrder.getExpectedDeliveryDate() != null && !TextUtils.isEmpty(mOrder.getExpectedDeliveryDate())) {
-            try {
-                Date expDeliveryDate = inputFormat.parse(mOrder.getExpectedDeliveryDate());
-                String dateToBeShown = outputFormat.format(expDeliveryDate);
-                mExpDelDate.setText(dateToBeShown);
-            } catch (ParseException pe) {
-                pe.printStackTrace();
-            }
-        } else {
-            mExpDelDateLayout.setVisibility(View.GONE);
-        }
-        if(mOrder.getPickUpMethod().equalsIgnoreCase("FO")) {
-            mReceiving.setText(getString(R.string.order_delivery_from_office));
-        } else if (mOrder.getPickUpMethod().equalsIgnoreCase("E")) {
-            mReceiving.setText(getString(R.string.order_delivery_on_email));
-        } else {
-            mReceiving.setText(getString(R.string.order_delivery_by_post));
-        }
 
-        new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();
+        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
     }
 
-    public void updateOrderDetails(JSONObject receivedResponses) {
+    private String getLanguageAbbreviation(String language) {
+        switch (language) {
+            case "Bulgarian":
+                return "BG";
+            case "German":
+                return "DE";
+            case "French":
+                return "FR";
+            default:
+                return "EN";
+        }
+    }
+
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
+    }
+
+    private void saveProfile(Profile profile) {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefsEditor = appPreferences.edit();
+        Gson gson = new Gson();
+
+        String updatedJson = gson.toJson(profile);
+        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
+        prefsEditor.apply();
+    }
+
+    public void updateOfferDetails(JSONObject receivedResponses) {
         List<Response> responses = new ArrayList<>();
         try {
             JSONArray adminResponses = receivedResponses.getJSONArray("fromAdmin");
@@ -282,55 +315,27 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
             Collections.sort(responses);
 
-            mOrder.setOrderResponses(responses);
+            offer.setResponses(responses);
 
-            mResponsesAdapter = new ResponsesAdapter(this, mOrder.getResponses());
+            mResponsesAdapter = new ResponsesAdapter(this, offer.getResponses());
             mResponsesLayout.setAdapter(mResponsesAdapter);
 
-            if (mOrder.getResponses() != null && mOrder.getResponses().size() > 0) {
-                mDiscussionMenu.setText(String.format(Locale.US, "%s (%s)", getString(R.string.order_details_discussion), mOrder.getResponses().size()));
-            }
-
-            mLoadingDialog.dismiss();
+            mLoadingDialog.hide();
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
     }
 
-    private String getLanguageAbbreviation(String language) {
-        switch (language) {
-            case "Bulgarian":
-                return "BG";
-            case "German":
-                return "DE";
-            case "French":
-                return "FR";
-            default:
-                return "EN";
-        }
-    }
-
-    private Profile getProfile() {
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Gson gson = new Gson();
-        Profile profile = new Profile();
-        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
-        if(!json.isEmpty()) {
-            profile = gson.fromJson(json, Profile.class);
-        }
-        return profile;
-    }
-
     public void handleSuccessfulResponseUpload() {
         hideLoadingDialog();
-        mLoadingDialog = ProgressDialog.show(OrderDetailsActivity.this, "",
+        mLoadingDialog = ProgressDialog.show(OfferDetailsActivity.this, "",
                 getString(R.string.loader_dialog_text), true);
 
-        new GetOrderResponsesTask(OrderDetailsActivity.this, "orders/mobile/getResponses", mOrder.getId(), mProfile.getToken()).execute();
+        new GetOfferResponsesTask(OfferDetailsActivity.this, "inquiries/mobile/getResponses", offer.getId(), mProfile.getToken()).execute();
     }
 
     public void hideLoadingDialog() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.hide();
     }
 
     public void showErrorMessage(String message) {

@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
-import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.LoginTask;
 import com.angelova.w510.radixapp.tasks.LogoutTask;

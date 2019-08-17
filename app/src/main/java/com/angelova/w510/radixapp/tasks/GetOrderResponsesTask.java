@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.angelova.w510.radixapp.clients.OrdersRestClient;
-import com.angelova.w510.radixapp.details_activities.OrderDetailsActivity;
+import com.angelova.w510.radixapp.OrderDetailsActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;

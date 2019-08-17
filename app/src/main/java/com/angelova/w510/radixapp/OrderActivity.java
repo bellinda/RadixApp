@@ -1,4 +1,4 @@
-package com.angelova.w510.radixapp.menu_items;
+package com.angelova.w510.radixapp;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -39,9 +38,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.angelova.w510.radixapp.BaseActivity;
-import com.angelova.w510.radixapp.MainActivity;
-import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.dialogs.YesNoDialog;
 import com.angelova.w510.radixapp.models.InvoiceData;

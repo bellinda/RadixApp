@@ -6,12 +6,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.angelova.w510.radixapp.clients.OffersRestClient;
-import com.angelova.w510.radixapp.details_activities.OfferDetailsActivity;
-import com.angelova.w510.radixapp.menu_items.OrderActivity;
-import com.angelova.w510.radixapp.menu_items.ProfileActivity;
+import com.angelova.w510.radixapp.OfferDetailsActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;

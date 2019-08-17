@@ -7,7 +7,7 @@ import android.os.Looper;
 
 import com.angelova.w510.radixapp.LoginActivity;
 import com.angelova.w510.radixapp.clients.LoginRestClient;
-import com.angelova.w510.radixapp.menu_items.ProfileActivity;
+import com.angelova.w510.radixapp.ProfileActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
-import com.angelova.w510.radixapp.details_activities.OfferDetailsActivity;
+import com.angelova.w510.radixapp.OfferDetailsActivity;
 import com.angelova.w510.radixapp.models.Offer;
 import java.util.List;
 import java.util.Locale;

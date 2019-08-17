@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angelova.w510.radixapp.details_activities.OfferDetailsActivity"
+    tools:context="com.angelova.w510.radixapp.OfferDetailsActivity"
     android:background="@color/colorAccent">
 
     <android.support.v7.widget.Toolbar

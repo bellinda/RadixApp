@@ -1,4 +1,4 @@
-package com.angelova.w510.radixapp.menu_items;
+package com.angelova.w510.radixapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,13 +9,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.angelova.w510.radixapp.BaseActivity;
-import com.angelova.w510.radixapp.LoginActivity;
-import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.dialogs.YesNoDialog;
-import com.angelova.w510.radixapp.list_fragments.AllOffersFragment;
-import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
+import com.angelova.w510.radixapp.fragments.AllOffersFragment;
+import com.angelova.w510.radixapp.fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;

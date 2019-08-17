@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.angelova.w510.radixapp.R;
-import com.angelova.w510.radixapp.details_activities.OrderDetailsActivity;
+import com.angelova.w510.radixapp.OrderDetailsActivity;
 import com.angelova.w510.radixapp.models.Order;
 
 import java.text.ParseException;

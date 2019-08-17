@@ -1,36 +1,27 @@
-package com.angelova.w510.radixapp.list_fragments;
+package com.angelova.w510.radixapp.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.adapters.OrdersAdapter;
-import com.angelova.w510.radixapp.menu_items.OrderActivity;
-import com.angelova.w510.radixapp.menu_items.ProfileActivity;
+import com.angelova.w510.radixapp.OrderActivity;
 import com.angelova.w510.radixapp.models.Order;
 import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.GetAllOrdersTask;
 import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ScrollDirectionListener;
 
 import java.util.ArrayList;
 import java.util.List;

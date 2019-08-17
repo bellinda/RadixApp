@@ -1,4 +1,4 @@
-package com.angelova.w510.radixapp.menu_items;
+package com.angelova.w510.radixapp;
 
 import android.graphics.Color;
 import android.os.Bundle;

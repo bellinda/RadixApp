@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angelova.w510.radixapp.menu_items.OrderActivity"
+    tools:context="com.angelova.w510.radixapp.OrderActivity"
     android:background="@color/colorAccent">
 
     <android.support.constraint.Guideline

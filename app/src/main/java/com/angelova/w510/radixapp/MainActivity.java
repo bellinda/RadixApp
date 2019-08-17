@@ -1,6 +1,5 @@
 package com.angelova.w510.radixapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,19 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
-import com.angelova.w510.radixapp.list_fragments.AllOffersFragment;
-import com.angelova.w510.radixapp.list_fragments.AllOrdersFragment;
-import com.angelova.w510.radixapp.menu_items.ProfileActivity;
-import com.angelova.w510.radixapp.menu_items.OfferActivity;
-import com.angelova.w510.radixapp.menu_items.OrderActivity;
-import com.angelova.w510.radixapp.menu_items.PricesActivity;
+import com.angelova.w510.radixapp.fragments.AllOffersFragment;
+import com.angelova.w510.radixapp.fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
-import com.angelova.w510.radixapp.models.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
