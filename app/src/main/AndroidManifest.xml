@@ -17,11 +17,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".OfferActivity"
+        <activity
+            android:name=".OfferActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".OrderActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".OrderActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".PricesActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />

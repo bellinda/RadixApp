@@ -12,8 +12,8 @@
         android:title="@string/menu_offer" />
 
     <item
-        android:id="@+id/navigation_prices"
-        android:icon="@drawable/ic_prices"
-        android:title="@string/menu_prices"/>
+        android:id="@+id/navigation_about"
+        android:icon="@drawable/ic_about"
+        android:title="@string/menu_about"/>
 
 </menu>

@@ -152,4 +152,390 @@
     <string name="offer_details_notes">Notes to your inquiry</string>
     <string name="offer_details_email">Email for response</string>
     <string name="offer_details_phone">Phone Number</string>
+
+    <string name="fragment_about_title">About</string>
+    <string name="fragment_about_text">Picture this… a tiny, rather crammed office with merely two employees and one typewriter, located right next to the Ministry of Exterior – over 20 years ago that was the way RADIX LTD started. Ever since that day we had the great pleasure to accommodate for many projects and to present them in such a way, that they meet the highest standards in any aspect and to facilitate the work of countless experts. True – our origins are humble, but our motivation to reach further grows stronger by the day and today we are proud to say that we are right where we want to be – next to you, offering you the best service and making sure that you succeed.</string>
+    <string name="fragment_about_tc">Terms and Conditions</string>
+    <string name="fragment_about_version">Version %s</string>
+    <string name="activity_about_copyright">Copyright © Radix LTD. All rights reserved.</string>
+
+    <string name="dialog_terms_conditions_title">Terms and conditions</string>
+    <string name="dialog_terms_conditions_text" formatted="false">This document describes the terms and conditions of the RADIX LTD company and shall be referred to as “Terms and Conditions”.\n
+        \n
+        Our services, received by you in the form of translation and processing of texts originates from the company RADIX LD, registered in Bulgaria, region Sofia (Capital), 105 boul. “Evlogi i Hristo Georgievi”. While reading this document it is worth noting that the terms “RADIX LTD” “we”, “us”, “our”, any derivative thereof and any combination thereof are to be all understood as RADIX LTD. The purpose of this document is to provide a clear picture on the use of our services, website and mobile app, as well as on all the data, information and services you receive from our website and mobile app.\n
+        \n
+        You hereby accept and agree to be bound by these Conditions. If you do not agree, then you shall not use the services we offer, even if you are using the “order as guest” mode in our website and/or mobile app.\n
+        \n
+        We may amend, change and delete (partially or completely) the present document as we are obliged to publish the aforementioned changes to our website and in our mobile app. You, as the Customer, are responsible to familiarize yourself with the changes made and to ensure that you are aware of any changes. Should you continue to use our services, this means you agree to any changes made in the Terms and Conditions.\n
+        \n
+        The presented organization in sections is meant to ease reading and shall not have any influence over the meaning or the interpretation of this document.\n
+        \n
+        TERMINOLOGY AND DEFINITIONS:\n\n
+        As “Client, you / your” we envision a physical or legal entity, which uses the services of RADIX LTD against the appropriate consideration.\n
+        \n
+        As “Contract” one must understand every agreement between you as the Client and RADIX LTD as the supplier and shall include:\n
+        \n
+        >>>>> a valid order, generated through our website, our mobile app or in-situ at our office; and\n
+        >>>>> these Terms and Conditions.\n
+        \n
+        Under “Products / Services” we classify all types of translations, proofreading and processing of any kind of text, including in ancient (dead) languages, as well as pre-print processing, translation of poetry, etc.\n
+        \n
+        The terms “documents”, “records”, “books” and “data” are abstractions for everything available as emails, translation documents, orders, etc. stored on hard drives or any other carriers and could be reproduced in legible form.\n
+        \n
+        These Terms and Conditions should be considered as the ultimate reference point in case of any conflict between the parties.\n
+        \n
+        “Confidentiality” or “Confidential Information” shall be understood as information format, which is confidential either to the client or to RADIX LTD, and which therefore cannot be disclosed to any third parties.\n
+        \n
+        “Intellectual Property Rights” means any rights, patents, registered utility models, protected trademarks, trade names and so on.\n
+        \n
+        “Order” includes all the necessary data, provided by you, in order to receive the service from RADIX LTD.\n
+        \n
+        “Originals” means all original documents you left with RADIX LTD.\n
+        \n
+        1. DESCRIPTION OF SERVICES\n\n
+        RADIX LTD provides a fixed fee service according to a predefined offer or on variable price whenever it is impossible to calculate the word count of a text.\n
+        \n
+        1A. DELIVERY\n\n
+        RADIX LTD shall do all in its powers to deliver the above-mentioned services in time without taking any liability for the delays being out of its control.\n
+        \n
+        All delivery dates, in principle, are fixed, but could be negotiated further between the Parties, for example: whenever RADIX LTD notifies the Client of any potential delay or whenever the Customer decides to postpone the reception of the said service. In some rare occasions, the Customer may be able to receive his translation before the due date.\n
+        \n
+        RADIX LTD shall not be liable for any delay in the delivery, which is due to the services provided by third parties, suppliers and/or subcontractors. This includes force majeure circumstances, but excludes the inability for the acts of our assigned translators in the case of sudden illness and/or death of any of them.\n
+        \n
+        Posting, presentation to carriers, sending via email and fax will be deemed as delivery of the order as the Customer shall be liable for the failed or delayed delivery of any such documents.\n
+        \n
+        We may deliver our translations and services in parts and the failed delivery of one or more parts of the Order does not entitle the Customer to withdraw from the agreement as a whole.\n
+        \n
+        2. CANCELLATION OR RESCISSION BY THE CLIENT\n\n
+        Should the Client cancel partially or the whole service order/offer to RADIX LTD before it is completed and delivered, then the first shall pay no less than 50 % of the remaining fees and costs after the payment of 50% (of the total price for the order in advance), which is a condition to start the work.\n
+        \n
+        RADIX LTD has the right to terminate any contract with the Client immediately and without a written notice whenever the Client is:\n
+        \n
+        >>>>> in breach of these Terms, has the chance to correct this state, but fails to do so within 7 days of receipt of a written notice specifying the breach and requiring it to be remedied;\n
+        >>>>> having unbearable debts or is under court administration or has started an administrative procedure of liquidation or bankruptcy (if the client is a company).\n
+        \n
+        Every delivered or prematurely ended order shall not cancel any rights or remedies which survive the end of the engagement.\n
+        \n
+        3. LIABILITY\n\n
+        All Services provided by RADIX LTD shall be carried out by professional translators and are subject of quality control before being given to the Customer as the selection of personnel requires the candidate to cover at least the set minimum for education, experience and technical literacy.\n
+        \n
+        We shall bear no responsibility as to the accuracy of the translation of abbreviations within the texts, for which the text does not provide meaning or which are net explicitly explained by the Customer. The same applies for personal names, as well as the eventual loss of meaning and/or context should the Customer provide an excerpt from the text on his discretion.\n
+        \n
+        We hereby reserve the right to make public a reference to the translation work, done for you without disclosing any data to third parties.\n
+        \n
+        RADIX LTD complies with the requirements of the European Translation Standard EN15038 and ISO 9001. This, however, does not mean that the texts presented to you will always meet your expectations and very specific requirements. Unless otherwise specified by us, you cannot assume that the translation will be uninterrupted or error free. The parties could negotiate further revisions and quality checks according to Section 4.\n
+        \n
+        Furthermore, we do note, that RADIX LTD does not warrant or make any representation regarding the use of terminology in terms of its accuracy, correctness, reliability or any other aspect thereof.\n
+        \n
+        The client acknowledges that any originals and Translations submitted by and to you over the Internet cannot be guaranteed to be free from the risk of interception, even if transmitted in encrypted form, and that we have no liability for the loss, corruption or interception of any originals or Translations.\n
+        \n
+        Save in respect of death or personal injury resulting from our negligence and subject to Section 8 our liability to the client in respect of the provision of translation services, translations and related services and works is limited as follows:\n
+        \n
+        >>>>> RADIX LTD shall not be liable for any loss of profits, business, contracts, revenue or damage to your reputation or goodwill, anticipated savings, and or any other indirect or consequential loss or damage whatsoever.\n
+        >>>>> RADIX LTD.’s entire liability to the client under any contract, including but not limited to in respect of the services, shall not exceed the price payable to RADIX LTD by the client under the contract to which any claim relates.\n
+        \n
+        The client must notify RADIX LTD within 30 days of delivery of the service of any claim arising as a result of the provision of the services and /or the translations, whether it is related to Section 4 or Section 7 in these Terms and Conditions. Full details of such claim should be sent. In any event, RADIX LTD shall not be liable to you if the client fails to notify us of any claim within a reasonable time of delivery of the services.\n
+        \n
+        4. TRANSLATION REVIEW BY THE CLIENT OR THIRD PARTIES\n\n
+        We ensure independent translation and proof-reading processes as we may apply text formatting and processing, which comply with our internal quality standards. Should the Client find any misinterpretations in the text, then the Client shall have no more than 30 days to notify RADIX LTD and the latter shall correct all noted errors, one time, for free and without further cost to the client.\n
+        \n
+        After this single free intervention, we shall not be liable to correct the text anymore, except if we desire to do so. In no case should such corrections from our side be treated as a condition to delay payments to RADIX LTD.\n
+        \n
+        4A. CHANGES BY THIRD PARTIES\n\n
+        RADIX LTD, hereby strictly forbids, and therefore shall not be liable for any changes made in the translation by third parties.\n
+        \n
+        5. CONFIDENTIALITY\n\n
+        All the information, denoted by the Client as “confidential” (in written form) and which may consist of: contractual information, customer data and so on will be strictly guarded by RADIX LTD and it shall not be disclosed nor published on our behalf, including the fat that we shall not empower third parties to give or publish any such information, except with your explicit written permission. All of our translators have signed a non – disclosure agreement and any contractor we use is obliged to sign the same document before performing any services for us.\n
+        \n
+        6. COPYRIGHT AND INTELLECTUAL PROPERTY\n\n
+        After paying the appropriate consideration, the translation becomes property and responsibility of the Client. The aforementioned acquisition is a subject of these terms and conditions and the Customer may use the content on his discretion (excluding the official headings, signatures and seals placed by RADIX LTD and the State certifications – if there are any).\n
+        \n
+        RADIX LTD has no ownership, nor rights, over any Intellectual Property of the Client, except if there isn’t a specific contract stating otherwise. The last sentence does not mean that RADIX LTD cannot store the documents, which may include the aforementioned intellectual property for a maximum of 6 (six) months after their delivery.\n
+        \n
+        7. FEES, TAXES, DISCOUNTS AND PAYMENT METHOD\n\n
+        The client agrees to pay the amount stipulated in the quotation/offer document as the said amount is calculated as per the price lists of RADIX LTD, updated to the date of the order. The Customer shall receive a numbered invoice, which must be paid in full not later than 14 days after it has been issued, except in the cases of explicit agreement (in written form) between the parties, stating otherwise.\n
+        \n
+        Unless otherwise stated, any price given to you as the Customer is in BGN and DOES NOT include VAT and other taxes (please, see sections 7a and 7b below). Our price includes the mailing fees to the Client (should there be any).\n
+        \n
+        7A. EUROPEAN VAT IN EUROPE – BASED TRANSACTIONS FOR TRANSLATION SERVICES\n\n
+        When liable, RADIX LTD shall collect all due taxes from you. Whenever it is a case of commerce with a country which has signed the treaty on avoiding double taxation, we shall not apply VAT to your order.\n
+        \n
+        7B. VAT AND TAXES OUTSIDE THE EU\n\n
+        Translation Services to non-EU countries are free of VAT and any sales taxes from our side, but some taxes may apply in your country.\n
+        \n
+        7C. DISCOUNTS\n\n
+        All discounts made and/or offered shall be valid only if the Customer pays in full his invoice within 14 days of the invoice delivery.\n
+        \n
+        All quotations, which are not in BGN shall be converted to the appropriate currency by the reference exchange rate of the BNB, except if the parties do not agree otherwise.\n
+        \n
+        7D. ADDITIONAL COSTS\n\n
+        The client will pay us for all the expenses, which are not included in the price, such as: unpredicted shortening of the translation term, delivery of the documents with an express delivery service (within 24 hours) and so on.\n
+        \n
+        7E. PAYMENT METHOD\n\n
+        All services of RADIX LTD, ordered by electronic means (which includes our website and mobile application) will be started only after the verified payment of 50% down payment. Whenever you order at our office, the down payment percentage can vary between 10% and 50% from the final price.\n
+        \n
+        The lack of initial or full payment on any invoice gives RADIX LTD the right to stop the order execution and not to give the translations, without prejudice t any of its rights or to the rights of the Customer according to these terms.\n
+        \n
+        RADIX LTD reserves the right to inflict interests on the due amounts up to 20% of the total order value.\n
+        \n
+        8. CLIENT’S LIABILITY AND RESPONSIBILITY\n\n
+        The Client hereby guarantees he will not submit texts with vulgar, racist, blasphemous or humiliating content, as well as that all submitted documents are not infringing any copyright both directly or indirectly.\n
+        \n
+        The Client is hereby obliged, whenever presented with a claim, to indemnify RADIX LTD, and all of its employees, against all losses, claims, expenses and other financial obligations, as to if the same are related to:\n
+        \n
+        >>>>> the ownership (temporary) or the processing of originals, provided by the Client for the performance of the service, including in case of infringement of the right of intellectual property of any third party (directly or indirectly), which is provable by the presented documents.\n
+        >>>>> the processing of data from our side in order to render the service.\n
+        >>>>> any infringement of the legislation of any country by the use of our service, irrespectively of its form and degree of use.\n
+        >>>>> any infringement of a representation, given from the Customer to RADIX LTD under this or any other section.\n
+        >>>>> any infringement of these Terms on your behalf.\n
+        \n
+        Should the Client require us to provide our services in his office, then the first has to:\n
+        \n
+        >>>>> appoint dedicated personnel to be in charge of our actions;\n
+        >>>>> provide appropriate insurance, covering all members of the personnel of RADIX LTD;\n
+        >>>>> provide access to all premises and appliances, as agreed, for the performance of the service;\n
+        >>>>> provide (preliminary) the entire information, which RADIX LTD may require, except the case of confidential information;\n
+        >>>>> accept that RADIX LTD shall require compensation and indemnification for all damages and expenses, made due to the presence of hazardous conditions or materials within your premises.\n
+        >>>>> note that, RADIX LTD shall require full reimbursement of all expenses made and will terminate the rendition of the service as soon as the employees establish the presence of unhygienic of dangerous labor conditions.\n
+        \n
+        9. APPLICABLE LAW AND ARBITRATION\n\n
+        This document, as well as all agreements between RADIX LTD and the Customer are governed by the Bulgarian legislation as in the cases, requiring arbitration, the latter will be led in Switzerland.\n
+        \n
+        10. MODIFICATIONS TO THE CONTENT\n\n
+        Every change of these Terms will be published online at www.radix.bgor in our mobile app and will be deemed in vigor as of the publishing date and time. You, as the Customer are obliged to be aware of the latest version of this document.\n
+        \n
+        Date of last update: 20.03.2018.\n
+        \n
+        11. MISCELLANEOUS\n\n
+        Should there be no other provision, RADIX LTD will keep translated documents for no more than 6 months and after that the said documents shall be deleted.\n
+        \n
+        GDPR\n
+        INTRODUCTION\n\n
+        The security and the correct us of personal data are quintessential both for our users and for us at RADIX LTD. Therefore, it is important to us that our users understand how and why do we process their personal information.\n
+        \n
+        This document is integrally linked to the Terms and Conditions of RADIX LTD, but the two documents are not to be treated as interlinked. This document does not aim to define the rules and obligations, but to clarify for the user which personal data is processed for the provision of translation services, why and how do we process them, including when it is necessary to disclose personal data to third parties, all in one with the information on the rights, which the users have in relation to the data processing done by RADIX LTD.\n
+        \n
+        This document applies to personal data, collected and processed by RADIX LTD in relation to the rendered services. This policy is applied whenever the users visit the website and/or use the mobile application of RADIX LTD.\n
+        \n
+        Many examples are given throughout the documents in order to illustrate how and/or why RADIX LTD processes the personal data. These examples are not to be treated as a part of this documents and are not exhaustive.\n
+        \n
+        PERSONAL DATA\n\n
+        This is every information, which identifies any particular moral or physical entity or which pertains to the said persons to be identified directly or indirectly. The types of personal data, subject to the present document are:\n
+        \n
+        >>>>> fundamental data;\n
+        >>>>> invoicing data; payment data; user contact data.\n
+        \n
+        Personal data, collected and/or processed by RADIX LTD:\n
+        \n
+        >>>>> Names;\n
+        >>>>> Personal ID Number;\n
+        >>>>> Address;\n
+        >>>>> Unique Identification Code;\n
+        >>>>> VAT №;\n
+        >>>>> Contact person;\n
+        >>>>> Phone number;\n
+        >>>>> E-mail;\n
+        >>>>> Other commercial and/or personal data.\n
+        \n
+        Processing of personal data includes actions, such as:\n
+        \n
+        >>>>> Collection;\n
+        >>>>> Recording;\n
+        >>>>> Storage;\n
+        >>>>> Review;\n
+        >>>>> Inspection;\n
+        >>>>> Modification;\n
+        >>>>> Extraction;\n
+        >>>>> Disclosure;\n
+        >>>>> Limitation;\n
+        >>>>> Deletion;\n
+        >>>>> Others.\n
+        \n
+        RADIX LTD\n
+        RADIX LTD, UIC 122033648, with seat and registered address in the city of Sofia, zip code 1504, 105 boul. “Evlogi i Hristo Georgievi”.\n
+        \n
+        In this document the use of “we”, “us” or “ours” also means RADIX LTD.\n
+        \n
+        USER\n
+        Every physical or legal entity which is registered in the website(s) or the mobile application(s) of RADIX LTD declares that it is agreeing to the general terms of this document and uses the translation services of RADIX LTD.\n
+        \n
+        Personal data anonymization:\n
+        \n
+        This is the process of removal of all data features, which could identify the person both directly and indirectly. This so processed data will not be considered as personal data. Example: data of the type: \'Name: Petar I. Yonkov, phone:+359 888 77 65 21, &#8230;\' will be turned into: \'Name:*****, phone:********, &#8230;\'.\n
+        \n
+        Fundamental principles of data processing:\n
+        \n
+        >>>>> We put great endeavor into processing your personal data in a correct and transparent way;\n
+        >>>>> We process personal data for legitimate reasons as we abide the applicable law at all times;\n
+        >>>>> The processing of your personal data is related directly to the rendition of a better service and is made in view of your needs;\n
+        >>>>> We have implemented practices, which will ensure the safety of your personal data during their processing;\n
+        >>>>> All data processing is abiding to the current legislation;\n
+        >>>>> The users are well informed as to what personal data do we collect and how and why do we do that.\n
+        \n
+        The processing of personal data from our behalf shall not, and will not, exceed the period needed for the attainment of the prescribed legislative goals, with the exception of the mandatory storage as per the valid legislation.\n
+        \n
+        We do respect your rights as per the Law on the Protection of Personal Data /LPPD/, including your right to access personal data, to correct personal data and so on.\n
+        \n
+        We introduce the required safety measures for your data against accidental or illegal deletion, as well as to protect the data from accidental loss or illegal tampering, disclosure or other illegal forms processing.\n
+        \n
+        HOW DO WE COLLECT YOUR PERSONAL DATA?\n
+        We collect your data by virtue of various information channels as in the majority of cases we receive the information directly from you during registration, setting up invoicing data and/or sending of a document for translation.\n
+        \n
+        Certain data is generated by our system whilst you use our service. We do not collect data for our users from third parties.\n
+        \n
+        HOW DOES RADIX LTD PROCESS YOUR PERSONAL DATA?\n
+        In order to have an agreement for translation services with RADIX LTD, respectively to start work, it is required that the user supplies us with his data as documents for translation, invoicing data and or personal data as: names, PIN, address and so on. This data serves as user identifiers, in the translation of his text and the invoicing of his due amounts.\n
+        \n
+        Should any given user refuse to supply the requested data we will not be able to perform our service, and the latter will be therefore cancelled due to lack of sufficient data.\n
+        \n
+        Data processing is key to the successful completion of any service we take as a company.\n
+        \n
+        DATA PROCESSING FOR THE COVERING OF STANDARDS\n\n
+        According to the National and European legislation, RADIX LTD has to process personal data for both its registered and guest users in order to attain certain results, in a certain fashion and/or for a certain period of time. Here we list the main cases in which we process data, regarding our obligations on the performance of norms.\n
+        \n
+        We process data when the law requires us to provide data to third parties.\n
+        \n
+        The legislation of the Republic of Bulgaria requires RADIX LTD to maintain certain personal data for certain periods of time. Should there be a legal cause, then this data, processed by RADIX LTD, has to be presented to the corresponding authorities.\n
+        \n
+        We process personal user data whenever we are obliged to cooperate to State and/or Municipal authorities, which carry out inspections. For example: our service is subject of control by various such authorities – the Committee of User Protection (CUP), the Committee of Personal Data Protection, the National Revenue agency (NRA) and other. During this control, the said agencies have the right to inspect, as well as to require that we provide them with information and documents. It is possible that these requests affect the personal data of our users.\n
+        \n
+        In order to prevent, establish, investigate and/or resolve:\n
+        \n
+        (а) vulnerabilities and/or problems, related to security; or\n
+        \n
+        (b) personal data theft,\n
+        \n
+        it is sometimes required that we process user personal data.\n
+        \n
+        We process your data in order to be able to satisfy the obligations, related to the accounting and fiscal legislation.\n
+        \n
+        The fiscal and accounting legislation of the Republic of Bulgaria require that RADIX LTD compiles certain accounting and trade information, including keeping the said information for a certain period of time, as well as all other transcripts and documents, which are required for fiscal purposes.\n
+        \n
+        The latter obligation requires that the information and documents, containing personal data for the users be stored for the term, set out in the law.\n
+        \n
+        These terms could vary according to the law (for example our invoices must be stored for 11 years).\n
+        \n
+        We process data for internal analyses to improve our services: In order to gain better understanding of your needs, to improve our services, as well as to boost our quality we do process personal data.\n
+        \n
+        We process the data as generalized to receive results for the results from advertisement campaigns and therefore to assess their efficiency, as well as to pick out the best moves for the future.\n
+        \n
+        During researches, RADIX LTD processes the following personal data: fundamental data; contractual data; obligations data; payment data; user contact data.\n
+        \n
+        We also process data for the users to prepare individual offers. We value your time and we strive our services to be optimized in terms of applicability. This requires us to generalize and process your data to get out the best propositions for your needs and/or preferences.\n
+        \n
+        Our offers are not binding to the users and do not present any engagement to them whatsoever.\n
+        \n
+        We process personal data if we have to settle legislative disputes.\n
+        \n
+        Sometimes it is possible that RADIX LTD processes your personal data on a claim presented outside the court or during a case against debtors and/or persons suspected of malicious use of personal data.\n
+        \n
+        It is also possible that some users present a claim and/or start a case against us. In this case it also possible that we process personal data in order to present a defense against the mentioned claim and/or case (this is how we aim at stopping the attacks against our property and our good name).\n
+        \n
+        PROCESSORS OF PERSONAL DATA\n\n
+        Entities, who process personal data in favor of RADIX LTD after signing the appropriate agreement. These entities cannot use the data supplied for purposes which are not described in, or implied by, their contract with us. The contracts will impose strict adherence to our command and the legislation on personal data protection, as well as that the same entities have ensured proper protection of personal data.\n
+        \n
+        BANKS AND FINANCIAL INSTITUTIONS\n\n
+        During the normal development of our activity we may disclose personal data to other financial institutions concerning the collection of receivables or the collection of unpaid amounts.\n
+        \n
+        Third parties in case of merger, transformation or other such activities with the participation of RADIX LTD:\n
+        \n
+        In case of transformation of RADIX LTD or transfer of assets according to the applicable law it is possible that the personal data of the users, which was under the control of RADIX LTD to be given to the third party.\n
+        \n
+        HOW LONG DO WE KEEP THE RECEIVED DATA?\n\n
+        We keep your personal data for as long as it is required in order to meet the goals of this policy or to meet the requirements of the applicable law.\n
+        \n
+        After the end of the terms related to the processing of your personal data we will either anonymize or delete them, except if:\n
+        \n
+        >>>>> the data is required for a court procedure or for a plaint submitted by the user; or\n
+        >>>>> the user has exercised his right to limitation in order to mitigate the processing of his personal data;\n
+        \n
+        We endeavor in order to guarantee that the personal data will be updated (and if necessary edited), as we do mention that we do not keep data, which is not related to the goals described above.\n
+        \n
+        RIGHTS OF THE PHYSICAL ENTITIES (PE) RELATED TO PERSONAL DATA:\n\n
+        General information:\n
+        \n
+        >>>>> We will act upon a request from a PE only if we are able to identify that entity.\n
+        >>>>> If the activity performed by RADIX LTD does not include identification of the PE, then RADIX LTD is not obliged to maintain or process any additional information to identify the person, provided that the only goal of the latter is the claim presented by this entity.\n
+        \n
+        We shall inform the PE for our actions within 1 month after the claim was presented and in some cases we may extend this period with up to 2 months due to the complex or multiple nature of the claim(s).\n
+        \n
+        The provision of information as per the former paragraph shall not be delayed on purpose and in all cases the customer shall have a reply within one month after passing in his claim.\n
+        \n
+        Should there be a delay, RADIX LTD shall inform the PE and the reasons thereof must also be stated.\n
+        \n
+        In case of claim rejection, RADIX LTD shall notify the PE for their rights.\n
+        \n
+        Should RADIX LTD fail to take action on any user claim, then the first shall notify immediately, or at most within 1 month of the claim presentation, for the reasons pertaining to the decline, as well as on the possible administrative procedures, such as firing a claim with the CPPD and/or to seek one’s rights in the courtroom.\n
+        \n
+        In some cases, we may require additional information to confirm the identity of PE:\n
+        \n
+        >>>>> Whenever we have reasonable doubts as to the personality of the PE, which fires the claim as per this section, RADIX LTD could require additional information on its identity.\n
+        \n
+        >>>>> All actions pertaining to the claims are free for the interested persons, except if the claims are lacking legal grounds or are excessive in nature.\n
+        \n
+        Whenever the claim has been revoked or excessive – for example repeated several times, RADIX LTD could:\n
+        \n
+        (а) cancel the performance of any claim-related actions; or\n
+        \n
+        (b) to require the payment of a sensible fee.\n
+        \n
+        The users shall have the right to know if we process their personal data and if that is the case, then the same will have the right to access their data and to request a change, should the same data is wrong or incomplete.\n
+        \n
+        The users shall have the right to request the deletion of their personal data in the following cases:\n
+        \n
+        >>>>> the data is not required for the purposes of its initial collection;\n
+        >>>>> their consent to the processing has been revoked and therefore there is no grounds to process the data anymore;\n
+        >>>>> there is an objection to the processing, in spite of the fact that the latter is based on a legally valid interest of RADIX LTD;\n
+        >>>>> there is malicious or illegal processing of the personal data;\n
+        >>>>> RADIX LTD has to delete the data due to legal obligation, based on the laws of the Bulgarian Republic or of the EU.\n
+        \n
+        Cases, in which the users may require limitation of the processing pertaining to their personal data:\n
+        \n
+        >>>>> the accuracy is debated by the user within a term, allowing the respective follow-up from our side;\n
+        >>>>> there is a malicious use of the data, but without a request of deletion by the user, and instead the latter requests a limitation of their usage;\n
+        >>>>> RADIX LTD does not need the data anymore, but the latter is subject of claim by the user for legal purposes;\n
+        >>>>> the user protests against the processing in favor of RADIX LTD as he expects the outcome of an inspection concerning the legal grounds for the actions of RADIX LTD.\n
+        \n
+        In any point of time and on legitimate grounds, the users have the right to object against the processing of their personal data should RADIX LTD process the data in favor of its legal interests.\n
+        \n
+        In some cases, this right is not contestable and RADIX LTD will always terminate the processing, should an objection be presented.\n
+        \n
+        In all other cases, RADIX LTD will make an external check as to the objection and will have a standpoint on this matter, which shall include:\n
+        \n
+        (а) confirmation on the fact that the processing is no longer applied to the personal data of the user; or\n
+        \n
+        (b) a motivated rejection with citation of legal grounds.\n
+        \n
+        The users have the right to pass in their complaints to the CPPD, should they think that RADIX LTD is breaching the LPPD. To pass your documents, please visit: https://www.cpdp.bg.\n
+        \n
+        You may also turn to other supervisors of the EU, according to (ЕС) 2016/679 from the 27/04/2016.\n
+        \n
+        HOW DO WE PROTECT YOUR PERSONAL DATA?\n
+        The trust between us is a matter of strategic importance. Therefore, the protection of our systems is a top-priority. A fundamental goal is that users feel safe, using our applications and services.\n
+        \n
+        To protect you and your data, RADIX LTD uses contemporary technologies in conjunction with uncompromising security management. For attaining maximal protection, RADIX LTD accepts a multitude of practices, pertaining to the processing of your data.\n
+        \n
+        We apply techniques, such as: encryption, anonymization, pseudonym usage and so on both for dynamic and static data.\n
+        \n
+        This policy on your personal data is updated as of 01.03.2019.\n
+        \n
+        This document can be changed or amended due to changes in the applicable legislation, on our discretion or as per the request of the users or a competent authority.\n
+        \n
+        We hereby take on the obligation to inform our users on the changes in this document, at least 30 (thirty) days before putting the new version in vigor by publishing the updated version at our webpage – www.radix.bg.\n
+        \n
+        We recommend that the users look periodically for the new version of the document at the listed email address.\n
+        \n
+        Legal notice\n
+        \n
+        ALL RIGHTS RESERVED\n\n
+        \n
+        Herein, we, RADIX LTD, state as follows: the content present on this website (www.radix.bg) and on our mobile app is our property. Everything, including the graphic design and images (except where credit is given expressly), constitutes a work of intellectual property belonging to RADIX LTD, as the only exception to the said works are products and services, owned by third parties.\n
+        \n
+        Users of the website and the mobile app, who wish to declare their interest in our service do accept our conditions and do declare their knowledge thereof. Any kind of reproduction, resale, distribution and reuse of our texts and services is strictly prohibited.\n
+        \n
+        RADIX LTD cannot be held liable is visiting the website and/or the mobile app becomes impossible due to temporary or permanent interruption of telecommunication services and/or power supply, which are to be considered as circumstances beyond our control and should they persist due to riots, cataclysms or other force majeure event – to be considered as force majeure. It is possible to lose access to the service if RADIX LTD is under administrative or judicial injunctions or orders, or saturations (intentional or not).\n
+        \n
+        By way of analogy, RADIX LTD cannot be held liable should the temporary or permanent lack of access to our services damages your data or your PC.\n
+        \n
+        Every sustainable damage, caused solely by the visit of our website and/or mobile application will be governed by the Bulgarian Law and the user accepts to present his case before the competent courts of Sofia, Bulgaria, therefore waiving any other jurisdiction which may apply.</string>
 </resources>

@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.fragments.AboutFragment;
 import com.angelova.w510.radixapp.fragments.AllOffersFragment;
 import com.angelova.w510.radixapp.fragments.AllOrdersFragment;
 import com.angelova.w510.radixapp.models.Offer;
@@ -33,11 +33,6 @@ public class MainActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
-
-    private LinearLayout mOfferItem;
-    private LinearLayout mOrderItem;
-    private LinearLayout mPricesItem;
-    private LinearLayout mProfileItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +74,16 @@ public class MainActivity extends BaseActivity {
                 case R.id.navigation_offers:
                     transaction.replace(R.id.content, new AllOffersFragment()).commit();
                     if(getSupportActionBar() != null) {
-                        //getSupportActionBar().setTitle(R.string.title_documents);
                         getSupportActionBar().setTitle(R.string.profile_my_offers);
                         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     }
                     return true;
-                case R.id.navigation_prices:
-//                    transaction.replace(R.id.content, new ArchiveFragment()).commit();
-//                    if(getSupportActionBar() != null) {
-//                        //getSupportActionBar().setTitle(R.string.title_reports);
-//                        toolbar.setVisibility(View.VISIBLE);
-//                        toolbarTitle.setText(R.string.title_archive);
-//                        toolbarSearchBtn.setVisibility(View.VISIBLE);
-//                        toolbarFilterBtn.setVisibility(View.VISIBLE);
-//                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    }
+                case R.id.navigation_about:
+                    transaction.replace(R.id.content, new AboutFragment()).commit();
+                    if(getSupportActionBar() != null) {
+                        getSupportActionBar().setTitle(R.string.fragment_about_title);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    }
                     return true;
             }
             return false;
