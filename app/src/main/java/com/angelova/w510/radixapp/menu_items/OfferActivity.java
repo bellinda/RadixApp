@@ -37,6 +37,7 @@ import com.angelova.w510.radixapp.BaseActivity;
 import com.angelova.w510.radixapp.MainActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.dialogs.WarnDialog;
+import com.angelova.w510.radixapp.dialogs.YesNoDialog;
 import com.angelova.w510.radixapp.requests_utils.ServiceGenerator;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Profile;
@@ -534,5 +535,21 @@ public class OfferActivity extends BaseActivity {
                 mSubmitBtn.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        YesNoDialog dialog = new YesNoDialog(this, "Are you sure you want to exit the process? All changes will be lost.", new YesNoDialog.DialogClickListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+
+            }
+        });
+        dialog.show();
     }
 }
