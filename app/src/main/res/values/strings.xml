@@ -8,6 +8,7 @@
     <string name="menu_languages">Languages</string>
     <string name="menu_about">About us</string>
     <string name="menu_profile">Your profile</string>
+    <string name="menu_invoices">Invoices</string>
 
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
@@ -538,4 +539,6 @@
         By way of analogy, RADIX LTD cannot be held liable should the temporary or permanent lack of access to our services damages your data or your PC.\n
         \n
         Every sustainable damage, caused solely by the visit of our website and/or mobile application will be governed by the Bulgarian Law and the user accepts to present his case before the competent courts of Sofia, Bulgaria, therefore waiving any other jurisdiction which may apply.</string>
+
+    <string name="fragment_invoices">Invoices</string>
 </resources>

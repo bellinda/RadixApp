@@ -12,8 +12,13 @@
         android:title="@string/menu_offer" />
 
     <item
-        android:id="@+id/navigation_about"
-        android:icon="@drawable/ic_about"
-        android:title="@string/menu_about"/>
+        android:id="@+id/navigation_invoices"
+        android:icon="@drawable/ic_invoice"
+        android:title="@string/menu_invoices"/>
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_about"-->
+        <!--android:icon="@drawable/ic_about"-->
+        <!--android:title="@string/menu_about"/>-->
 
 </menu>

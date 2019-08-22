@@ -16,6 +16,12 @@ public class Profile {
     private List<Offer> offers;
     private List<Order> orders;
 
+    private int unpaidInvoicesCount;
+    private int paidInvoicesCount;
+    private int requestedInvoicesCount;
+    private int deliveredInvoicesCount;
+    private List<Invoice> invoices;
+
     public String getName() {
         return name;
     }
@@ -70,5 +76,45 @@ public class Profile {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public int getUnpaidInvoicesCount() {
+        return unpaidInvoicesCount;
+    }
+
+    public void setUnpaidInvoicesCount(int unpaidInvoicesCount) {
+        this.unpaidInvoicesCount = unpaidInvoicesCount;
+    }
+
+    public int getPaidInvoicesCount() {
+        return paidInvoicesCount;
+    }
+
+    public void setPaidInvoicesCount(int paidInvoicesCount) {
+        this.paidInvoicesCount = paidInvoicesCount;
+    }
+
+    public int getRequestedInvoicesCount() {
+        return requestedInvoicesCount;
+    }
+
+    public void setRequestedInvoicesCount(int requestedInvoicesCount) {
+        this.requestedInvoicesCount = requestedInvoicesCount;
+    }
+
+    public int getDeliveredInvoicesCount() {
+        return deliveredInvoicesCount;
+    }
+
+    public void setDeliveredInvoicesCount(int deliveredInvoicesCount) {
+        this.deliveredInvoicesCount = deliveredInvoicesCount;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }

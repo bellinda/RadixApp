@@ -1,6 +1,8 @@
 package com.angelova.w510.radixapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,8 +15,12 @@ import com.angelova.w510.radixapp.dialogs.WarnDialog;
 import com.angelova.w510.radixapp.fragments.AboutFragment;
 import com.angelova.w510.radixapp.fragments.AllOffersFragment;
 import com.angelova.w510.radixapp.fragments.AllOrdersFragment;
+import com.angelova.w510.radixapp.fragments.InvoicesFragment;
+import com.angelova.w510.radixapp.models.Invoice;
 import com.angelova.w510.radixapp.models.Offer;
 import com.angelova.w510.radixapp.models.Order;
+import com.angelova.w510.radixapp.models.Profile;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +35,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class MainActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
+    private Profile mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +63,8 @@ public class MainActivity extends BaseActivity {
         }
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        mProfile = getProfile();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,10 +89,10 @@ public class MainActivity extends BaseActivity {
                         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     }
                     return true;
-                case R.id.navigation_about:
-                    transaction.replace(R.id.content, new AboutFragment()).commit();
+                case R.id.navigation_invoices:
+                    transaction.replace(R.id.content, new InvoicesFragment()).commit();
                     if(getSupportActionBar() != null) {
-                        getSupportActionBar().setTitle(R.string.fragment_about_title);
+                        getSupportActionBar().setTitle(R.string.fragment_invoices);
                         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     }
                     return true;
@@ -187,6 +198,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void handleErrorOnInvoicesGet(String errorMessage) {
+        showAlertDialogNow(errorMessage, "Warning");
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (currentFragment instanceof InvoicesFragment) {
+            ((InvoicesFragment) currentFragment).stopLoader();
+        }
+    }
+
     public void handleSuccessfulOffersDownload(JSONArray receivedData) {
         List<Offer> offers = new ArrayList<>();
         try {
@@ -247,6 +266,51 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void handleSuccessfulInvoicesDownload(JSONObject response) {
+        try {
+            mProfile.setDeliveredInvoicesCount(response.getInt("deliveredInvoicesCount"));
+            mProfile.setUnpaidInvoicesCount(response.getInt("unpaidInvoicesCount"));
+            mProfile.setPaidInvoicesCount(response.getInt("paidInvoicesCount"));
+            mProfile.setRequestedInvoicesCount(response.getInt("requestedInvoicesCount"));
+
+            List<Invoice> invoices = new ArrayList<>();
+            for (int i = 0; i < response.getJSONArray("invoices").length(); i++) {
+                JSONObject responseItem = response.getJSONArray("invoices").getJSONObject(i);
+                Invoice invoice = new Invoice();
+                invoice.setPostedBy(responseItem.getString("postedBy"));
+                invoice.setInvoiceCurrency(responseItem.getString("invoiceCurrency"));
+                invoice.setInvoiceLanguage(responseItem.getString("invoiceLanguage"));
+                invoice.setInvoicePaid(responseItem.getBoolean("invoicePaid"));
+                invoice.setPartialPayment(responseItem.getBoolean("partialPayment"));
+                invoice.setInvoicePaymentRejected(responseItem.getBoolean("invoicePaymentRejected"));
+                invoice.setUploadedProofDocument(responseItem.getBoolean("uploadedProofDocument"));
+                invoice.setHasUploadedTranslations(responseItem.getBoolean("hasUploadedTranslations"));
+                invoice.setUserEmail(responseItem.getString("userEmail"));
+                invoice.setInvoicedAmount(responseItem.getString("invoicedAmount"));
+                invoice.setPayBefore(responseItem.getString("payBefore"));
+                invoice.setInvoiceType(responseItem.getString("invoiceType"));
+                invoice.setInvoiceTypeBG(responseItem.getString("invoiceTypeBG"));
+                invoice.setAdminComment(responseItem.getString("adminComment"));
+                invoice.setConsecutiveID(responseItem.getString("consecutiveID"));
+                invoice.setOrderConsecutiveID(responseItem.getString("orderConsecutiveID"));
+                invoice.setCreatedAt(responseItem.getString("createdAt"));
+                invoice.setUpdatedAt(responseItem.getString("updatedAt"));
+                List<String> files = new ArrayList<>();
+                for (int j = 0; j < responseItem.getJSONArray("file").length(); j++) {
+                    String file = responseItem.getJSONArray("file").getString(j);
+                    files.add(file);
+                }
+                invoice.setFile(files);
+
+                invoices.add(invoice);
+            }
+            mProfile.setInvoices(invoices);
+            saveProfile(mProfile);
+        } catch (JSONException jse) {
+            jse.printStackTrace();
+        }
+    }
+
     private void showAlertDialogNow(String message, String title) {
         WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
             @Override
@@ -254,5 +318,26 @@ public class MainActivity extends BaseActivity {
             }
         });
         warning.show();
+    }
+
+    private Profile getProfile() {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        Profile profile = new Profile();
+        String json = appPreferences.getString(SHARED_PROFILE_KEY, "");
+        if(!json.isEmpty()) {
+            profile = gson.fromJson(json, Profile.class);
+        }
+        return profile;
+    }
+
+    private void saveProfile(Profile profile) {
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefsEditor = appPreferences.edit();
+        Gson gson = new Gson();
+
+        String updatedJson = gson.toJson(profile);
+        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
+        prefsEditor.apply();
     }
 }
