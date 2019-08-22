@@ -40,6 +40,12 @@ public class OrdersRestClient {
         client.post(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
     }
 
+    public static void getAllInvoices(Context context, String url, HttpEntity entity, String contentType, String headerKey, String headerValue, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("Sending GET request for getting all invoices to " + getAbsoluteUrl(url));
+        client.addHeader(headerKey, headerValue);
+        client.get(context, getAbsoluteUrl(url), entity, contentType, responseHandler);
+    }
+
     private static String getAbsoluteUrl(String relativeUrl) {
         return Utils.URL + relativeUrl;
     }
