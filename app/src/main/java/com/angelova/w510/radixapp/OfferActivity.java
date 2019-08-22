@@ -60,13 +60,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class OfferActivity extends BaseActivity {
 
     private static final int READ_REQUEST_CODE = 42;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 2077;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     private ImageView mBackBtn;
     private RadioGroup mNameRadioGroup;

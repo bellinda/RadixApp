@@ -38,11 +38,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class OrderDetailsActivity extends AppCompatActivity {
 
     private Order mOrder;
 
-    public static final String SHARED_PROFILE_KEY = "profile";
     private Profile mProfile;
     private ProgressDialog mLoadingDialog;
 

@@ -19,14 +19,14 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText mOldPassInput;
     private EditText mNewPassInput;
     private EditText mConfirmPassInput;
     private Button mSendBtn;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

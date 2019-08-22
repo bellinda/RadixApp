@@ -14,6 +14,8 @@ public class Utils {
     public static final int ENCRYPTION_ITERATION_COUNT = 2048;
     public static final int ENCRYPTION_KEY_STRENGTH = 256;
 
+    public static final String SHARED_PROFILE_KEY = "profile";
+
     public static int getWidth(Context context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

@@ -26,9 +26,9 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllOffersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
 
-    public static final String SHARED_PROFILE_KEY = "profile";
+public class AllOffersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mListView;

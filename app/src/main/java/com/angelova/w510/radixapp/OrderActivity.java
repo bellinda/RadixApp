@@ -82,9 +82,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderActivity extends BaseActivity {
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
 
-    public static final String SHARED_PROFILE_KEY = "profile";
+public class OrderActivity extends BaseActivity {
 
     private static final int REQUEST_EXTERNAL_STORAGE = 2077;
 

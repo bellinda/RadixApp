@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 /**
  * Created by W510 on 18.3.2018 г..
  */
@@ -30,7 +32,6 @@ import java.util.TimeZone;
 public class ResponsesAdapter extends ArrayAdapter<Response> {
 
     private Context context;
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     public ResponsesAdapter(Context context, List<Response> responses) {
         super(context, R.layout.respones_list_item, responses);

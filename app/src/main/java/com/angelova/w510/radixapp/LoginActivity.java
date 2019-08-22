@@ -33,6 +33,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmailInput;
@@ -41,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mForgotPass;
     private TextView mSignUpNew;
     private ProgressBar mLoginLoader;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class OfferDetailsActivity extends AppCompatActivity {
 
     private Offer offer;
@@ -71,8 +73,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mDocumentsList;
     private ListView mResponsesLayout;
     private ResponsesAdapter mResponsesAdapter;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     private Profile mProfile;
 

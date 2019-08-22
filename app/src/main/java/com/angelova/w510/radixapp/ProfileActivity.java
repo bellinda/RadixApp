@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
+
 public class ProfileActivity extends BaseActivity {
 
     private TextView mOffersCount;
@@ -45,8 +47,6 @@ public class ProfileActivity extends BaseActivity {
     private LinearLayout mLogoutBtn;
 
     private ProgressDialog loadingDialog;
-
-    public static final String SHARED_PROFILE_KEY = "profile";
 
     private Profile mProfile;
 
