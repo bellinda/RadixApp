@@ -1,8 +1,9 @@
 package com.angelova.w510.radixapp.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Invoice {
+public class Invoice implements Serializable {
 
     private String postedBy;
     private String invoiceCurrency;

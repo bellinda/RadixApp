@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.angelova.w510.radixapp.InvoiceDetailsActivity;
 import com.angelova.w510.radixapp.R;
 import com.angelova.w510.radixapp.models.Invoice;
 import com.angelova.w510.radixapp.models.Order;
@@ -93,9 +94,9 @@ public class InvoicesAdapter extends RecyclerView.Adapter<InvoicesAdapter.ViewHo
         viewHolder.mainContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, OfferDetailsActivity.class);
-//                intent.putExtra("invoice", invoice);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, InvoiceDetailsActivity.class);
+                intent.putExtra("invoice", invoice);
+                context.startActivity(intent);
             }
         });
     }
