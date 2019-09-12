@@ -44,4 +44,9 @@
 
     <color name="colorOfferPending">#ffc107</color>
     <color name="colorOfferGotResponse">#558b2f</color>
+
+    <color name="colorInvoicePartial">#f7ae1b</color>
+    <color name="colorInvoicePaid">#558b2f</color>
+    <color name="colorInvoiceUnpaid">#c62828</color>
+    <color name="colorInvoiceRejected">#949494</color>
 </resources>

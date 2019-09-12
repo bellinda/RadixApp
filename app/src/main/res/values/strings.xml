@@ -541,4 +541,9 @@
         Every sustainable damage, caused solely by the visit of our website and/or mobile application will be governed by the Bulgarian Law and the user accepts to present his case before the competent courts of Sofia, Bulgaria, therefore waiving any other jurisdiction which may apply.</string>
 
     <string name="fragment_invoices">Invoices</string>
+    <string name="fragment_invoices_paid">Paid</string>
+    <string name="fragment_invoices_unpaid">Unpaid</string>
+    <string name="fragment_invoices_rejected">Rejected</string>
+    <string name="fragment_invoices_partial">Partial</string>
+    <string name="fragment_invoices_no_invoices_found">No invoices found of the selected type</string>
 </resources>

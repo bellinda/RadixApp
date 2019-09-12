@@ -304,8 +304,11 @@ public class MainActivity extends BaseActivity {
 
                 invoices.add(invoice);
             }
-            mProfile.setInvoices(invoices);
-            saveProfile(mProfile);
+
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content);
+            if (currentFragment instanceof InvoicesFragment) {
+                ((InvoicesFragment) currentFragment).handleInvoicesLoaded(invoices);
+            }
         } catch (JSONException jse) {
             jse.printStackTrace();
         }
@@ -329,15 +332,5 @@ public class MainActivity extends BaseActivity {
             profile = gson.fromJson(json, Profile.class);
         }
         return profile;
-    }
-
-    private void saveProfile(Profile profile) {
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefsEditor = appPreferences.edit();
-        Gson gson = new Gson();
-
-        String updatedJson = gson.toJson(profile);
-        prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
-        prefsEditor.apply();
     }
 }

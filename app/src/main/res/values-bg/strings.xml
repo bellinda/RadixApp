@@ -136,4 +136,11 @@
     <string name="order_details_notes">Бележки към поръчката</string>
     <string name="order_details_email">Имейл за кореспонденция</string>
     <string name="order_details_phone">Телефонен номер</string>
+
+    <string name="fragment_invoices">Фактури</string>
+    <string name="fragment_invoices_paid">Платена</string>
+    <string name="fragment_invoices_unpaid">Неплатена</string>
+    <string name="fragment_invoices_rejected">Отказана</string>
+    <string name="fragment_invoices_partial">Частична</string>
+    <string name="fragment_invoices_no_invoices_found">Няма намерени фактури от избрания от Вас тип</string>
 </resources>
