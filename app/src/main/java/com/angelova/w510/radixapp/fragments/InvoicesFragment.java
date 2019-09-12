@@ -19,6 +19,7 @@ import com.angelova.w510.radixapp.models.Profile;
 import com.angelova.w510.radixapp.tasks.GetAllInvoicesTask;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
@@ -33,6 +34,16 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
     private Profile mProfile;
     private boolean isLoading = true;
 
+    private TextView mAllTitle;
+    private TextView mUnpaidTitle;
+    private TextView mPaidTitle;
+    private TextView mRejectedTitle;
+
+    private boolean isAllSelected = true;
+    private boolean isUnpaidSelected = false;
+    private boolean isPaidSelected = false;
+    private boolean isRejectedSelected = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +51,11 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mListView = (RecyclerView) rootView.findViewById(R.id.listView);
         mNoInvoicesView = (TextView) rootView.findViewById(R.id.no_offers_view);
+
+        mAllTitle = (TextView) rootView.findViewById(R.id.all_title);
+        mUnpaidTitle = (TextView) rootView.findViewById(R.id.unpaid_title);
+        mPaidTitle = (TextView) rootView.findViewById(R.id.paid_title);
+        mRejectedTitle = (TextView) rootView.findViewById(R.id.rejected_title);
 
         mProfile = getProfile();
         if (mProfile.getInvoices() != null && mProfile.getInvoices().size() > 0) {
@@ -53,6 +69,105 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+        mAllTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isLoading) {
+                    if (getProfile().getInvoices() != null && getProfile().getInvoices().size() > 0) {
+                        mNoInvoicesView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mInvoicesAdapter = new InvoicesAdapter(getActivity(), getProfile().getInvoices(), getProfile().getOrders());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mInvoicesAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoInvoicesView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mAllTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isAllSelected = true;
+                }
+            }
+        });
+
+        mUnpaidTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLoading) {
+                    List<Invoice> unpaidInvoices = getUnpaidInvoices();
+                    if (unpaidInvoices.size() > 0) {
+                        mNoInvoicesView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mInvoicesAdapter = new InvoicesAdapter(getActivity(), unpaidInvoices, getProfile().getOrders());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mInvoicesAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoInvoicesView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mUnpaidTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mUnpaidTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isUnpaidSelected = true;
+                }
+            }
+        });
+
+        mPaidTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLoading) {
+                    List<Invoice> paidInvoices = getPaidInvoices();
+                    if (paidInvoices.size() > 0) {
+                        mNoInvoicesView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mInvoicesAdapter = new InvoicesAdapter(getActivity(), paidInvoices, getProfile().getOrders());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mInvoicesAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoInvoicesView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mPaidTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mPaidTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isPaidSelected = true;
+                }
+            }
+        });
+
+        mRejectedTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLoading) {
+                    List<Invoice> rejectedInvoices = getRejectedInvoices();
+                    if (rejectedInvoices.size() > 0) {
+                        mNoInvoicesView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        mInvoicesAdapter = new InvoicesAdapter(getActivity(), rejectedInvoices, getProfile().getOrders());
+                        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        mListView.setHasFixedSize(true);
+                        mListView.setAdapter(mInvoicesAdapter);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mNoInvoicesView.setVisibility(View.VISIBLE);
+                    }
+                    removeAllMarks();
+                    mRejectedTitle.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    mRejectedTitle.setTextColor(getResources().getColor(R.color.white));
+                    resetAllFlags();
+                    isRejectedSelected = true;
+                }
+            }
+        });
 
         mSwipeRefreshLayout.setRefreshing(true);
         new GetAllInvoicesTask(getActivity(), "invoices", mProfile.getToken()).execute();
@@ -80,8 +195,9 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
         mProfile.setInvoices(invoices);
         saveProfile(mProfile);
 
-        if (invoices != null && invoices.size() > 0) {
-            mInvoicesAdapter = new InvoicesAdapter(getActivity(), invoices, mProfile.getOrders());
+        List<Invoice> invoicesByType = getInvoicesBasedOnSelectedType();
+        if (invoicesByType != null && invoicesByType.size() > 0) {
+            mInvoicesAdapter = new InvoicesAdapter(getActivity(), invoicesByType, mProfile.getOrders());
             mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mListView.setHasFixedSize(true);
             mListView.setAdapter(mInvoicesAdapter);
@@ -90,20 +206,58 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
             mNoInvoicesView.setVisibility(View.VISIBLE);
         }
 
-//        List<Invoice> offersByType = getOrdersBasedOnSelectedType();
-//        if (offersByType != null && offersByType.size() > 0) {
-//            mOffersAdapter = new OffersAdapter(getActivity(), offersByType);
-//            mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//            mListView.setHasFixedSize(true);
-//            mListView.setAdapter(mOffersAdapter);
-//            mNoInvoicesView.setVisibility(View.GONE);
-//        } else {
-//            mNoInvoicesView.setVisibility(View.VISIBLE);
-//        }
         isLoading = false;
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    private List<Invoice> getInvoicesBasedOnSelectedType() {
+        if (isAllSelected) {
+            return mProfile.getInvoices();
+        } else if (isUnpaidSelected) {
+            return getUnpaidInvoices();
+        } else if (isPaidSelected) {
+            return getPaidInvoices();
+        } else {
+            return getRejectedInvoices();
+        }
+    }
+
+    private List<Invoice> getUnpaidInvoices() {
+        List<Invoice> unpaidInvoices = new ArrayList<>();
+        if(mProfile.getInvoices() != null) {
+            for (Invoice invoice : mProfile.getInvoices()) {
+                if (!invoice.isInvoicePaid() && !invoice.isInvoicePaymentRejected() && !invoice.isPartialPayment()) {
+                    unpaidInvoices.add(invoice);
+                }
+            }
+        }
+        return unpaidInvoices;
+    }
+
+    private List<Invoice> getPaidInvoices() {
+        List<Invoice> paidInvoices = new ArrayList<>();
+        if(mProfile.getInvoices() != null) {
+            for (Invoice invoice : mProfile.getInvoices()) {
+                if (invoice.isInvoicePaid()) {
+                    paidInvoices.add(invoice);
+                }
+            }
+        }
+        return paidInvoices;
+    }
+
+    private List<Invoice> getRejectedInvoices() {
+        List<Invoice> rejectedInvoices = new ArrayList<>();
+        if(mProfile.getInvoices() != null) {
+            for (Invoice invoice : mProfile.getInvoices()) {
+                if (invoice.isInvoicePaymentRejected()) {
+                    rejectedInvoices.add(invoice);
+                }
+            }
+        }
+        return rejectedInvoices;
     }
 
     private void saveProfile(Profile profile) {
@@ -114,6 +268,24 @@ public class InvoicesFragment extends Fragment implements SwipeRefreshLayout.OnR
         String updatedJson = gson.toJson(profile);
         prefsEditor.putString(SHARED_PROFILE_KEY, updatedJson);
         prefsEditor.apply();
+    }
+
+    private void removeAllMarks() {
+        mAllTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mAllTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mUnpaidTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mUnpaidTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mPaidTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mPaidTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mRejectedTitle.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mRejectedTitle.setTextColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+    private void resetAllFlags() {
+        isAllSelected = false;
+        isUnpaidSelected = false;
+        isPaidSelected = false;
+        isRejectedSelected = false;
     }
 
     @Override

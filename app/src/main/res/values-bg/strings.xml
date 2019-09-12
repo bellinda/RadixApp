@@ -138,6 +138,7 @@
     <string name="order_details_phone">Телефонен номер</string>
 
     <string name="fragment_invoices">Фактури</string>
+    <string name="fragment_invoices_all">Всички</string>
     <string name="fragment_invoices_paid">Платена</string>
     <string name="fragment_invoices_unpaid">Неплатена</string>
     <string name="fragment_invoices_rejected">Отказана</string>

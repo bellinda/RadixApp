@@ -21,13 +21,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/chart_bottom_guideline"
-        android:weightSum="3">
+        android:weightSum="4">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/all_offers_all"
+            android:text="@string/fragment_invoices_all"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -38,21 +38,31 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/all_offers_pending"
+            android:text="@string/fragment_invoices_unpaid"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
-            android:id="@+id/pending_title"/>
+            android:id="@+id/unpaid_title"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/all_offers_with_response"
+            android:text="@string/fragment_invoices_paid"
             android:gravity="center"
             android:textSize="15sp"
             android:textColor="@color/colorPrimary"
-            android:id="@+id/with_response_title"/>
+            android:id="@+id/paid_title"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/fragment_invoices_rejected"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/rejected_title"/>
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout
