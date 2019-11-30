@@ -547,4 +547,9 @@
     <string name="fragment_invoices_rejected">Rejected</string>
     <string name="fragment_invoices_partial">Partial</string>
     <string name="fragment_invoices_no_invoices_found">No invoices found of the selected type</string>
+
+    <string name="invoices_title">Invoice %s</string>
+
+    <string name="action_bar_icon_share">Share</string>
+    <string name="action_bar_icon_download">Download</string>
 </resources>

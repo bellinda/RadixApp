@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.angelova.w510.radixapp.models.Invoice;
 import com.angelova.w510.radixapp.models.Profile;
@@ -18,22 +21,48 @@ import static com.angelova.w510.radixapp.utils.Utils.SHARED_PROFILE_KEY;
 
 public class InvoiceDetailsActivity extends AppCompatActivity {
 
+    private com.github.barteksc.pdfviewer.PDFView mPdfView;
+    private Toolbar mToolbar;
+    private ProgressBar mLoader;
+
     private Invoice mInvoice;
     private Profile mProfile;
-
-    private com.github.barteksc.pdfviewer.PDFView mPdfViewTry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice_details);
 
-        mPdfViewTry = (PDFView) findViewById(R.id.pdfView);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mPdfView = (PDFView) findViewById(R.id.pdfView);
+        mLoader = (ProgressBar) findViewById(R.id.loader);
 
         mInvoice = (Invoice) getIntent().getSerializableExtra("invoice");
 
         mProfile = getProfile();
 
+        mToolbar.setTitle(String.format(getString(R.string.invoices_title), mInvoice.getConsecutiveID()));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        mToolbar.inflateMenu(R.menu.invoice_menu);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_share) {
+
+                } else if (item.getItemId() == R.id.action_download) {
+
+                }
+                return false;
+            }
+        });
+
+        mPdfView.setVisibility(View.GONE);
+        mLoader.setVisibility(View.VISIBLE);
         new DownloadPdfTask(InvoiceDetailsActivity.this, mInvoice.getFile().get(0), mInvoice.getConsecutiveID(), "/invoices/download", mProfile.getToken()).execute();
     }
 
@@ -49,8 +78,9 @@ public class InvoiceDetailsActivity extends AppCompatActivity {
     }
 
     public void handleFileDownloaded(File file) {
-        mPdfViewTry.setVisibility(View.VISIBLE);
-        mPdfViewTry.fromFile(file)
+        mLoader.setVisibility(View.GONE);
+        mPdfView.setVisibility(View.VISIBLE);
+        mPdfView.fromFile(file)
                 .enableSwipe(true) // allows to block changing pages using swipe
                 .swipeHorizontal(true)
                 .enableDoubletap(true)

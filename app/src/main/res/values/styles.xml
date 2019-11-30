@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:actionButtonStyle">@style/CustomActionButtonStyle</item>
+        <item name="actionButtonStyle">@style/CustomActionButtonStyle</item>
     </style>
 
     <style name="TagGroup.Red">
@@ -74,4 +76,13 @@
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <style name="CustomActionButtonStyle" parent="Widget.AppCompat.ActionButton">
+        <item name="android:maxHeight">21dp</item>
+        <item name="android:height">21dp</item>
+        <!--<item name="android:minWidth">24dp</item>-->
+        <item name="android:maxWidth">40dp</item>
+        <item name="android:width">40dp</item>
+    </style>
+
 </resources>

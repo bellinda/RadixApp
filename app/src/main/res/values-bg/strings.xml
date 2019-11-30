@@ -144,4 +144,6 @@
     <string name="fragment_invoices_rejected">Отказана</string>
     <string name="fragment_invoices_partial">Частична</string>
     <string name="fragment_invoices_no_invoices_found">Няма намерени фактури от избрания от Вас тип</string>
+
+    <string name="invoices_title">Фактура %s</string>
 </resources>

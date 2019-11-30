@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/action_bar_icon_share"
+        android:icon="@drawable/ic_share_white"
+        app:showAsAction="always"
+        android:id="@+id/action_share"/>
+
+    <item
+        android:title="@string/action_bar_icon_download"
+        android:icon="@mipmap/ic_download_white"
+        app:showAsAction="always"
+        android:id="@+id/action_download"/>
+</menu>
